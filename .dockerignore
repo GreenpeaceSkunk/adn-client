@@ -1,0 +1,10 @@
+.dockerignore
+.gitignore
+build
+.env
+.env.development.sample
+.env.production.sample
+Dockerfile-dist
+Dockerfile-dev
+node_modules
+README.md
