@@ -8,18 +8,13 @@ declare global {
   }
 }
 
-// export type SearchParamsType = {
-//   ref?: string;
-//   utm_medium?: string;
-//   utm_campaign?: string;
-// }
+export type OnChangeEvent = MouseEvent<HTMLButtonElement> | ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>;
 
 export type EventType =
   | 'pageview'
-
-  export interface GenericReducerFn<S, A> { 
-    (state: S, action: A): S;
-  }
+export interface GenericReducerFn<S, A> { 
+  (state: S, action: A): S;
+}
 
 export type StylesType = {
   [el: string]: React.CSSProperties,
@@ -32,7 +27,7 @@ export type AxiosResquestError = {
 };
 
 export type SharedState = {
-  data: IUserData;
+  user: IUserData;
   submitting?: boolean,
   submitted?: boolean,
   error: string | null,
@@ -45,14 +40,15 @@ export type SharedActions =
   | { type: 'FAILURE', error: any }
 
 interface IUserData {
-  cod_area?: string;
-  dni?: string;
-  creditCardNumber?: string;
-  campania?: string;
   email?: string;
-  nombre?: string;
-  apellido?: string;
-  otherAmount?: string;
-  telefono?: string;
-  monto?: string;
+  fullName?: string;
+  birthday?: string;
+}
+
+export interface IAnimal {
+  name: string;
+  label: string;
+  picture: string;
+  description: string;
+  group: 'A' | 'B' | 'C' | 'D' | 'E';
 }

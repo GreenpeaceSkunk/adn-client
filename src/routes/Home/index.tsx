@@ -1,20 +1,14 @@
 import React, { memo, useContext, useMemo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
-import Wrapper, { Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
+import { Wrapper, Button, Nav, P, View } from '@bit/meema.ui-components.elements';
+import { H1, ButtonNavLink } from '../../components/Elements';
 import styled, { css } from 'styled-components';
-import { backgroundImage } from '../../styles/mixins';
-import { 
-  BackgroundHome,
-  ChitaAnimal,
-  TucanAnimal,
-  PenguinAnimal,
-} from '../../lib/images';
-// import RegistrationForm from '../Registration';
 import { AppContext } from '../App/context';
-import { Link, NavLink } from 'react-router-dom';
-import { pixelToRem, borderRadius } from 'greenpeace-ui-themes';
-import Bubble from '../../components/Home/Bubbles';
+import { pixelToRem } from 'meema.utils';
 import Registration from '../Registration';
+import Animal from '../../components/Animal';
+import Bubble from '../../components/Home/Bubble';
+import config from '../../config'; 
 
 export const Form = styled.form`
   /* flex: 1 0 100%; */
@@ -47,25 +41,6 @@ const Input = styled.input`
   }
 `;
 
-// .attrs({ activeClassName })
-/* &.${activeClassName} {
-  color: red;
-} */
-const ButtonNavLink = styled(Link)`
-  display: inline-flex;
-  width: auto;
-  font-size: ${pixelToRem(32)};
-  border-radius: ${pixelToRem(30)};
-  padding: ${pixelToRem(15)} ${pixelToRem(46)};
-  color: white;
-  background: ${(props) => props.theme.color.primary.normal};
-  transition: all 250ms ease;
-
-  &:hover {
-    background: ${(props) => props.theme.color.primary.dark};
-  }
-`;
-
 const Home: React.FunctionComponent<{}> = () => {
   const { searchParams } = useContext(AppContext);
   const { path } = useRouteMatch();
@@ -80,34 +55,38 @@ const Home: React.FunctionComponent<{}> = () => {
         height: 100%;
       `}
     >
-      <Wrapper>
+      <Wrapper
+        customCss={css`
+          padding: ${pixelToRem(40)};
+        `}
+      >
         <H1
-          customCss={css`
-            color: white;
-          `}
-        >Descubrí a qué animal autóctono te pareces más</H1>
-        <ButtonNavLink to='/registration'>Comenzar</ButtonNavLink>
+          fontSize={pixelToRem(58)
+        }>Descubrí a qué <br/>animal autóctono te pareces más</H1>
+        <ButtonNavLink to='/registration' style={{marginTop: pixelToRem(30)}}>Comenzar</ButtonNavLink>
       </Wrapper>
       <Wrapper
         customCss={css`
           position: relative;
           display: flex;
           justify-self: flex-end;
-          /* background: yellowgreen; */
           flex: 0 0 50%;
-          /* overflow: hidden; */
         `}
       >
-        <Bubble background={ChitaAnimal} size={295} animationTime={5} initialPosX={20} initialPosY={131} initialPosZ={0} rotateX={0} translate={75} />
-        <Bubble background={PenguinAnimal} size={250} animationTime={5} initialPosX={0} initialPosY={397} initialPosZ={0} rotateX={0} translate={75} />
-        <Bubble background={PenguinAnimal} size={250} animationTime={5} initialPosX={0} initialPosY={397} initialPosZ={0} rotateX={0} translate={75} />
-        <Bubble background={TucanAnimal} size={322} animationTime={5} initialPosX={10} initialPosY={760} initialPosZ={0} rotateX={0} translate={75} />
+        <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}><Animal {...config.animals[2]}/></Bubble>
+        <Bubble size={155} animationTime={5} initialPosX={30} initialPosY={-100}><Animal {...config.animals[7]}/></Bubble>
+        <Bubble size={295} animationTime={5} initialPosX={-10} initialPosY={0}><Animal {...config.animals[0]}/></Bubble>
+        <Bubble size={300} animationTime={5} initialPosX={60} initialPosY={380}><Animal {...config.animals[1]}/></Bubble>
+        <Bubble size={150} animationTime={5} initialPosX={40} initialPosY={100}><Animal {...config.animals[4]}/></Bubble>
+        <Bubble size={200} animationTime={5} initialPosX={65} initialPosY={150}><Animal {...config.animals[5]}/></Bubble>
+        <Bubble size={170} animationTime={5} initialPosX={40} initialPosY={280}><Animal {...config.animals[6]}/></Bubble>
+        <Bubble size={250} animationTime={5} initialPosX={-30} initialPosY={340}><Animal {...config.animals[3]}/></Bubble>
+        <Bubble size={150} animationTime={5} initialPosX={10} initialPosY={320}><Animal {...config.animals[8]}/></Bubble>
+        <Bubble size={322} animationTime={5} initialPosX={10} initialPosY={490}><Animal {...config.animals[9]}/></Bubble>
       </Wrapper>
       <Switch>
         <Route path='/registration'>
           <Registration />
-          {/* <Suspense fallback={<Loader />}>
-          </Suspense> */}
         </Route>
       </Switch>
     </View>

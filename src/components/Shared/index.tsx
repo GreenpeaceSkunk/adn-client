@@ -1,6 +1,6 @@
 import React from 'react';
-import {GreenpeaceLogoWhite as GreenpeaceLogo} from '../../lib/icons';
-import Wrapper, { Img, A } from '@bit/meema.ui-components.elements';
+import {GreenpeaceLogoWhite as GreenpeaceLogo} from '../../assets/icons';
+import { Wrapper, Img, A } from '@bit/meema.ui-components.elements';
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
 import { css } from 'styled-components';
 

@@ -3,11 +3,14 @@
 FROM node:14
 WORKDIR /usr/src/app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-*.json yarn.lock ./
-COPY .npmrc ./
-RUN yarn
+# COPY package.json ./
+# COPY package-*.json yarn.lock ./
+# COPY .npmrc ./
 COPY . ./
+# COPY . ./
+RUN npm install react-scripts -g
+# RUN yarn
+RUN npm install
 RUN npm run types
-RUN npm run client:start
+# CMD ["npm", "run", "client:start"]
 EXPOSE 3000

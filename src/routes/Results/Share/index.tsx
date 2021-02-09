@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import {withRouter } from 'react-router-dom';
+import {useRouteMatch, withRouter } from 'react-router-dom';
 import { View } from '@bit/meema.ui-components.elements'
 
 const Share: React.FunctionComponent<{}> = () => {
