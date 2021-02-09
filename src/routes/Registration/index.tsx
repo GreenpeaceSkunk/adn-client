@@ -1,20 +1,24 @@
-import React, { memo, useContext, useMemo } from 'react';
-import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
-import Wrapper, { Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
+import React, { memo, useCallback, useContext, useMemo } from 'react';
+import { useRouteMatch, withRouter, useHistory } from 'react-router';
+import { Wrapper, Nav, View, Span, Img } from '@bit/meema.ui-components.elements';
+import { H1, ButtonNavLink, Overlay } from '../../components/Elements';
 import styled, { css } from 'styled-components';
-// import RegistrationForm from '../Registration';
 import { AppContext } from '../App/context';
-import { Link, NavLink } from 'react-router-dom';
-import { pixelToRem } from 'greenpeace-ui-themes';
+import { pixelToRem } from 'meema.utils';
+import { OnChangeEvent } from 'greenpeace';
+import { NavLink } from 'react-router-dom';
+import { XCloseIcon } from '../../assets/images';
 
-export const Form = styled.form`
-  /* flex: 1 0 100%; */
+const Form = styled.form`
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: ${pixelToRem(380)};
+  padding: ${pixelToRem(40)} ${pixelToRem(40)};
   background-color: white;
-  width: ${pixelToRem(325)};
-  padding: ${pixelToRem(30)} ${pixelToRem(40)};
-  position: absolute;
-  z-index: 1;
   border-radius: ${pixelToRem(20)};
+  z-index: 9999;
 `;
 
 const FormGroup = styled(Wrapper)`
@@ -27,78 +31,97 @@ const Input = styled.input`
   height: 2.5rem;
   outline: none;
   appearance: none;  
-  border: 1px solid transparent;
-  padding: 0.5rem;
-  margin: 0 0 1rem 0;
-  font-size: 1rem;
-  border-bottom: 1px solid ${(props) => props.theme.color.secondary.light};
+  border: ${pixelToRem(1)} solid transparent;
+  padding: ${pixelToRem(8)};
+  margin: 0 0 ${pixelToRem(16)} 0;
+  font-size: ${pixelToRem(16)};
+  border-bottom: ${pixelToRem(1)} solid ${(props) => props.theme.color.secondary.light};
+  transition: all 250ms ease;
 
   &:focus {
-    border-color: ${(props) => props.theme.color.primary.normal};
+    border-bottom-color: ${(props) => props.theme.color.primary.normal};
   }
 `;
 
-// .attrs({ activeClassName })
-/* &.${activeClassName} {
-  color: red;
-} */
-const ButtonNavLink = styled(Link)`
-  display: inline-flex;
-  width: auto;
-  font-size: ${pixelToRem(32)};
-  border-radius: ${pixelToRem(30)};
-  padding: ${pixelToRem(15)} ${pixelToRem(46)};
-  color: white;
-  background: ${(props) => props.theme.color.primary.normal};
-  transition: all 250ms ease;
-
-  &:hover {
-    background: ${(props) => props.theme.color.primary.dark};
-  }
+const XCloseButton = styled(NavLink)`
+  position: absolute;
+  top: ${pixelToRem(15)};
+  right: ${pixelToRem(15)};
 `;
 
 const Registration: React.FunctionComponent<{}> = () => {
-  const { searchParams } = useContext(AppContext);
+  const { user, dispatch } = useContext(AppContext);
   const { path } = useRouteMatch();
-  const history = useHistory();
-  
+
+  const onChange = useCallback((evt: OnChangeEvent) => {
+    evt.preventDefault();
+    dispatch({
+      type: 'UPDATE_USER_DATA',
+      payload: { [evt.currentTarget.name]: evt.currentTarget.value }
+    });
+  }, [
+    dispatch,
+  ]);
+
   return useMemo(() => (
-    <View
-      customCss={css`
-      position: fixed;
-      display: flex;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-    `}
-    >
-      <Form>
-        Completa para comenzar
-        <FormGroup>
-          <label htmlFor="email" />
-          <Input type='text' name='fullName' value={''} placeholder='Nombre y apellido' onChange={() => {}} />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="email" />
-          <Input type='text' name='birthday' value={''} placeholder='DD/MM/AAAA' onChange={() => {}} />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="email" />
-          <Input type='email' name='email' value={''} placeholder='Email' onChange={() => {}} />
-        </FormGroup>
-        <Nav>
-          <ButtonNavLink to='/tutorial'>Comenzar</ButtonNavLink>
-        </Nav>
-      </Form>
-    </View>
+    <>
+      <Overlay />
+      <Wrapper
+        customCss={css`
+          position: fixed;
+          display: fixed;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          width: 100vw;
+          height: 100vh;
+          top: 0;
+        `}
+      >
+        <Form>
+          <XCloseButton to='/'>
+            <Img src={XCloseIcon} />
+          </XCloseButton>
+          <Span
+            customCss={css`
+              color: ${props => props.theme.color.primary.normal};
+              font-family: ${props => props.theme.font.family.normal};
+              font-size: ${pixelToRem(24)};
+            `}
+          >Completa para comenzar</Span>
+          <Wrapper
+            customCss={css`
+              margin: ${pixelToRem(25)} 0;
+              width: 100%;
+            `}
+          >
+            <FormGroup>
+              <label htmlFor="email" />
+              <Input type='text' name='fullName' value={user.fullName} placeholder='Nombre y apellido' onChange={onChange} />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="email" />
+              <Input type='text' name='birthday' value={user.birthday} placeholder='DD/MM/AAAA' onChange={onChange} />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor="email" />
+              <Input type='email' name='email' value={user.email} placeholder='Email' onChange={onChange} />
+            </FormGroup>
+          </Wrapper>
+          <Nav>
+            <ButtonNavLink
+              to='/tutorial'
+              disabled={false}
+            >Comenzar</ButtonNavLink>
+          </Nav>
+        </Form>
+      </Wrapper>
+    </>
   ), [
     path,
-    searchParams,
+    user,
+    onChange,
+    dispatch,
   ]);
 };
 

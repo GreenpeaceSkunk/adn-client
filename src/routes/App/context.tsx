@@ -1,13 +1,14 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import { IUserData } from "greenpeace";
+import React, { createContext, useEffect, useMemo, useReducer, useState } from "react";
 import { RouteComponentProps, useLocation, withRouter } from "react-router-dom";
 import useSearchParams from "../../hooks/useSearchParams";
-// import yaml from 'js-yaml';
-// import fs from 'fs';
-// import config from '../../config.yml';
+import { reducer, initialState, ContextActionType } from './reducer';
 
 interface IContext {
   searchParams: string;
   refParam: string;
+  user: IUserData;
+  dispatch: React.Dispatch<ContextActionType>;
 }
 
 interface IProps {
@@ -21,8 +22,9 @@ const { Provider, Consumer } = Context;
 const ContextProvider: React.FunctionComponent<IProps & RouteComponentProps> = ({ children }) => {
   const { search } = useLocation();
   const [ searchParams, setSearchParams ] = useState<string>('');
+  const [ refParam, setRefParam ] = useState<string>(`${process.env.REACT_APP_DEFAULT_REF_PARAM}`);
+  const [{user}, dispatch] = useReducer(reducer, initialState);
   const parsedSearchParams = useSearchParams(searchParams);
-  const [ refParam, setRefParam ] = useState<string>(`${process.env.REACT_APP_DEFAULT_REF_PARAM}`)
   
   useEffect(() => {
     if(search !== '') {
@@ -42,25 +44,19 @@ const ContextProvider: React.FunctionComponent<IProps & RouteComponentProps> = (
     parsedSearchParams,
   ]);
 
-  useEffect(() => {
-    // try {
-    //   const doc = yaml.load(fs.readFileSync(config, 'utf8'));
-    //   console.log(doc);
-    // } catch (e) {
-    //   console.log(e);
-    // }
-  }, []);
-
   return useMemo(() => (
     <Provider value={{
       searchParams,
       refParam,
+      user,
+      dispatch,
     }}>
       { children }
     </Provider>
   ), [
     searchParams,
     refParam,
+    user,
     children,
   ]);
 };

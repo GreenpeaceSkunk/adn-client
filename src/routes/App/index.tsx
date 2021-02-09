@@ -4,7 +4,7 @@ import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../theme/globalStyle';
 // import { pushToDataLayer } from '../../utils/gtm';
 import {DarkTheme as Theme} from 'greenpeace-ui-themes'
-import Wrapper, { H1, Span, P, Nav,  } from '@bit/meema.ui-components.elements';
+import { Wrapper, H1, Span, P, Nav,  } from '@bit/meema.ui-components.elements';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { Loader } from '../../components/Shared';
 import MainFooter, {TinyFooter} from '../../components/Footer';
@@ -14,13 +14,16 @@ import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
 import { 
   BackgroundHome,
-} from '../../lib/images';
-import { pixelToRem } from 'greenpeace-ui-themes';
+} from '../../assets/images';
+import { pixelToRem } from 'meema.utils';
 
 const MainHeader = React.lazy(() => import('../../components/Header'));
 const HomeView = React.lazy(() => import('../Home'));
-const ThankYouView = React.lazy(() => import('../ThankYou'));
+const ResultsView = React.lazy(() => import('../Results'));
 const TutorialView = React.lazy(() => import('../Tutorial'));
+const GameView = React.lazy(() => import('../Game'));
+// const GameView = React.lazy(() => import('../../components/Game'));
+const AnalysisView = React.lazy(() => import('../Analysis'));
 
 const Main = styled(Wrapper)`
   display: flex;
@@ -58,27 +61,29 @@ const App: React.FunctionComponent<{}> = () => {
             </Suspense>
             <Wrapper
               customCss={css`
-                height: calc(100vh - 5rem - 5rem);
-                /* padding: ${pixelToRem(40)}; */
+                min-height: calc(100vh - 5rem - 5rem);
+                position: relative;
               `}
             >
               <Switch>
-                <Route exact path='/results'>
-                  {/* <Suspense fallback={<Loader />}>
-                    <ThankYouView/>
-                  </Suspense> */}
-                  {/* <TinyFooter /> */}
-                  Resultados
-                </Route>
                 <Route exact path='/analysis'>
-                  Picker
+                  <Suspense fallback={<Loader />}>
+                    <AnalysisView/>
+                  </Suspense>
                 </Route>
-                <Route exact path='/analysis'>
-                  Analysis
-                </Route>
-                <Route exact path='/tutorial'>
+                <Route path='/tutorial'>
                   <Suspense fallback={<Loader />}>
                     <TutorialView/>
+                  </Suspense>
+                </Route>
+                <Route path='/game'>
+                  <Suspense fallback={<Loader />}>
+                    <GameView/>
+                  </Suspense>
+                </Route>
+                <Route path='/results'>
+                  <Suspense fallback={<Loader />}>
+                    <ResultsView/>
                   </Suspense>
                 </Route>
                 <Route path='/'>
@@ -88,24 +93,9 @@ const App: React.FunctionComponent<{}> = () => {
                 </Route>
               </Switch>
             </Wrapper>
-            
-            {/* <Wrapper
-              customCss={css`
-                height: 100%;
-              `}
-            >
-            </Wrapper> */}
-
             <Suspense fallback={<Loader />}>
               <MainFooter />
             </Suspense>
-            {/* <footer>
-              <Nav>
-                <Span>Términos y condiciones</Span>|
-                <Span>Políticas de privacidad</Span>
-              </Nav>
-              <P>© Greenpeace Copyright</P>
-            </footer> */}
           </Main>
         </AppProvider>
       </ErrorBoundary>

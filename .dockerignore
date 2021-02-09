@@ -2,9 +2,11 @@
 .gitignore
 build
 .env
-.env.development.sample
-.env.production.sample
+.env.development
+.env.production
 Dockerfile-dist
 Dockerfile-dev
 node_modules
 README.md
+CHANGELOG.md
+.DS_Store/**/*
