@@ -1,18 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { css } from 'styled-components';
-<<<<<<< HEAD
-import { Footer, Wrapper, Span, A, Nav } from '@bit/meema.ui-components.elements';
-import { footerHeightNormal } from 'greenpeace-ui-themes';
-=======
 import { Footer, Wrapper, Span, A } from '@bit/meema.ui-components.elements';
 import { footerHeightNormal } from '../../theme/Theme';
 import { pixelToRem } from 'meema.utils';
->>>>>>> Re-install external libraries and implement Theme
 import { Logo } from '../../components/Shared';
-import { PeopleIcon } from '../../assets/icons';
+import { PeopleIcon } from '../../lib/icons';
 import SocialMediaNavs from '../SocialMediaNav';
 import { alignMiddle } from '../../styles/mixins';
-import { pixelToRem } from 'meema.utils';
 
 const FooterWrapper: FunctionComponent<{
   children: React.ReactNode | HTMLAllCollection;
@@ -58,6 +52,7 @@ const BottomContent = () => (
       }
     `}
   >
+    <Logo />
     <Span
       customCss={css`
         display: flex;
@@ -81,13 +76,6 @@ const BottomContent = () => (
           color: white;
           text-decoration: underline;
         `}
-      >Politicas de privacidad</A>|
-      <A
-        href='https://www.greenpeace.org/argentina/politica-privacidad/'
-        customCss={css`
-          color: white;
-          text-decoration: underline;
-        `}
       >Politicas de privacidad</A>
     </Span>
   </Wrapper>
@@ -102,49 +90,47 @@ export const TinyFooter = () => (
   </FooterWrapper>
 );
 
-/* justify-content: ${justifyContent};
-min-height: ${pixelToRem(height)}; */
 const MainFooter = () => (
-  <Footer
-    customCss={css`
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      width: 100vw;
-      color: white;
-      padding: 0 2rem;
-      height: 5rem;
-      z-index: 1;
-    `} 
-  >
-    <Nav customCss={css`
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    `}>
-      <Wrapper customCss={css`display: inline-flex; align-items: center;`}>
-        <A
-            href='https://www.greenpeace.org/argentina/terminios-y-condiciones/'
-            customCss={css`
-              color: white;
-              text-decoration: underline;
-            `}
-          >Términos y condiciones</A>
-        <Wrapper customCss={css`margin: 0 ${pixelToRem(9)};`}>|</Wrapper>
-        <A
-          href='https://www.greenpeace.org/argentina/politica-privacidad/'
-          customCss={css`
-            color: white;
-            text-decoration: underline;
-          `}
-        >Politicas de privacidad</A>
+  <FooterWrapper>
+    <Wrapper
+      customCss={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      `}
+    >
+      <Wrapper
+        customCss={css`
+          width: ${pixelToRem(85)};
+          height: ${pixelToRem(85)};
+          border-radius: 50%;
+          background: ${(props) => props.theme.color.primary.normal};
+          margin-top: -${pixelToRem(85 / 2)};
+          margin-bottom: 1rem;
+          ${alignMiddle};
+        `}
+      >
+        <img src={PeopleIcon} alt='Greenpeace' />
       </Wrapper>
-      <Span>© Greenpeace Copyright</Span>
-
-    </Nav>
-  </Footer>
+      <Span customCss={css`
+        font-size: ${pixelToRem(24)};
+        margin-bottom: 1rem;
+      `}>¡COMPARTÍ!</Span>
+      <SocialMediaNavs />
+      <Span
+        customCss={css`
+          text-align: center;
+          width: 100%;
+          margin-top: 1rem;
+          font-size: ${pixelToRem(14)};
+        `}
+      >NUESTRO PLANETA NECESITA MÁS PERSONAS COMO VOS</Span>
+    </Wrapper>
+    <BottomContent />
+  </FooterWrapper>
 );
 
 MainFooter.displayName = 'MainFooter';

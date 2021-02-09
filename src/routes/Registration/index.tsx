@@ -1,13 +1,10 @@
-import React, { memo, useCallback, useContext, useMemo } from 'react';
-import { useRouteMatch, withRouter, useHistory } from 'react-router';
-import { Wrapper, Nav, View, Span, Img } from '@bit/meema.ui-components.elements';
-import { H1, ButtonNavLink, Overlay } from '../../components/Elements';
+import React, { memo, useContext, useMemo } from 'react';
+import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
+import { Wrapper, Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
+import { Link, NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
-import { OnChangeEvent } from 'greenpeace';
-import { NavLink } from 'react-router-dom';
-import { XCloseIcon } from '../../assets/images';
 
 const Form = styled.form`
   position: relative;

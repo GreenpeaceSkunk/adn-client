@@ -1,10 +1,11 @@
 import React, { memo, useContext, useMemo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
-import { Wrapper, Button, Nav, P, View } from '@bit/meema.ui-components.elements';
-import { H1, ButtonNavLink } from '../../components/Elements';
+import { Wrapper, Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
+import { Link, NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
+import Bubble from '../../components/Home/Bubbles';
 import Registration from '../Registration';
 import Animal from '../../components/Animal';
 import Bubble from '../../components/Home/Bubble';

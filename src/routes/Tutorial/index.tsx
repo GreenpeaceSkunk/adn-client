@@ -6,7 +6,13 @@ import styled, { css } from 'styled-components';
 import { ArrowRightIcon } from '../../assets/images';
 import TutorialStepOne from './TutorialStepOne';
 import TutorialStepTwo from './TutorialStepTwo';
+import Carousel from '@bit/meema.ui-components.carousel';
+// import RegistrationForm from '../Registration';
+import { AppContext } from '../App/context';
+import { Link, NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
+// import config from '../../config.yml';
+// console.log(config);
 
 const IconImage = styled(Img)`
   margin-left: 10px;
