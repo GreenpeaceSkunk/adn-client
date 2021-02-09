@@ -1,8 +1,11 @@
 import React, { memo, useContext, useEffect, useMemo } from 'react';
-import {NavLink, Route, Switch, useRouteMatch, withRouter } from 'react-router-dom';
-import { H1, Span, View, Header, Wrapper, Nav, Button } from '@bit/meema.ui-components.elements'
-import styled, { css } from 'styled-components';
+import { NavLink, Route, Switch, useRouteMatch, withRouter } from 'react-router-dom';
+import { Wrapper, A, H1, Span, View, Header } from '@bit/meema.ui-components.elements';
+import { css } from 'styled-components';
+import { backgroundImage } from '../../styles/mixins';
+import { headerHeightNormal } from '../../theme/Theme';
 import { pixelToRem } from 'meema.utils';
+import { trackEvent } from '../../utils/facebookPixel';
 import Share from './Share';
 import ResultsCard from '../../components/Results/ResultsCard';
 import { ButtonNavLink } from '../../components/Elements';

@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../theme/globalStyle';
 // import { pushToDataLayer } from '../../utils/gtm';
-import {DarkTheme as Theme} from 'greenpeace-ui-themes'
+import {DarkTheme as Theme} from '../../theme/Theme';
 import { Wrapper, H1, Span, P, Nav,  } from '@bit/meema.ui-components.elements';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { Loader } from '../../components/Shared';
@@ -14,7 +14,7 @@ import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
 import { 
   BackgroundHome,
-} from '../../assets/images';
+} from '../../lib/images';
 import { pixelToRem } from 'meema.utils';
 
 const MainHeader = React.lazy(() => import('../../components/Header'));

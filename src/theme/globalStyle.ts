@@ -7,7 +7,7 @@ import {
   fontPrimaryRegular,
   fontPrimaryBold,
   fontPrimaryMedium,
-} from 'greenpeace-ui-themes';
+} from '../theme/Theme';
 
 import RobotoLightFont from '../fonts/Roboto/Roboto-Light.ttf';
 import RobotoRegularFont from '../fonts/Roboto/Roboto-Regular.ttf';
