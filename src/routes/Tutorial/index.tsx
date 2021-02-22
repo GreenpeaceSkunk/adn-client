@@ -23,13 +23,13 @@ const Tutorial: React.FunctionComponent<{}> = () => {
   return useMemo(() => (
     <View>
       <Switch>
-        <Route exact path={`${path}/step/1`}>
+        <Route exact path={path}>
           <TutorialStepOne />
         </Route>
         {/* <Route exact path={`${path}/step/2`}>
           <TutorialStepTwo />
         </Route> */}
-        <Redirect from={path} to={`${path}/step/1`} />
+        {/* <Redirect from={path} to={`${path}/step/1`} /> */}
       </Switch>
       <Nav
         customCss={css`
@@ -48,7 +48,7 @@ const Tutorial: React.FunctionComponent<{}> = () => {
               format='outlined'
             >Siguiente <IconImage src={ArrowRightIcon} /></ButtonNavLink>
           </Route> */}
-          <Route exact path={`${path}/step/1`}>
+          <Route exact path={path}>
             <ButtonNavLink to={`/`} style={{border: 'none'}}>Anterior</ButtonNavLink>
             <ButtonNavLink
               to='/game'

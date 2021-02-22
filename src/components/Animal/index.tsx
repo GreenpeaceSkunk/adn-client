@@ -19,6 +19,7 @@ const Chip = styled(Wrapper)<{ chipOrientation?: string; }>`
   animation: animateChip 250ms forwards;
   animation-delay: 750ms;
   transform: scale(0);
+  z-index: 99999;
 
   ${(props => (props.chipOrientation === 'bottom') && css`
     bottom: -${pixelToRem(20)};
@@ -52,7 +53,7 @@ const Chip = styled(Wrapper)<{ chipOrientation?: string; }>`
 interface IProps {
   showChip?: boolean;
   chipOrientation?: 'right' | 'bottom' | 'left';
-  onClickHandler?: () => void;
+  onClickHandler?: (value: string) => void;
 }
 
 export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
@@ -66,6 +67,23 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   onClickHandler,
 }) => {
   const [ image, setImage ] = useState<any>();
+  const [ clicked, setClicked ] = useState<boolean>(false);
+
+  const onClick = useCallback(() => {
+    if(onClickHandler) {
+      setClicked(true);
+
+      const timer = setTimeout(() => {
+        onClickHandler(label);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [
+    label,
+    clicked,
+    onClickHandler,
+  ])
   
   useEffect(() => {
     (async () => {
@@ -78,7 +96,13 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
     })()
   }, [
     picture,
-  ]); 
+  ]);
+  
+  useEffect(() => {
+    setClicked(false);
+  }, [
+    image,
+  ]);
 
   return useMemo(() => (
     <Wrapper
@@ -87,8 +111,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: white;
-        background-image: url(${image});
+        background: white url(${image});
         background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -96,6 +119,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         height: 100%;
         border-radius: 50%;
         font-size: 40px;
+        overflow: hidden;
         transition: all 300ms ease;
         cursor: auto;
 
@@ -107,8 +131,19 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
           }
         `}
       `}
-      onClick={(onClickHandler) && onClickHandler}
-    >
+      onClick={onClick}
+      >
+      <Wrapper 
+        customCss={css`
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: ${clicked ? '100%' : '0%'};
+          background: linear-gradient(transparent, #66CC00);
+          transition: all 300ms ease;
+        `}
+      />
       {showChip && (
         <Chip
           chipOrientation={chipOrientation}
@@ -122,9 +157,12 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
     name,
     picture,
     image,
+    clicked,
     onClickHandler,
   ]);
 };
 
 Animal.displayName = 'Animal';
 export default Animal;
+
+

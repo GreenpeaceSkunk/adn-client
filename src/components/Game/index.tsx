@@ -117,6 +117,8 @@ const Game: React.FunctionComponent<IProps> = ({
   const [ currentStep, setCurrentStep ] = useState<number>(1);
   const [ isSelected, setIsSelected ] = useState<boolean>(false);
   const [ players, setPlayers ] = useState<IAnimal[]>([]);
+  const [ winners, setWinners ] = useState<IAnimal[]>([]);
+  const [ losers, setLosers ] = useState<IAnimal[]>([]);
   const [ matches, setMatches ] = useState<any[]>([]);
 
   const goPrev = useCallback(() => {
@@ -152,12 +154,15 @@ const Game: React.FunctionComponent<IProps> = ({
     match,
   ]);
 
-  const onClickHandler = useCallback(() => {
+  const onClickHandler = useCallback((animal_label: string) => {
+    setWinners([...winners, ...players.filter((a: IAnimal) => a.label === animal_label)])
+    setLosers([...losers, ...matches[currentStep - 1].filter((a: IAnimal) => a.label !== animal_label)]);
     goNext();
   }, [
     currentStep,
     isSelected,
     maxSteps,
+    matches,
   ]);
 
   useEffect(() => {
@@ -230,7 +235,6 @@ const Game: React.FunctionComponent<IProps> = ({
       return [...a].concat(b[idx]);
     }, []);
 
-
     setPlayers(players);
     setMatches(players.reduce((a: any, b: IAnimal, c: number) => {
       const temp = (c === 0) ? [] : a;
@@ -243,6 +247,25 @@ const Game: React.FunctionComponent<IProps> = ({
       return a;
     }, []));
   }, []);
+
+  // useEffect(() => {
+  //   console.log("Winners", winners);
+  // }, [
+  //   winners,
+  // ]);
+
+  useEffect(() => {
+    console.log("Losers", losers);
+    if(losers.length === matches.length - 1) {
+      if(!matches[currentStep ][1]) {
+        console.log('Agregar random de perdedores');
+        matches[currentStep].push(losers[Math.round(Math.random() * 1)]);
+      }
+    }
+  }, [
+    matches,
+    losers,
+  ]);
 
   return useMemo(() => (
     <View>
@@ -345,15 +368,28 @@ const Game: React.FunctionComponent<IProps> = ({
                   <>
                     <WrapperAnimal
                       className={`${isSelected ? 'toLeft' : 'fromLeft'}`}
-                      onClick={onClickHandler}
                     >
-                      {(players.length && matches.length) && <Animal {...matches[currentStep - 1][0]} showChip={!true}  chipOrientation='left' onClickHandler={onClickHandler} />}
+                      {(players.length && matches.length) && (
+                        <Animal
+                          {...matches[currentStep - 1][0]}
+                          showChip={true}
+                          chipOrientation='left'
+                          onClickHandler={onClickHandler}
+                        />
+                      )}
                     </WrapperAnimal>
 
                     <WrapperAnimal
                       className={`${isSelected ? 'toRight' : 'fromRight'}`}
                     >
-                      {(players.length && matches.length) && <Animal {...matches[currentStep - 1][1]} showChip={!true} chipOrientation='right' onClickHandler={onClickHandler}/>}
+                      {(players.length && matches.length) && (
+                        <Animal
+                          {...matches[currentStep - 1][1]}
+                          showChip={true}
+                          chipOrientation='right'
+                          onClickHandler={onClickHandler}
+                        />
+                      )}
                     </WrapperAnimal>
                   </>
                 )
@@ -370,6 +406,8 @@ const Game: React.FunctionComponent<IProps> = ({
     matches,
     history,
     path,
+    winners,
+    losers,
     match,
   ]);
 };
