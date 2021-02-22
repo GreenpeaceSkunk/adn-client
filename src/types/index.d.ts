@@ -1,11 +1,19 @@
 import { env } from "process";
-
 declare global {
   interface Window {
       dataLayer: [{
         event: EventType,
       }];
+
+      navigator;
   }
+}
+
+export interface IUser {
+  fullName: string;
+  email: string;
+  birthday: string;
+  userAgent?: string;
 }
 
 export type OnChangeEvent = MouseEvent<HTMLButtonElement> | ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>;
@@ -27,7 +35,7 @@ export type AxiosResquestError = {
 };
 
 export type SharedState = {
-  user: IUserData;
+  user: IUser;
   submitting?: boolean,
   submitted?: boolean,
   error: string | null,
@@ -38,13 +46,6 @@ export type SharedActions =
   | { type: 'SUBMITTED' }
   | { type: 'CANCEL' }
   | { type: 'FAILURE', error: any }
-
-interface IUserData {
-  email?: string;
-  fullName?: string;
-  birthday?: string;
-}
-
 export interface IAnimal {
   name: string;
   label: string;

@@ -1,10 +1,15 @@
-import React, { memo, useContext, useMemo } from 'react';
-import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
-import { Wrapper, Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
+import React, { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useHistory, useRouteMatch, withRouter } from 'react-router';
+import { Wrapper, Nav, P, Span, Img } from '@bit/meema.ui-components.elements';
+import { H1, Button, Overlay } from '../../components/Elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
-import { Link, NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
+import { OnChangeEvent } from 'greenpeace';
+import { NavLink } from 'react-router-dom';
+import { XCloseIcon } from '../../assets/images';
+import { save } from './service';
+import moment from 'moment';
 
 const Form = styled.form`
   position: relative;
@@ -47,8 +52,10 @@ const XCloseButton = styled(NavLink)`
 `;
 
 const Registration: React.FunctionComponent<{}> = () => {
+  const history = useHistory();
   const { user, dispatch } = useContext(AppContext);
   const { path } = useRouteMatch();
+  const [ errorTxt, setErrorTxt ] = useState<string>('');
 
   const onChange = useCallback((evt: OnChangeEvent) => {
     evt.preventDefault();
@@ -56,9 +63,48 @@ const Registration: React.FunctionComponent<{}> = () => {
       type: 'UPDATE_USER_DATA',
       payload: { [evt.currentTarget.name]: evt.currentTarget.value }
     });
+
   }, [
     dispatch,
   ]);
+
+  const onSubmit = useCallback((evt: any) => {
+    evt.preventDefault();
+    (async () => {
+      setErrorTxt('');
+      const birthday = moment(user.birthday, 'DD/MM/YYYY', true);
+      if(user.fullName.length <= 2) {
+        setErrorTxt('Ingresa tu nombre y apellido');
+      } else if(!birthday.isValid()) {
+        setErrorTxt('Fecha de nacimiento inválida');
+      } else if (moment.duration(moment().diff(birthday)).years() < 18) {
+        setErrorTxt('Debes ser mayor de edad');
+      } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(user.email))) {
+        setErrorTxt('Email inválido');
+      } else {  
+        const result = await save({
+          fullName: user.fullName,
+          birthday: user.birthday,
+          email: user.email,
+          userAgent: window.navigator.userAgent,
+        });
+        if(result) {
+          history.push('/tutorial');
+        } else {
+          setErrorTxt('Error al guardar la información');
+        }
+      }
+    })(); 
+  }, [
+    user,
+    errorTxt,
+  ]);
+
+  useEffect(() => {
+    dispatch({
+      type: 'RESET_USER_DATA',
+    });
+  }, []);
 
   return useMemo(() => (
     <>
@@ -75,7 +121,7 @@ const Registration: React.FunctionComponent<{}> = () => {
           top: 0;
         `}
       >
-        <Form>
+        <Form onSubmit={onSubmit}>
           <XCloseButton to='/'>
             <Img src={XCloseIcon} />
           </XCloseButton>
@@ -106,17 +152,25 @@ const Registration: React.FunctionComponent<{}> = () => {
             </FormGroup>
           </Wrapper>
           <Nav>
-            <ButtonNavLink
-              to='/tutorial'
-              disabled={false}
-            >Comenzar</ButtonNavLink>
+            <Button
+              type='submit'
+            >
+              Comenzar
+            </Button>
           </Nav>
+          <P
+            customCss={css`
+              color: red;
+              margin-top: ${pixelToRem(20)};
+            `}
+          >{errorTxt}</P>
         </Form>
       </Wrapper>
     </>
   ), [
     path,
     user,
+    errorTxt,
     onChange,
     dispatch,
   ]);
