@@ -58,3 +58,37 @@ export const ButtonNavLink = styled(Link)<IButtonNavLink>`
       }
     `}
 `;
+
+export const Button = styled(Elements.Button)<IButtonNavLink>`
+  display: inline-flex;
+  align-items: center;
+  padding: ${pixelToRem(10)} ${pixelToRem(46)};
+  width: auto;
+  border-radius: ${pixelToRem(30)};
+  font-size: ${pixelToRem(24)};
+  color: white;
+  background: ${(props) => props.theme.color.primary.normal};
+  transition: all 250ms ease;
+
+  &:hover {
+    background: ${(props) => props.theme.color.primary.dark};
+  }
+  
+  ${props => props.disabled && css`
+    background-color: #E0E0E0;
+    pointer-events: none;
+    cursor: not-allowed;
+  `}
+
+  ${props => (props.format && props.format === 'outlined') && css`
+      background: transparent;
+      font-size: ${pixelToRem(32)};
+      border: solid 2px white;
+
+      &:hover {
+        color: white;
+        background: ${(props) => props.theme.color.primary.dark};
+
+      }
+    `}
+`;

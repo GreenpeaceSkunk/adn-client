@@ -1,4 +1,4 @@
-import { IUserData } from "greenpeace";
+import { IUser } from "greenpeace";
 import React, { createContext, useEffect, useMemo, useReducer, useState } from "react";
 import { RouteComponentProps, useLocation, withRouter } from "react-router-dom";
 import useSearchParams from "../../hooks/useSearchParams";
@@ -7,7 +7,7 @@ import { reducer, initialState, ContextActionType } from './reducer';
 interface IContext {
   searchParams: string;
   refParam: string;
-  user: IUserData;
+  user: IUser;
   dispatch: React.Dispatch<ContextActionType>;
 }
 
