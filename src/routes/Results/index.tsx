@@ -1,7 +1,7 @@
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { NavLink, Route, Switch, useRouteMatch, withRouter } from 'react-router-dom';
-import { Wrapper, A, H1, Span, View, Header } from '@bit/meema.ui-components.elements';
-import { css } from 'styled-components';
+import { Wrapper, A, H1, Span, View, Header, Nav } from '@bit/meema.ui-components.elements';
+import styled, { css } from 'styled-components';
 import { backgroundImage } from '../../styles/mixins';
 import { headerHeightNormal } from '../../theme/Theme';
 import { pixelToRem } from 'meema.utils';

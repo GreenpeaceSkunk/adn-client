@@ -1,17 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { css } from 'styled-components';
-<<<<<<< HEAD
 import { Footer, Wrapper, Span, A, Nav } from '@bit/meema.ui-components.elements';
-import { footerHeightNormal } from 'greenpeace-ui-themes';
-=======
-import { Footer, Wrapper, Span, A } from '@bit/meema.ui-components.elements';
 import { footerHeightNormal } from '../../theme/Theme';
-import { pixelToRem } from 'meema.utils';
->>>>>>> Re-install external libraries and implement Theme
-import { Logo } from '../../components/Shared';
-import { PeopleIcon } from '../../assets/icons';
-import SocialMediaNavs from '../SocialMediaNav';
-import { alignMiddle } from '../../styles/mixins';
 import { pixelToRem } from 'meema.utils';
 
 const FooterWrapper: FunctionComponent<{

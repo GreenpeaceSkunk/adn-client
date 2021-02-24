@@ -3,16 +3,14 @@ import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from '
 import { Wrapper, Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
-import { Link, NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
 import Bubble from '../../components/Home/Bubbles';
 import Registration from '../Registration';
 import Animal from '../../components/Animal';
-import Bubble from '../../components/Home/Bubble';
-import config from '../../config'; 
+import config from '../../config';
+import { ButtonNavLink } from '../../components/Elements';
 
 export const Form = styled.form`
-  /* flex: 1 0 100%; */
   background-color: white;
   width: ${pixelToRem(325)};
   padding: ${pixelToRem(30)} ${pixelToRem(40)};
@@ -62,8 +60,11 @@ const Home: React.FunctionComponent<{}> = () => {
         `}
       >
         <H1
-          fontSize={pixelToRem(58)
-        }>Descubrí a qué <br/>animal autóctono te pareces más</H1>
+          customCss={css`
+            color: white;
+            font-size: ${pixelToRem(58)};
+          `}
+        >Descubrí a qué <br/>animal autóctono te pareces más</H1>
         <ButtonNavLink to='/registration' style={{marginTop: pixelToRem(30)}}>Comenzar</ButtonNavLink>
       </Wrapper>
       <Wrapper
@@ -74,16 +75,36 @@ const Home: React.FunctionComponent<{}> = () => {
           flex: 0 0 50%;
         `}
       >
-        <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}><Animal {...config.animals[2]}/></Bubble>
-        <Bubble size={155} animationTime={5} initialPosX={30} initialPosY={-100}><Animal {...config.animals[7]}/></Bubble>
-        <Bubble size={295} animationTime={5} initialPosX={-10} initialPosY={0}><Animal {...config.animals[0]}/></Bubble>
-        <Bubble size={300} animationTime={5} initialPosX={60} initialPosY={380}><Animal {...config.animals[1]}/></Bubble>
-        <Bubble size={150} animationTime={5} initialPosX={40} initialPosY={100}><Animal {...config.animals[4]}/></Bubble>
-        <Bubble size={200} animationTime={5} initialPosX={65} initialPosY={150}><Animal {...config.animals[5]}/></Bubble>
-        <Bubble size={170} animationTime={5} initialPosX={40} initialPosY={280}><Animal {...config.animals[6]}/></Bubble>
-        <Bubble size={250} animationTime={5} initialPosX={-30} initialPosY={340}><Animal {...config.animals[3]}/></Bubble>
-        <Bubble size={150} animationTime={5} initialPosX={10} initialPosY={320}><Animal {...config.animals[8]}/></Bubble>
-        <Bubble size={322} animationTime={5} initialPosX={10} initialPosY={490}><Animal {...config.animals[9]}/></Bubble>
+        <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}>
+          <Animal {...config.animals[2]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={155} animationTime={5} initialPosX={30} initialPosY={-100}>
+          <Animal {...config.animals[7]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={295} animationTime={5} initialPosX={-10} initialPosY={0}>
+          <Animal {...config.animals[0]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={300} animationTime={5} initialPosX={60} initialPosY={380}>
+          <Animal {...config.animals[1]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={150} animationTime={5} initialPosX={40} initialPosY={100}>
+          <Animal {...config.animals[4]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={200} animationTime={5} initialPosX={65} initialPosY={150}>
+          <Animal {...config.animals[5]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={170} animationTime={5} initialPosX={40} initialPosY={280}>
+          <Animal {...config.animals[6]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={250} animationTime={6} initialPosX={-30} initialPosY={340}>
+          <Animal {...config.animals[3]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={150} animationTime={5} initialPosX={10} initialPosY={320}>
+          <Animal {...config.animals[8]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
+        <Bubble size={322} animationTime={5} initialPosX={10} initialPosY={490}>
+          <Animal {...config.animals[9]} onClickHandler={()=>{}} showChip={true} />
+        </Bubble>
       </Wrapper>
       <Switch>
         <Route path='/registration'>

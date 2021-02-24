@@ -13,23 +13,24 @@ import { ArrowLeftIcon } from '../../assets/images';
 import config from '../../config'; 
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
 
-
-// example route
-{/* <Route path="/products/:name" component={ProductContainer} /> */}
-
 interface MatchParams {
-    stepId?: string;
+  stepId?: string;
 }
 
-interface IProps extends RouteComponentProps<MatchParams> {
-}
+interface IProps extends RouteComponentProps<MatchParams> {}
 
-const ProgressLine = styled(Wrapper)`
-  position: absolute;
+const ProgressLine = styled(Wrapper)<{ finished: boolean }>`
   width: 100%;
   height: ${pixelToRem(4)};
+  margin-right: ${pixelToRem(30)};
+  margin-left: ${pixelToRem(30)};
   background-color: white;
-  border-radius: ${pixelToRem(4)};
+  animation: bg-animation 1000ms infinite;
+  transition: all 500ms ease;
+
+  ${(props) => (props.finished) && css`
+    background: ${({theme}) => theme.color.primary.normal};
+  `}
 `;
 
 const WrapperAnimal = styled(Wrapper)`
@@ -75,6 +76,7 @@ const WrapperAnimal = styled(Wrapper)`
   &.fromRight {
     animation-name: fromRight;
     animation-duration: 750ms;
+
     @keyframes fromRight {
       0% {
         right: -${pixelToRem(310)};
@@ -102,12 +104,6 @@ const WrapperAnimal = styled(Wrapper)`
   }
 `;
 
-/*
-Paso 1: 0 vs 1 (Math.round(Math.random() * 1))
-Paso 2: 2 vs 3
-Paso 3: 4 vs 5 (el 5 es un random entre el no seleccionado del Paso 1 vs Paso 2) 
-*/
-
 const Game: React.FunctionComponent<IProps> = ({
   match,
 }) => {
@@ -117,6 +113,8 @@ const Game: React.FunctionComponent<IProps> = ({
   const [ currentStep, setCurrentStep ] = useState<number>(1);
   const [ isSelected, setIsSelected ] = useState<boolean>(false);
   const [ players, setPlayers ] = useState<IAnimal[]>([]);
+  const [ winners, setWinners ] = useState<IAnimal[]>([]);
+  const [ losers, setLosers ] = useState<IAnimal[]>([]);
   const [ matches, setMatches ] = useState<any[]>([]);
 
   const goPrev = useCallback(() => {
@@ -136,13 +134,11 @@ const Game: React.FunctionComponent<IProps> = ({
     setIsSelected(true);
     const timer = setTimeout(() => {
       if(currentStep >= maxSteps) {
-        console.log("Do nothing")
         setCurrentStep(currentStep + 1);
       } else {
         const newUrl = match.path.replace(':stepId', `${currentStep + 1}`);
         history.replace(newUrl);
       }
-
     }, 250);
     return () => clearTimeout(timer);
   }, [
@@ -152,12 +148,15 @@ const Game: React.FunctionComponent<IProps> = ({
     match,
   ]);
 
-  const onClickHandler = useCallback(() => {
+  const onClickHandler = useCallback((animal_label: string) => {
+    setWinners([...winners, ...players.filter((a: IAnimal) => a.label === animal_label)])
+    setLosers([...losers, ...matches[currentStep - 1].filter((a: IAnimal) => a.label !== animal_label)]);
     goNext();
   }, [
     currentStep,
     isSelected,
     maxSteps,
+    matches,
   ]);
 
   useEffect(() => {
@@ -175,10 +174,10 @@ const Game: React.FunctionComponent<IProps> = ({
     if(maxSteps > 0 && currentStep > maxSteps) {
       const timer = setTimeout(() => {
         history.push(`${match.url}/end`);
-        const timer = setTimeout(() => {
-          history.push(`/analysis`);
-          return () => clearTimeout(timer);    
-        }, 1000);
+        // const timer = setTimeout(() => {
+        //   history.push(`/analysis`);
+        //   return () => clearTimeout(timer);    
+        // }, 1000);
       }, 250);
       return () => clearTimeout(timer);
     }
@@ -230,7 +229,6 @@ const Game: React.FunctionComponent<IProps> = ({
       return [...a].concat(b[idx]);
     }, []);
 
-
     setPlayers(players);
     setMatches(players.reduce((a: any, b: IAnimal, c: number) => {
       const temp = (c === 0) ? [] : a;
@@ -244,12 +242,25 @@ const Game: React.FunctionComponent<IProps> = ({
     }, []));
   }, []);
 
+  useEffect(() => {
+    if(losers.length === matches.length - 1) {
+      if(!matches[currentStep ][1]) {
+        console.log('Agregar random de perdedores');
+        matches[currentStep].push(losers[Math.round(Math.random() * 1)]);
+      }
+    }
+  }, [
+    matches,
+    losers,
+  ]);
+
   return useMemo(() => (
     <View>
       <Wrapper>
         <Wrapper
           customCss={css`
             display: flex;
+            flex-direction: column;
             width: 100%;
             margin-bottom: ${pixelToRem(20)};
           `}
@@ -273,11 +284,21 @@ const Game: React.FunctionComponent<IProps> = ({
                     font-family: ${pixelToRem(50)} !important;
                     cursor: pointer;
                   `}
-                ><Img customCss={css`margin-right: ${pixelToRem(14)};`} src={ArrowLeftIcon} />Volver al paso anterior</Wrapper>)}
+                ><Img
+                  customCss={css`
+                    margin-right:${pixelToRem(14)};
+                  `}
+                  src={ArrowLeftIcon}
+                />Volver al paso anterior</Wrapper>)}
               </Route>
             </Switch>
           </Wrapper>
-          <H1>Elegí con cuál te identificas más</H1>
+          <H1
+            customCss={css`
+              text-align: center !important;
+              margin-top: ${pixelToRem(34)};
+            `}
+          >Elegí con cuál te identificas más</H1>
           <Wrapper
             customCss={css`
               display: flex;
@@ -288,7 +309,16 @@ const Game: React.FunctionComponent<IProps> = ({
         <Wrapper customCss={css`
           height: ${pixelToRem(40)};
           width: 100%;
-          padding: 0 15%;
+          padding-top: 0;
+          padding-bottom: 0;
+          padding-left: 5%;
+          padding-right: 5%;
+          transition: all 500ms ease;
+
+          @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+            padding-left: 15%;
+            padding-right: 15%;
+          }
         `}>
           <Wrapper
             customCss={css`
@@ -299,22 +329,72 @@ const Game: React.FunctionComponent<IProps> = ({
               height: 100%;
             `}
           >
-            <ProgressLine />
-            <ProgressLine 
+            <Wrapper
               customCss={css`
-                width: calc(100% / ${maxSteps} * ${(currentStep >= maxSteps) ? maxSteps : currentStep}) !important;
-                background-color: ${props => props.theme.color.primary.normal} !important;
-                transition: all 500ms ease;
-            `}
-            />
+                width: 100%;
+                display: flex;
+                padding: 0 ${pixelToRem(40 / 2)};
+              `}
+            >
+              {[...Array((maxSteps - 1 < 0) ? 0 : maxSteps - 1).keys()].map((step: number) => (
+                <ProgressLine key={step} finished={currentStep > step + 1} />
+              ))}
+            </Wrapper>
+
+            <Wrapper
+              customCss={css`
+                position: absolute;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              `}
+            >
+              {[...Array(maxSteps).keys()].map((step: number) => (
+                <Wrapper
+                  key={step}
+                  customCss={css`
+                    display: flex;
+                    flex: 0 0 ${pixelToRem(40)};
+                    height: ${pixelToRem(40)};
+                    border: solid ${pixelToRem(1)} white;
+                    color: white;
+                    border-radius: 50%;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: ${props => props.theme.font.family.primary.bold};
+                    font-size: ${pixelToRem(20)};
+                    opacity: 1;
+                    transition: all 600ms ease;
+                    
+                    ${(currentStep >= (step + 1)) && css`
+                      background: white;
+                      opacity: 1;
+                      color: black;
+                      transition-delay: 350ms;
+                    `}
+                  `}
+                >{step + 1}</Wrapper>
+              ))}
+            </Wrapper>
             <Img
+              src={SliderIcon}
               customCss={css`
                 position: absolute;
                 top: 0;
-                left: calc(100% / ${maxSteps} * ${(currentStep >= maxSteps) ? maxSteps : currentStep} - ${pixelToRem(40)});
-                transition: all 500ms ease;
+                opacity: 1;
+                transition: all 500ms ease-out;
+
+                ${(currentStep === 1) ? css`
+                  left: 0%;
+                ` : (currentStep === maxSteps) ? css`
+                  left: calc(100% - ${pixelToRem(40)});
+                ` : (currentStep < maxSteps) ? css`
+                  left: calc(50% - ${pixelToRem(20)});
+                ` : css`
+                  opacity: 0;
+                `}
               `}
-              src={SliderIcon}
             />
           </Wrapper>
         </Wrapper>
@@ -345,15 +425,28 @@ const Game: React.FunctionComponent<IProps> = ({
                   <>
                     <WrapperAnimal
                       className={`${isSelected ? 'toLeft' : 'fromLeft'}`}
-                      onClick={onClickHandler}
                     >
-                      {(players.length && matches.length) && <Animal {...matches[currentStep - 1][0]} showChip={!true}  chipOrientation='left' onClickHandler={onClickHandler} />}
+                      {(players.length && matches.length) && (
+                        <Animal
+                          {...matches[currentStep - 1][0]}
+                          showChip={true}
+                          chipOrientation='left'
+                          onClickHandler={onClickHandler}
+                        />
+                      )}
                     </WrapperAnimal>
 
                     <WrapperAnimal
                       className={`${isSelected ? 'toRight' : 'fromRight'}`}
                     >
-                      {(players.length && matches.length) && <Animal {...matches[currentStep - 1][1]} showChip={!true} chipOrientation='right' onClickHandler={onClickHandler}/>}
+                      {(players.length && matches.length) && (
+                        <Animal
+                          {...matches[currentStep - 1][1]}
+                          showChip={true}
+                          chipOrientation='right'
+                          onClickHandler={onClickHandler}
+                        />
+                      )}
                     </WrapperAnimal>
                   </>
                 )
@@ -370,6 +463,8 @@ const Game: React.FunctionComponent<IProps> = ({
     matches,
     history,
     path,
+    winners,
+    losers,
     match,
   ]);
 };

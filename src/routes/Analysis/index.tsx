@@ -21,7 +21,13 @@ const Analysis: React.FunctionComponent<{}> = () => {
   }, []);
 
   return useMemo(() => (
-    <View>
+    <View
+      customCss={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      `}
+    >
       <Header
         customCss={css`
           padding: ${pixelToRem(40)};
@@ -33,14 +39,19 @@ const Analysis: React.FunctionComponent<{}> = () => {
       </Header>
       <Wrapper
         customCss={css`
-          padding: ${pixelToRem(20)} 0 0 0;
+          align-self: center;
+          justify-self: center;
+          width: ${pixelToRem(300)};
+          overflow: hidden;
+          margin-top: ${pixelToRem(50)};
+          border-radius: 50%;
         `}
       >
         <Carousel
           index={0}
           showControls={false}
           showIndicators={false}
-          moveX={pixelToRem(230)}
+          moveX={pixelToRem(300)}
           autoSlide={true}
           infinite={true}
           delay={300}
@@ -55,7 +66,7 @@ const Analysis: React.FunctionComponent<{}> = () => {
                 align-items: center;
                 flex: 0 0 ${pixelToRem(300)};
                 height: ${pixelToRem(300)};
-                padding: ${pixelToRem(20)};
+                /* padding: ${pixelToRem(20)}; */
 
                 & > * {
                   margin: 0 !important;
