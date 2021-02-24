@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import {GreenpeaceLogoWhite as GreenpeaceLogo} from '../../assets/icons';
-=======
-import {GreenpeaceLogoWhite as GreenpeaceLogo} from '../../lib/icons';
->>>>>>> Re-install external libraries and implement Theme
 import { Wrapper, Img, A } from '@bit/meema.ui-components.elements';
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
 import { css } from 'styled-components';

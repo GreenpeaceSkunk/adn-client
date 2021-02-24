@@ -14,8 +14,7 @@ import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
 import { 
   BackgroundHome,
-} from '../../lib/images';
-import { pixelToRem } from 'meema.utils';
+} from '../../assets/images';
 
 const MainHeader = React.lazy(() => import('../../components/Header'));
 const HomeView = React.lazy(() => import('../Home'));

@@ -20,6 +20,7 @@ export const textColorSecondaryNormal = colorPrimaryDark;
 export const colorSuccess = '#3c763d';
 export const colorError = '#FF4D4F';
 
+export const fontPrimaryThin = 'Font-Primary-Thin';
 export const fontPrimaryLight = 'Font-Primary-Light';
 export const fontPrimaryBook = 'Font-Primary-Book';
 export const fontPrimaryRegular = 'Font-Primary-Regular';
