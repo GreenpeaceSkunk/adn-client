@@ -1,28 +1,29 @@
-import React, { Suspense, memo, useMemo, useEffect, useContext } from 'react';
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import React, { Suspense, memo, useMemo, useContext } from 'react';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../theme/globalStyle';
-// import { pushToDataLayer } from '../../utils/gtm';
 import {DarkTheme as Theme} from '../../theme/Theme';
-import { Wrapper, H1, Span, P, Nav,  } from '@bit/meema.ui-components.elements';
+import { Wrapper } from '@bit/meema.ui-components.elements';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { Loader } from '../../components/Shared';
-import MainFooter, {TinyFooter} from '../../components/Footer';
-// import { trackEvent } from '../../utils/facebookPixel';
 import { AppContext, AppProvider } from './context';
+// import { pushToDataLayer } from '../../utils/gtm';
+// import { trackEvent } from '../../utils/facebookPixel';
 import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
 import { 
   BackgroundHome,
 } from '../../assets/images';
+import { GameProvider } from '../../components/Game/context';
 
 const MainHeader = React.lazy(() => import('../../components/Header'));
+const MainFooter = React.lazy(() => import('../../components/Footer'));
 const HomeView = React.lazy(() => import('../Home'));
 const ResultsView = React.lazy(() => import('../Results'));
 const TutorialView = React.lazy(() => import('../Tutorial'));
-const GameView = React.lazy(() => import('../Game'));
-// const GameView = React.lazy(() => import('../../components/Game'));
+const GameRouter = React.lazy(() => import('../../components/Game/router'));
 const AnalysisView = React.lazy(() => import('../Analysis'));
+const Registration = React.lazy(() => import('../../components/Modal/Registration'));
 
 const Main = styled(Wrapper)`
   display: flex;
@@ -35,6 +36,7 @@ const Main = styled(Wrapper)`
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+  font-family: ${({theme}) => theme.font.family.primary.regular};
 `;
 
 // initializeTagManager();
@@ -54,48 +56,64 @@ const App: React.FunctionComponent<{}> = () => {
       <GlobalStyle />
       <ErrorBoundary>
         <AppProvider>
-          <Main>
-            <Suspense fallback={<Loader />}>
-              <MainHeader />
-            </Suspense>
-            <Wrapper
-              customCss={css`
-                min-height: calc(100vh - 5rem - 5rem);
-                position: relative;
-              `}
-            >
-              <Switch>
-                <Route exact path='/analysis'>
-                  <Suspense fallback={<Loader />}>
-                    <AnalysisView/>
-                  </Suspense>
-                </Route>
-                <Route path='/tutorial'>
-                  <Suspense fallback={<Loader />}>
-                    <TutorialView/>
-                  </Suspense>
-                </Route>
-                <Route path='/game'>
-                  <Suspense fallback={<Loader />}>
-                    <GameView/>
-                  </Suspense>
-                </Route>
-                <Route path='/results'>
-                  <Suspense fallback={<Loader />}>
-                    <ResultsView/>
-                  </Suspense>
-                </Route>
-                <Route path='/'>
-                  <Suspense fallback={<Loader />}>
-                    <HomeView />
-                  </Suspense>
-                </Route>
-              </Switch>
-            </Wrapper>
-            <Suspense fallback={<Loader />}>
-              <MainFooter />
-            </Suspense>
-          </Main>
+          <Switch>
+            <Route path='/'>
+              <Main>
+                <Suspense fallback={<Loader />}>
+                  <MainHeader />
+                </Suspense>
+                <Wrapper
+                  customCss={css`
+                    min-height: calc(100vh - 5rem - 5rem);
+                    position: relative;
+                  `}
+                >
+                  <GameProvider>
+                    <Switch>
+                      <Route exact path='/analysis'>
+                        <Suspense fallback={<Loader />}>
+                          <AnalysisView/>
+                        </Suspense>
+                      </Route>
+                      <Route path='/tutorial'>
+                        <Suspense fallback={<Loader />}>
+                          <TutorialView/>
+                        </Suspense>
+                      </Route>
+                      <Route path='/game'>
+                        <Suspense fallback={<Loader />}>
+                          <GameRouter/>
+                        </Suspense>
+                      </Route>
+                      
+                      <Route path='/results'>
+                        <Suspense fallback={<Loader />}>
+                          <ResultsView/>
+                        </Suspense>
+                      </Route>
+
+                      <Route path='/'>
+                        <Suspense fallback={<Loader />}>
+                          <HomeView />
+                        </Suspense>
+                      </Route>
+                    </Switch>
+
+                  </GameProvider>
+                </Wrapper>
+                <Suspense fallback={<Loader />}>
+                  <MainFooter />
+                </Suspense>
+              </Main>
+
+              <Route path='/registration'>
+                <Suspense fallback={<Loader />}>
+                  <Registration />
+                </Suspense>
+              </Route>
+
+            </Route>
+          </Switch>
         </AppProvider>
       </ErrorBoundary>
     </ThemeProvider>
