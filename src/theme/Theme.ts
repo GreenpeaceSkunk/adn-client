@@ -34,13 +34,10 @@ export const fontSecondaryMedium = 'Font-Secondary-Medium';
 export const fontSecondaryBold = 'Font-Secondary-Bold';
 
 export const headerHeightNormal = 64;
-export const footerHeightNormal = 314;
+export const footerHeightNormal = 70;
 
 const DefaultTheme: ITheme = {
-  // borderColorBase: 'red',
   borderRadius,
-  // boxShadowBase: ``,
-  // disabledColor: 'yellow',
   color: {
     primary: {
       // light: '',

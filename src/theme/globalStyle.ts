@@ -18,24 +18,6 @@ import ProximaNovaBoldWoff2Font from '../fonts/ProximaNova/Proxima-Nova-Bold.wof
 import ProximaNovaThinWoffFont from '../fonts/ProximaNova/Proxima-Nova-Thin.woff';
 import ProximaNovaThinWoff2Font from '../fonts/ProximaNova/Proxima-Nova-Thin.woff2';
 
-
-// Proxima-Nova-Black-Italic.woff
-// Proxima-Nova-Black-Italic.woff2
-// Proxima-Nova-Black.woff
-// Proxima-Nova-Black.woff2
-// Proxima-Nova-Bold-Italic.woff
-// Proxima-Nova-Bold-Italic.woff2
-// Proxima-Nova-Bold.woff
-// Proxima-Nova-Bold.woff2
-// Proxima-Nova-Extra-Bold-Italic.woff
-// Proxima-Nova-Extra-Bold-Italic.woff2
-// Proxima-Nova-Semi-Bold.woff
-// Proxima-Nova-Semi-Bold.woff2
-// Proxima-Nova-Thin-Italic.woff
-// Proxima-Nova-Thin-Italic.woff2
-// Proxima-Nova-Thin.woff
-// Proxima-Nova-Thin.woff2
-
 const shared = css`
   font-weight: normal;
   font-style: normal;
