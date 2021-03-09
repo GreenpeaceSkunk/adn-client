@@ -7,7 +7,7 @@
     "email": "dtovbein@gmail.com",
     "url": "https://github.com/dantovbein"
   },
-  "homepage": "/sk/adn/",
+  "homepage": ".",
   "dependencies": {
     "@bit/meema.ui-components.carousel": "0.0.25",
     "@bit/meema.ui-components.elements": "0.0.30",
