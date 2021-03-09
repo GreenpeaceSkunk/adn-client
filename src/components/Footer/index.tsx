@@ -83,17 +83,6 @@ const BottomContent = () => (
   </Wrapper>
 )
 
-export const TinyFooter = () => (
-  <FooterWrapper
-    height={80}
-   justifyContent='center'
-  >
-    <BottomContent />
-  </FooterWrapper>
-);
-
-/* justify-content: ${justifyContent};
-min-height: ${pixelToRem(height)}; */
 const MainFooter = () => (
   <Footer
     customCss={css`
@@ -104,17 +93,33 @@ const MainFooter = () => (
       width: 100vw;
       color: white;
       padding: 0 2rem;
-      height: 5rem;
+      height: ${({theme}) => pixelToRem(theme.footer.height.normal)};
       z-index: 1;
     `} 
   >
     <Nav customCss={css`
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+    
+      @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+        flex-direction: row;
+      }
     `}>
-      <Wrapper customCss={css`display: inline-flex; align-items: center;`}>
+      <Wrapper customCss={css`
+        display: inline-flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: ${pixelToRem(10)};
+      
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+          margin-bottom: 0;
+          width: auto;
+        }
+      `}>
         <A
             href='https://www.greenpeace.org/argentina/terminios-y-condiciones/'
             customCss={css`
@@ -132,7 +137,6 @@ const MainFooter = () => (
         >Politicas de privacidad</A>
       </Wrapper>
       <Span>© Greenpeace Copyright</Span>
-
     </Nav>
   </Footer>
 );
