@@ -5,10 +5,11 @@ import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
 import { pixelToRem } from 'meema.utils';
 import Bubble from '../../components/Home/Bubbles';
-import Registration from '../Registration';
+// import Registration from '../../components/Registration';
 import Animal from '../../components/Animal';
 import config from '../../config';
 import { ButtonNavLink } from '../../components/Elements';
+import { headerHeightNormal, footerHeightNormal } from '../../theme/Theme';
 
 export const Form = styled.form`
   background-color: white;
@@ -50,13 +51,22 @@ const Home: React.FunctionComponent<{}> = () => {
       customCss={css`
         position: relative;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         height: 100%;
+
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+          flex-direction: row;
+        }
       `}
     >
       <Wrapper
         customCss={css`
           padding: ${pixelToRem(40)};
+          z-index: 99;
+
+          @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+          }
         `}
       >
         <H1
@@ -72,7 +82,14 @@ const Home: React.FunctionComponent<{}> = () => {
           position: relative;
           display: flex;
           justify-self: flex-end;
-          flex: 0 0 50%;
+          flex-grow: 0;
+          flex-shrink: 0;
+          height: calc(50vh - ${pixelToRem(headerHeightNormal)} - ${pixelToRem(footerHeightNormal)});
+
+          @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+            flex-basis: 50%;
+            height: calc(100vh - ${pixelToRem(headerHeightNormal)} - ${pixelToRem(footerHeightNormal)});
+          }
         `}
       >
         <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}>
@@ -106,11 +123,11 @@ const Home: React.FunctionComponent<{}> = () => {
           <Animal {...config.animals[9]} onClickHandler={()=>{}} showChip={true} />
         </Bubble>
       </Wrapper>
-      <Switch>
+      {/* <Switch>
         <Route path='/registration'>
           <Registration />
         </Route>
-      </Switch>
+      </Switch> */}
     </View>
   ), [
     path,
