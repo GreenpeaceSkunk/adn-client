@@ -8,7 +8,6 @@ declare global {
       navigator;
   }
 }
-
 export interface IUser {
   fullName: string;
   email: string;
@@ -35,7 +34,6 @@ export type AxiosResquestError = {
 };
 
 export type SharedState = {
-  user: IUser;
   submitting?: boolean,
   submitted?: boolean,
   error: string | null,
@@ -52,4 +50,7 @@ export interface IAnimal {
   picture: string;
   description: string;
   group: 'A' | 'B' | 'C' | 'D' | 'E';
+  thought: string;
+  feeling: string;
+  energy: string;
 }
