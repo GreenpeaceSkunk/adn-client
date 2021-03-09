@@ -22,6 +22,7 @@
     "@types/node": "^12.19.4",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
+    "@types/react-share": "^3.0.3",
     "axios": "^0.21.0",
     "dotenv": "^8.2.0",
     "greenpeace-ui-themes": "^1.0.63",
@@ -34,7 +35,7 @@
     "react-gtm-module": "^2.0.11",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
-    "react-share": "^4.3.1",
+    "react-share": "^4.4.0",
     "styled-components": "^5.2.1",
     "typescript": "^4.0.5",
     "web-vitals": "^0.2.4"

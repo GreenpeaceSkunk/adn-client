@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter } from 'react-router';
-import Game from '../../components/Game';
+import Game from './';
 
-export default memo(withRouter(() => {
+const Component: React.FunctionComponent<{}> =  memo(withRouter(() => {
   const {path} = useRouteMatch();
   return (
     <>
@@ -15,3 +15,6 @@ export default memo(withRouter(() => {
     </>
   );
 }));
+
+Component.displayName = 'GameRouter';
+export default Component;

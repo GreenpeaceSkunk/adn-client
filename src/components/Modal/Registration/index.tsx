@@ -1,15 +1,16 @@
-import React, { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useRouteMatch, withRouter } from 'react-router';
 import { Wrapper, Nav, P, Span, Img } from '@bit/meema.ui-components.elements';
-import { H1, Button, Overlay } from '../../components/Elements';
+import { Button } from '../../Elements';
 import styled, { css } from 'styled-components';
-import { AppContext } from '../App/context';
+import { AppContext } from '../../../routes/App/context';
 import { pixelToRem } from 'meema.utils';
 import { OnChangeEvent } from 'greenpeace';
-import { NavLink } from 'react-router-dom';
-import { XCloseIcon } from '../../assets/images';
 import { save } from './service';
 import moment from 'moment';
+import { Loader } from '../../Shared';
+
+const Modal = React.lazy(() => import('..'));
 
 const Form = styled.form`
   position: relative;
@@ -17,10 +18,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: ${pixelToRem(380)};
-  padding: ${pixelToRem(40)} ${pixelToRem(40)};
-  background-color: white;
   border-radius: ${pixelToRem(20)};
-  z-index: 9999;
 `;
 
 const FormGroup = styled(Wrapper)`
@@ -43,12 +41,6 @@ const Input = styled.input`
   &:focus {
     border-bottom-color: ${(props) => props.theme.color.primary.normal};
   }
-`;
-
-const XCloseButton = styled(NavLink)`
-  position: absolute;
-  top: ${pixelToRem(15)};
-  right: ${pixelToRem(15)};
 `;
 
 const Registration: React.FunctionComponent<{}> = () => {
@@ -107,24 +99,9 @@ const Registration: React.FunctionComponent<{}> = () => {
   }, []);
 
   return useMemo(() => (
-    <>
-      <Overlay />
-      <Wrapper
-        customCss={css`
-          position: fixed;
-          display: fixed;
-          justify-content: center;
-          align-items: center;
-          z-index: 9999;
-          width: 100vw;
-          height: 100vh;
-          top: 0;
-        `}
-      >
+    <Suspense fallback={<Loader />}>
+      <Modal>
         <Form onSubmit={onSubmit}>
-          <XCloseButton to='/'>
-            <Img src={XCloseIcon} />
-          </XCloseButton>
           <Span
             customCss={css`
               color: ${props => props.theme.color.primary.normal};
@@ -160,13 +137,13 @@ const Registration: React.FunctionComponent<{}> = () => {
           </Nav>
           <P
             customCss={css`
-              color: red;
+              color: ${({theme}) => theme.color.error.normal};
               margin-top: ${pixelToRem(20)};
             `}
           >{errorTxt}</P>
         </Form>
-      </Wrapper>
-    </>
+      </Modal>
+    </Suspense>
   ), [
     path,
     user,

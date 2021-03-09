@@ -1,6 +1,5 @@
-// import { IUser } from 'nexus-tool';
 import { AxiosResquestError, IUser } from 'greenpeace';
-import { ApiCall } from '../../utils/apiCall';
+import { ApiCall } from '../../../utils/apiCall';
 
 const save = async (data: IUser): Promise<any | AxiosResquestError> => (
   ApiCall({

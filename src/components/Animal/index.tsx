@@ -88,6 +88,7 @@ const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boo
 interface IProps {
   showChip?: boolean;
   chipOrientation?: 'right' | 'bottom' | 'left';
+  borderRadius?: boolean;
   onClickHandler?: (value: string) => void;
 }
 
@@ -99,6 +100,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   picture,
   showChip = false,
   chipOrientation = 'bottom',
+  borderRadius = true,
   onClickHandler,
 }) => {
   const [ image, setImage ] = useState<any>();
@@ -125,7 +127,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
           // setShowChipAnimation(false);
           clearInterval(interval);
         }
-      }, 500);
+      }, 50);
 
       // return () => clearTimeout(timer);
     }
@@ -170,7 +172,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         background-repeat: no-repeat;
         flex: 0 0 100%; 
         height: 100%;
-        border-radius: 50%;
+        border-radius: ${borderRadius ? '50%' : '0'};
         font-size: 40px;
         transition: all 300ms ease;
         overflow: hidden;
@@ -216,6 +218,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
     image,
     clicked,
     showChipAnimation,
+    borderRadius,
     onClickHandler,
   ]);
 };

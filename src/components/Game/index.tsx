@@ -12,6 +12,7 @@ import Animal from '../../components/Animal';
 import { ArrowLeftIcon } from '../../assets/images';
 import config from '../../config'; 
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
+import { GameContext } from './context';
 
 interface MatchParams {
   stepId?: string;
@@ -116,6 +117,7 @@ const Game: React.FunctionComponent<IProps> = ({
   const [ winners, setWinners ] = useState<IAnimal[]>([]);
   const [ losers, setLosers ] = useState<IAnimal[]>([]);
   const [ matches, setMatches ] = useState<any[]>([]);
+  const { dispatch } = useContext(GameContext);
 
   const goPrev = useCallback(() => {
     setIsSelected(true);
@@ -172,12 +174,15 @@ const Game: React.FunctionComponent<IProps> = ({
 
   useEffect(() => {
     if(maxSteps > 0 && currentStep > maxSteps) {
+      // End game
+      dispatch({type: 'UPDATE_USER_GAME_DATA', payload: winners });
       const timer = setTimeout(() => {
+        // history.push(`/results`);
         history.push(`${match.url}/end`);
-        // const timer = setTimeout(() => {
-        //   history.push(`/analysis`);
-        //   return () => clearTimeout(timer);    
-        // }, 1000);
+        const timer = setTimeout(() => {
+          history.push(`/analysis`);
+          return () => clearTimeout(timer);    
+        }, 500);
       }, 250);
       return () => clearTimeout(timer);
     }
@@ -466,6 +471,7 @@ const Game: React.FunctionComponent<IProps> = ({
     winners,
     losers,
     match,
+    dispatch,
   ]);
 };
 

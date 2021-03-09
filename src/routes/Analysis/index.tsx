@@ -66,14 +66,17 @@ const Analysis: React.FunctionComponent<{}> = () => {
                 align-items: center;
                 flex: 0 0 ${pixelToRem(300)};
                 height: ${pixelToRem(300)};
-                /* padding: ${pixelToRem(20)}; */
 
                 & > * {
                   margin: 0 !important;
                 }
               `}
             >
-              <Animal key={animal.label} {...animal} />
+              <Animal
+                key={animal.label}
+                borderRadius={false}
+                {...animal}
+              />
             </Wrapper>
           ))}
         </Carousel>
