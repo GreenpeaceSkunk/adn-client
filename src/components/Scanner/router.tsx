@@ -1,24 +1,25 @@
-import React, { memo, useContext, useMemo } from 'react';
+import React, { Suspense, memo, useContext, useMemo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter } from 'react-router';
 import { AppContext } from '../App/context';
-import Component from './';
+import { Loader } from '../Shared';
+
+const Component = React.lazy(() => import('.'));
 
 const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
   const { path } = useRouteMatch();
   const { user } = useContext(AppContext);
-console.log(user)
+
   return useMemo(() => (
     <Switch>
-      {(user) ? (
-        <>
-          <Route path={`${path}/dupla/:stepId`}>
+      <Route path={path}>
+        {(user) ? (
+          <Suspense fallback={<Loader />}>
             <Component />
-          </Route>
-          <Redirect from={path} to={`${path}/dupla/1`} />
-        </>
-      ) : (
-        <Redirect from={path} to='/registration' />
-      )}
+          </Suspense>
+        ) : (
+          <Redirect from={path} to='/registration' />
+        )}
+      </Route>
     </Switch>
   ), [
     path,
@@ -26,5 +27,5 @@ console.log(user)
   ]);
 }));
 
-Router.displayName = 'GameRouter';
+Router.displayName = 'ScannerRouter';
 export default Router;

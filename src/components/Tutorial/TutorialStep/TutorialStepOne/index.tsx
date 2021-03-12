@@ -4,9 +4,9 @@ import { Wrapper, View, Header } from '@bit/meema.ui-components.elements';
 import { pixelToRem } from 'meema.utils';
 import styled, { css } from 'styled-components';
 import Carousel from '@bit/meema.ui-components.carousel';
-import { H1 } from '../../../components/Elements';
-import Animal from '../../../components/Animal';
-import config from '../../../config'; 
+import { H1 } from '../../../Elements';
+import Animal from '../../../Animal';
+import config from '../../../../config'; 
 
 const TutorialStepOne: React.FunctionComponent<{}> = () => {
   return useMemo(() => (

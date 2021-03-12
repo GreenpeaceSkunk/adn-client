@@ -7,7 +7,7 @@ import { reducer, initialState, ContextActionType } from './reducer';
 interface IContext {
   searchParams: string;
   refParam: string;
-  user: IUser;
+  user: IUser | null;
   dispatch: React.Dispatch<ContextActionType>;
 }
 

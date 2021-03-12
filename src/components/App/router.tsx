@@ -4,8 +4,8 @@ import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../theme/globalStyle';
 import {DarkTheme as Theme} from '../../theme/Theme';
 import { Wrapper } from '@bit/meema.ui-components.elements';
-import ErrorBoundary from '../../components/ErrorBoundary';
-import { Loader } from '../../components/Shared';
+import ErrorBoundary from '../ErrorBoundary';
+import { Loader } from '../Shared';
 import { AppContext, AppProvider } from './context';
 // import { pushToDataLayer } from '../../utils/gtm';
 // import { trackEvent } from '../../utils/facebookPixel';
@@ -14,16 +14,16 @@ import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel
 import { 
   BackgroundHome,
 } from '../../assets/images';
-import { GameProvider } from '../../components/Game/context';
+import { GameProvider } from '../Game/context';
 
-const MainHeader = React.lazy(() => import('../../components/Header'));
-const MainFooter = React.lazy(() => import('../../components/Footer'));
-const HomeView = React.lazy(() => import('../Home'));
-const ResultsView = React.lazy(() => import('../Results'));
-const TutorialView = React.lazy(() => import('../Tutorial'));
-const GameRouter = React.lazy(() => import('../../components/Game/router'));
-const AnalysisView = React.lazy(() => import('../Analysis'));
-const Registration = React.lazy(() => import('../../components/Modal/Registration'));
+const MainHeader = React.lazy(() => import('../Header'));
+const MainFooter = React.lazy(() => import('../Footer'));
+const HomeView = React.lazy(() => import('../../routes/Home'));
+const ResultsRouter = React.lazy(() => import('../Results/router'));
+const TutorialRouter = React.lazy(() => import('../Tutorial/router'));
+const GameRouter = React.lazy(() => import('../Game/router'));
+const ScannerRouter = React.lazy(() => import('../Scanner/router'));
+const Registration = React.lazy(() => import('../Modal/Registration'));
 
 const Main = styled(Wrapper)`
   display: flex;
@@ -70,25 +70,25 @@ const App: React.FunctionComponent<{}> = () => {
                 >
                   <GameProvider>
                     <Switch>
-                      <Route exact path='/analysis'>
+                      <Route exact path='/scanner'>
                         <Suspense fallback={<Loader />}>
-                          <AnalysisView/>
+                          <ScannerRouter/>
                         </Suspense>
                       </Route>
                       <Route path='/tutorial'>
                         <Suspense fallback={<Loader />}>
-                          <TutorialView/>
+                          <TutorialRouter/>
                         </Suspense>
                       </Route>
                       <Route path='/game'>
                         <Suspense fallback={<Loader />}>
-                          <GameRouter/>
+                          <GameRouter />
                         </Suspense>
                       </Route>
                       
                       <Route path='/results'>
                         <Suspense fallback={<Loader />}>
-                          <ResultsView/>
+                          <ResultsRouter />
                         </Suspense>
                       </Route>
 
@@ -119,6 +119,7 @@ const App: React.FunctionComponent<{}> = () => {
     </ThemeProvider>
   ), [
     searchParams,
+    pathname,
   ]);
 }
 

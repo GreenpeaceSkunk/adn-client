@@ -180,7 +180,7 @@ const Game: React.FunctionComponent<IProps> = ({
         // history.push(`/results`);
         history.push(`${match.url}/end`);
         const timer = setTimeout(() => {
-          history.push(`/analysis`);
+          history.push(`/scanner`);
           return () => clearTimeout(timer);    
         }, 500);
       }, 250);
