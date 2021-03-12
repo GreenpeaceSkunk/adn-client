@@ -3,9 +3,9 @@ import { useHistory, useRouteMatch, withRouter } from 'react-router';
 import { Wrapper, Nav, P, Span, Img } from '@bit/meema.ui-components.elements';
 import { Button } from '../../Elements';
 import styled, { css } from 'styled-components';
-import { AppContext } from '../../../routes/App/context';
+import { AppContext } from '../../App/context';
 import { pixelToRem } from 'meema.utils';
-import { OnChangeEvent } from 'greenpeace';
+import { CustomCSSType, OnChangeEvent } from 'greenpeace';
 import { save } from './service';
 import moment from 'moment';
 import { Loader } from '../../Shared';
@@ -26,7 +26,7 @@ const FormGroup = styled(Wrapper)`
   flex-direction: row;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ customCss?: CustomCSSType }>`
   width: 100%;
   height: 2.5rem;
   outline: none;
@@ -41,6 +41,28 @@ const Input = styled.input`
   &:focus {
     border-bottom-color: ${(props) => props.theme.color.primary.normal};
   }
+
+  ${(props) => props.customCss && css`
+    ${props.customCss};
+  `};
+`;
+
+const Select = styled.select`
+  width: 100%;
+  height: 2.5rem;
+  outline: none;
+  appearance: none;  
+  border: ${pixelToRem(1)} solid transparent;
+  padding: ${pixelToRem(8)};
+  margin: 0 0 ${pixelToRem(16)} 0;
+  font-size: ${pixelToRem(16)};
+  border-bottom: ${pixelToRem(1)} solid ${(props) => props.theme.color.secondary.light};
+  transition: all 250ms ease;
+  text-align: center;
+
+  &:focus {
+    border-bottom-color: ${(props) => props.theme.color.primary.normal};
+  }
 `;
 
 const Registration: React.FunctionComponent<{}> = () => {
@@ -48,6 +70,9 @@ const Registration: React.FunctionComponent<{}> = () => {
   const { user, dispatch } = useContext(AppContext);
   const { path } = useRouteMatch();
   const [ errorTxt, setErrorTxt ] = useState<string>('');
+  const now = new Date();
+  
+  console.log(now.getFullYear())
 
   const onChange = useCallback((evt: OnChangeEvent) => {
     evt.preventDefault();
@@ -64,26 +89,26 @@ const Registration: React.FunctionComponent<{}> = () => {
     evt.preventDefault();
     (async () => {
       setErrorTxt('');
-      const birthday = moment(user.birthday, 'DD/MM/YYYY', true);
-      if(user.fullName.length <= 2) {
+      const birthDate = moment(user?.birthDate, 'DD/MM/YYYY', true);
+      if((user?.fullName || '').length <= 2) {
         setErrorTxt('Ingresa tu nombre y apellido');
-      } else if(!birthday.isValid()) {
+      } else if(!birthDate.isValid()) {
         setErrorTxt('Fecha de nacimiento inválida');
-      } else if (moment.duration(moment().diff(birthday)).years() < 18) {
+      } else if (moment.duration(moment().diff(birthDate)).years() < 18) {
         setErrorTxt('Debes ser mayor de edad');
-      } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(user.email))) {
+      } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(user?.email || ''))) {
         setErrorTxt('Email inválido');
       } else {  
         const result = await save({
-          fullName: user.fullName,
-          birthday: user.birthday,
-          email: user.email,
+          fullName: user?.fullName || '',
+          birthDate: user?.birthDate || '',
+          email: user?.email || '',
           userAgent: window.navigator.userAgent,
         });
-        if(result) {
-          history.push('/tutorial');
-        } else {
+        if(result.error) {
           setErrorTxt('Error al guardar la información');
+        } else {
+          history.push('/tutorial');
         }
       }
     })(); 
@@ -117,15 +142,70 @@ const Registration: React.FunctionComponent<{}> = () => {
           >
             <FormGroup>
               <label htmlFor="email" />
-              <Input type='text' name='fullName' value={user.fullName} placeholder='Nombre y apellido' onChange={onChange} />
+              <Input 
+                type='text'
+                name='fullName'
+                value={user?.fullName || ''} 
+                placeholder='Nombre y apellido'
+                onChange={onChange}
+              />
             </FormGroup>
             <FormGroup>
               <label htmlFor="email" />
-              <Input type='text' name='birthday' value={user.birthday} placeholder='DD/MM/AAAA' onChange={onChange} />
+              <Input
+                type='text'
+                name='birthDate'
+                value={user?.birthDate || ''}
+                placeholder='DD/MM/AAAA'
+                onChange={onChange}
+                customCss={css`
+                  @media (max-width: ${props => pixelToRem(props.theme.responsive.mobile.maxWidth)}) {
+                    display: none;
+                  }
+                `}
+              />
+              <Wrapper
+                customCss={css`
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+
+                  @media (min-width: ${props => pixelToRem(props.theme.responsive.mobile.maxWidth)}) {
+                    display: none;
+                  }
+                `}
+              >
+                <label>Fecha de nacimiento</label>
+                <Wrapper
+                  customCss={css`
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                  `}
+                >
+                  <Select>
+                    {Array.from({length: 31}, (_, i) => <option>{i + 1}</option>)}
+                  </Select>
+                  /
+                  <Select>
+                    {Array.from({length: 12}, (_, i) => <option>{i + 1}</option>)}
+                  </Select>
+                  /
+                  <Select>
+                    {Array.from({length: 100}, (_, i) => i).reverse().map((i) => <option key={i}>{(now.getFullYear() - 100) + i}</option>)}
+                  </Select>
+                </Wrapper>
+              </Wrapper>
             </FormGroup>
             <FormGroup>
               <label htmlFor="email" />
-              <Input type='email' name='email' value={user.email} placeholder='Email' onChange={onChange} />
+              <Input 
+                type='email'
+                name='email'
+                value={user?.email || ''}
+                placeholder='Email'
+                onChange={onChange} 
+              />
             </FormGroup>
           </Wrapper>
           <Nav>

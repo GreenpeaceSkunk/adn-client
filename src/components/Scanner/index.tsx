@@ -1,23 +1,24 @@
 import React, { memo, useEffect, useMemo } from 'react';
 import { Route, Switch, withRouter, useHistory } from 'react-router-dom';
 import { Wrapper, View, Header, Span } from '@bit/meema.ui-components.elements';
-import { H1 } from '../../components/Elements';
+import { H1 } from '../Elements';
 import { IAnimal } from 'greenpeace';
-import Animal from '../../components/Animal';
+import Animal from '../Animal';
 import { pixelToRem } from 'meema.utils';
 import Carousel from '@bit/meema.ui-components.carousel';
 import config from '../../config'; 
 import { css } from 'styled-components';
 
-const Analysis: React.FunctionComponent<{}> = () => {
+const Component: React.FunctionComponent<{}> = () => {
   const history = useHistory();
 
   useEffect(() => {
     setTimeout(() => {
+      console.log('Ir a results')
       history.push({
         pathname: `/results`,
       });
-    }, 5000);
+    }, 3500);
   }, []);
 
   return useMemo(() => (
@@ -85,4 +86,5 @@ const Analysis: React.FunctionComponent<{}> = () => {
   ), []);
 }
 
-export default memo(withRouter(Analysis));
+Component.displayName = 'ScannerView'
+export default memo(withRouter(Component));

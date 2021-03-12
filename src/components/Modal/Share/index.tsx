@@ -79,7 +79,7 @@ const Share: React.FunctionComponent<{}> = () => {
         </WhatsappShareButton>
         
         <FacebookShareButton
-          quote={`&#128154;&#128154;🌎🌎🌎🌎🌎#Greenpeace sos vos 🌎| ¡Descubrí a qué animal autóctono te parecés más! 🐧🐧🐧`}
+          quote={`${process.env.REACT_APP_SHARE_FACEBOOK_TITLE}`}
           url={`${process.env.REACT_APP_SHARE_URL}`}
           windowHeight={SHARE_MODAL_HEIGHT}
           windowWidth={SHARE_MODAL_WIDTH}

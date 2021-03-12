@@ -6,7 +6,7 @@ import { pixelToRem } from 'meema.utils';
 import { trackEvent } from '../../utils/facebookPixel';
 import ResultsCard from './Card';
 import { ButtonNavLink } from '../Elements';
-import { AppContext } from '../../routes/App/context';
+import { AppContext } from '../App/context';
 import { GameContext } from '../Game/context';
 import { IAnimal } from 'greenpeace';
 import { Loader } from '../Shared';
@@ -15,7 +15,7 @@ interface IContext {
   results: IAnimal[];
 }
 
-const Share = React.lazy(() => import('../../components/Modal/Share'));
+// const Share = React.lazy(() => import('../../components/Modal/Share'));
 const AnimalDescription = React.lazy(() => import('../Modal/AnimalDescription'));
 
 const HomeButton = styled(NavLink)`
@@ -33,7 +33,6 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
   const [ sortedResults, setSortedResults ] = useState<IAnimal[]>([]);
 
   useEffect(() => {
-    console.log(results);
     if(results.length) {
       setSortedResults(results.sort(() => 0.5 - Math.random()));
     }
@@ -72,7 +71,7 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
                 }
               }
             `}
-          >{user.fullName}, por tu ADN Greenpeace<br/> descubrimos que:</H1>
+          >{user?.fullName}, por tu ADN Greenpeace<br/> descubrimos que:</H1>
         </Header>
         <Wrapper
           customCss={css`
@@ -120,18 +119,6 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
           <ButtonNavLink to={`${path}/share`}>¡Compartí el resultado con amigos!</ButtonNavLink>
           <HomeButton to='/'>Ir al inicio</HomeButton>
         </Nav>
-        <Switch>
-          <Route path={`${path}/animal/:id`}>
-            <Suspense fallback={<Loader />}>
-              <AnimalDescription />
-            </Suspense>
-          </Route>
-          <Route path={`${path}/share`}>
-            <Suspense fallback={<Loader />}>
-              <Share />
-            </Suspense>
-          </Route>
-        </Switch>
       </View>
     </Provider>
   ), [

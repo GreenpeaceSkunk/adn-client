@@ -3,7 +3,7 @@ import { P, Span, Wrapper } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { IAnimal } from 'greenpeace';
-import Animal from '../Animal';
+import Animal from '../../Animal';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 const NavLinkButton = styled(NavLink)`

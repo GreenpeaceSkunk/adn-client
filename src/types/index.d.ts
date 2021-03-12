@@ -1,4 +1,6 @@
 import { env } from "process";
+import { CSSObject, CSSProp } from "styled-components";
+
 declare global {
   interface Window {
       dataLayer: [{
@@ -11,10 +13,11 @@ declare global {
 export interface IUser {
   fullName: string;
   email: string;
-  birthday: string;
+  birthDate: string;
   userAgent?: string;
 }
 
+export type CustomCSSType = CSSProp | CSSObject;
 export type OnChangeEvent = MouseEvent<HTMLButtonElement> | ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>;
 
 export type EventType =

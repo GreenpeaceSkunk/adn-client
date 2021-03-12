@@ -1,6 +1,6 @@
 import {SharedState, SharedActions, GenericReducerFn, IUser} from 'greenpeace';
 
-export type ContextStateType = { user: IUser; } & SharedState;
+export type ContextStateType = { user: IUser | null; } & SharedState;
 
 export type ContextActionType = 
 | { type: 'UPDATE_USER_DATA', payload: { [x: string]: string | number }}
@@ -9,11 +9,12 @@ export type ContextActionType =
 | SharedActions;
 
 export const initialState: ContextStateType = {
-  user: {
-    birthday: '20/03/1985',
-    email: 'dtovbein@gmail.com',
-    fullName: 'Dan Tovbein',
-  } as IUser,
+  user: null,
+  // user: {
+  //   birthDate: '20/03/1985',
+  //   email: 'dtovbein@gmail.com',
+  //   fullName: 'Dan Tovbein',
+  // } as IUser,
   submitting: false,
   submitted: false,
   error: null,
@@ -32,11 +33,7 @@ export const reducer: GenericReducerFn<ContextStateType, ContextActionType> = (s
     case 'RESET_USER_DATA': {
       return {
         ...state,
-        // user: {
-        //   birthday: '',
-        //   email: '',
-        //   fullName: '',
-        // }
+        user: null,
       }
     }
     case 'SUBMIT':
