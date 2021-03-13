@@ -48,7 +48,8 @@
   },
   "scripts": {
     "client:start": "NODE_ENV=development && node -r dotenv/config ./node_modules/.bin/react-scripts start dotenv_config_path='$PWD/.env'",
-    "client:build": "NODE_ENV=production && react-scripts build",
+    "client:build:development": "source ./deploy.sh development",
+    "client:build:production": "source ./deploy.sh production",
     "types": "ln -s $(pwd)/src/types $(pwd)/node_modules/@types/greenpeace",
     "stylelint": "npx stylelint '**/*.css'"
   },

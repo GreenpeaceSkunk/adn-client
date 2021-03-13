@@ -1,6 +1,5 @@
 .dockerignore
 .gitignore
-build
 .env
 .env.development
 .env.production
