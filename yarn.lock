@@ -1145,6 +1145,14 @@
     meema.utils "^1.1.10"
     styled-components "^5.2.1"
 
+"@bit/meema.ui-components.elements@^0.0.31":
+  version "0.0.31"
+  resolved "https://node.bit.dev/meema.ui-components.elements/-/meema.ui-components.elements-0.0.31.tgz#8df3196cb72fa58a6ad76feb2413bb494658a428"
+  integrity sha1-jfMZbLcvpYpq12/rJBO7SUZYpCg=
+  dependencies:
+    meema.utils "^1.1.10"
+    styled-components "^5.2.1"
+
 "@bit/meema.ui-components.loaders.three-circles@0.0.2":
   version "0.0.2"
   resolved "https://node.bit.dev/meema.ui-components.loaders.three-circles/-/meema.ui-components.loaders.three-circles-0.0.2.tgz#0c6a97506c037475eb1028b73fd73ff75c8caf8c"
@@ -1890,6 +1898,13 @@
   integrity sha512-ofHbZMlp0Y2baOHgsWBQ4K3AttxY61bDMkwTiBOkPg7U6C/3UwwB5WaIx28JmSVi/eX3uFEMRo61BV22fDQIvg==
   dependencies:
     "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-share@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/react-share/-/react-share-3.0.3.tgz#d75514902b0a3a77800b3bea0395f7add463b228"
+  integrity sha512-GpKAVNbwMBgad0995uVLkOdKWp3CjCrvIeUt4qZcsrgLtf7SMR7gIfMgC9X2rsfLgN6saT/nr2T4QLJE9cCZiA==
+  dependencies:
     "@types/react" "*"
 
 "@types/react@*":
@@ -5469,6 +5484,13 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.5.tgz#bc18864a6c9fc7b303f2e2abdb9155ad178fbe29"
   integrity sha512-kBBSQbz2K0Nyn+31j/w36fUfxkBW9/gfwRWdUY1ULReH3iokVJgddZAFcD1D0xlgTmFxJCbUkUclAlc6/IDJkw==
 
+greenpeace-ui-themes@^1.0.63:
+  version "1.0.66"
+  resolved "https://registry.yarnpkg.com/greenpeace-ui-themes/-/greenpeace-ui-themes-1.0.66.tgz#ed46195b4cc69fcd1ad8262066423ebdc72430ae"
+  integrity sha512-nChDf/jmof7+y4mvDzBS6XQai2MFnzdTKV5azC4QLxC7UlNRAWs5tmtw1w5KiQooMyLEeIzvyUPcOC0VjLMxiA==
+  dependencies:
+    meema.utils "^1.1.11"
+
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
@@ -7250,6 +7272,15 @@ meema.utils@^1.1.10, meema.utils@^1.1.11:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/meema.utils/-/meema.utils-1.1.11.tgz#ad18a7229a2df11d617943059b7760e72ff23be5"
   integrity sha512-CnT6VxlvJ/VRC/3vbT95MAYHdUCA/jEYh6FpBl52Ujo/KbLVAcBpmcEBHdwA1iq7Bkq9KSiNrGPLrPl29aEC1Q==
+
+meema.utils@^1.1.16:
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/meema.utils/-/meema.utils-1.1.16.tgz#397b7bbaa34382810506714368b54e3c89083c52"
+  integrity sha512-3YmbvHF5ssa+t03aly3jeiWwr+9Gtz1UMOxcTbmskJfSQkP+fmhaEWGd0J+TLKffH0vhYcobI+zE9dJeodeegQ==
+  dependencies:
+    react "^17.0.1"
+    react-dom "^17.0.1"
+    styled-components "^5.2.1"
 
 memory-fs@^0.4.1:
   version "0.4.1"
@@ -9323,10 +9354,10 @@ react-scripts@^4.0.0:
   optionalDependencies:
     fsevents "^2.1.3"
 
-react-share@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.3.1.tgz#2eac80bc5e3f1c6d83c7315342db1fd2f21009d3"
-  integrity sha512-ikh0y8NKxhU7dQBXh1Jccd1ANLb9WNYaSonln33yLyNYo2HTBRp9D6HkTsFlgX/2J9GPsGLqhzzpDNiVKx3WVA==
+react-share@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.4.0.tgz#cabbf2111d7a907a888ab4d89d08410329efd5ee"
+  integrity sha512-POe8Ge/JT9Ew9iyW7CiYsCCWCb8uMJWqFl9S7W0fJ/oH5gBJNzukH0bL5vSr17KKG5h15d3GfKaoviI22BKeYA==
   dependencies:
     classnames "^2.2.5"
     jsonp "^0.2.1"
