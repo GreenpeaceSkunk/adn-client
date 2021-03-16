@@ -1,4 +1,4 @@
-import React, { Suspense, memo, useMemo, useContext } from 'react';
+import React, { Suspense, memo, useMemo, useContext, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../theme/globalStyle';
@@ -7,8 +7,8 @@ import { Wrapper } from '@bit/meema.ui-components.elements';
 import ErrorBoundary from '../ErrorBoundary';
 import { Loader } from '../Shared';
 import { AppContext, AppProvider } from './context';
-// import { pushToDataLayer } from '../../utils/gtm';
-// import { trackEvent } from '../../utils/facebookPixel';
+import { pushToDataLayer } from '../../utils/gtm';
+import { trackEvent } from '../../utils/facebookPixel';
 import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
 import { 
@@ -23,7 +23,12 @@ const ResultsRouter = React.lazy(() => import('../Results/router'));
 const TutorialRouter = React.lazy(() => import('../Tutorial/router'));
 const GameRouter = React.lazy(() => import('../Game/router'));
 const ScannerRouter = React.lazy(() => import('../Scanner/router'));
-const Registration = React.lazy(() => import('../Modal/Registration'));
+const Registration = React.lazy(() => import('../Registration'));
+
+if(!process.env.DEBUG_MODE) {
+  initializeTagManager();
+  initializeFacebookPixel();
+}
 
 const Main = styled(Wrapper)`
   display: flex;
@@ -39,17 +44,18 @@ const Main = styled(Wrapper)`
   font-family: ${({theme}) => theme.font.family.primary.regular};
 `;
 
-// initializeTagManager();
-// initializeFacebookPixel();
-
 const App: React.FunctionComponent<{}> = () => {
   const { searchParams } = useContext(AppContext);
   const { pathname } = useLocation();
 
-  // useEffect(() => {
-  //   trackEvent('PageView');
-  //   pushToDataLayer('pageview');
-  // }, [ pathname ]);
+  useEffect(() => {
+    if(!process.env.DEBUG_MODE) {
+      trackEvent('PageView');
+      pushToDataLayer('pageview');
+    }
+  }, [
+    pathname,
+  ]);
 
   return useMemo(() => (
     <ThemeProvider theme={Theme}>
@@ -124,3 +130,4 @@ const App: React.FunctionComponent<{}> = () => {
 }
 
 export default memo(App);
+
