@@ -10,7 +10,7 @@
   "homepage": ".",
   "dependencies": {
     "@bit/meema.ui-components.carousel": "0.0.25",
-    "@bit/meema.ui-components.elements": "0.0.30",
+    "@bit/meema.ui-components.elements": "^0.0.31",
     "@bit/meema.ui-components.loaders.three-circles": "0.0.2",
     "@bit/meema.ui-components.stepper": "0.0.32",
     "@testing-library/jest-dom": "^5.11.5",
@@ -27,7 +27,7 @@
     "dotenv": "^8.2.0",
     "greenpeace-ui-themes": "^1.0.63",
     "js-yaml": "^4.0.0",
-    "meema.utils": "^1.1.11",
+    "meema.utils": "^1.1.16",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -49,7 +49,8 @@
   "scripts": {
     "client:start": "NODE_ENV=development && node -r dotenv/config ./node_modules/.bin/react-scripts start dotenv_config_path='$PWD/.env'",
     "client:build:development": "source ./deploy.sh development",
-    "client:build:production": "source ./deploy.sh production",
+    "client:build:production__": "./deploy.sh production",
+    "client:build:production": "NODE_ENV=production PUBLIC_URL=/ react-scripts build",
     "types": "ln -s $(pwd)/src/types $(pwd)/node_modules/@types/greenpeace",
     "stylelint": "npx stylelint '**/*.css'"
   },
