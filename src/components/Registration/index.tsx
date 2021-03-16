@@ -1,16 +1,16 @@
 import React, { Suspense, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useRouteMatch, withRouter } from 'react-router';
-import { Wrapper, Nav, P, Span, Img } from '@bit/meema.ui-components.elements';
-import { Button } from '../../Elements';
+import { Wrapper, Nav, P, Span, Label, Option } from '@bit/meema.ui-components.elements';
+import { Button } from '../Elements';
 import styled, { css } from 'styled-components';
-import { AppContext } from '../../App/context';
+import { AppContext } from '../App/context';
 import { pixelToRem } from 'meema.utils';
 import { CustomCSSType, OnChangeEvent } from 'greenpeace';
 import { save } from './service';
 import moment from 'moment';
-import { Loader } from '../../Shared';
+import { Loader } from '../Shared';
 
-const Modal = React.lazy(() => import('..'));
+const Modal = React.lazy(() => import('../Modal'));
 
 const Form = styled.form`
   position: relative;
@@ -70,16 +70,57 @@ const Registration: React.FunctionComponent<{}> = () => {
   const { user, dispatch } = useContext(AppContext);
   const { path } = useRouteMatch();
   const [ errorTxt, setErrorTxt ] = useState<string>('');
-  const now = new Date();
-  
-  console.log(now.getFullYear())
+  const [ now, setNow ] = useState<Date>(new Date());
+  const [ birthDay, setBirthDay ] = useState<string>('');
+  const [ birthMonth, setBirthMonth ] = useState<string>('');
+  const [ birthYear, setBirthYear ] = useState<string>('');
 
+  useEffect(() => {
+    if(now) {
+      setBirthDay(`${now.getDate()}`);
+      setBirthMonth(`${now.getMonth() + 1}`);
+      setBirthYear(`${now.getFullYear()}`);
+    }
+  }, [
+    now,
+  ])
+  
   const onChange = useCallback((evt: OnChangeEvent) => {
     evt.preventDefault();
+    console.log(evt.currentTarget.name);
     dispatch({
       type: 'UPDATE_USER_DATA',
       payload: { [evt.currentTarget.name]: evt.currentTarget.value }
     });
+
+  }, [
+    dispatch,
+  ]);
+
+  const onChangeBirthDate = useCallback((evt: OnChangeEvent) => {
+    evt.preventDefault();
+    const name = evt.currentTarget.name;
+
+    console.log(evt.currentTarget.name, evt.currentTarget.value);
+
+    switch(name) {
+      case 'birthDay': {
+        setBirthDay(evt.currentTarget.value);
+      }
+      break;
+      case 'birthMonth': {
+        setBirthMonth(evt.currentTarget.value);
+      }
+      break;
+      case 'birthYear': {
+        setBirthYear(evt.currentTarget.value);
+      }
+      break;
+    }
+    // dispatch({
+    //   type: 'UPDATE_USER_DATA',
+    //   payload: { [evt.currentTarget.name]: evt.currentTarget.value }
+    // });
 
   }, [
     dispatch,
@@ -141,7 +182,7 @@ const Registration: React.FunctionComponent<{}> = () => {
             `}
           >
             <FormGroup>
-              <label htmlFor="email" />
+              <label htmlFor="fullName" />
               <Input 
                 type='text'
                 name='fullName'
@@ -151,7 +192,7 @@ const Registration: React.FunctionComponent<{}> = () => {
               />
             </FormGroup>
             <FormGroup>
-              <label htmlFor="email" />
+              <label htmlFor="birthDate" />
               <Input
                 type='text'
                 name='birthDate'
@@ -175,7 +216,13 @@ const Registration: React.FunctionComponent<{}> = () => {
                   }
                 `}
               >
-                <label>Fecha de nacimiento</label>
+                <Label
+                  customCss={css`
+                    color: grey;
+                    padding: ${pixelToRem(10)};
+                    font-size: ${pixelToRem(17)};
+                  `}
+                >Fecha de nacimiento</Label>
                 <Wrapper
                   customCss={css`
                     width: 100%;
@@ -183,16 +230,28 @@ const Registration: React.FunctionComponent<{}> = () => {
                     align-items: center;
                   `}
                 >
-                  <Select>
-                    {Array.from({length: 31}, (_, i) => <option>{i + 1}</option>)}
+                  <Select
+                    name='birthDay'
+                    onChange={onChangeBirthDate}
+                    value={birthDay}
+                  >
+                    {Array.from({length: 31}, (_, idx) => <option key={`day-${idx}`}>{idx + 1}</option>)}
                   </Select>
-                  /
-                  <Select>
-                    {Array.from({length: 12}, (_, i) => <option>{i + 1}</option>)}
+                  <Span customCss={css`display: block; padding: 0 ${pixelToRem(10)}; color: grey; `}>/</Span>
+                  <Select
+                    name='birthMonth'
+                    onChange={onChangeBirthDate}
+                    value={birthMonth}
+                  >
+                    {Array.from({length: 12}, (_, idx) => <option key={`month-${idx}`}>{idx + 1}</option>)}
                   </Select>
-                  /
-                  <Select>
-                    {Array.from({length: 100}, (_, i) => i).reverse().map((i) => <option key={i}>{(now.getFullYear() - 100) + i}</option>)}
+                  <Span customCss={css`display: block; padding: 0 ${pixelToRem(10)}; color: grey; `}>/</Span>
+                  <Select
+                    name='birthYear'
+                    onChange={onChangeBirthDate}
+                    value={birthYear}
+                  >
+                    {Array.from({length: 100}, (_, idx) => idx).reverse().map((i) => <option key={`year-${i}`}>{((now.getFullYear() + 1) - 100) + i}</option>)}
                   </Select>
                 </Wrapper>
               </Wrapper>
@@ -227,6 +286,9 @@ const Registration: React.FunctionComponent<{}> = () => {
   ), [
     path,
     user,
+    birthDay,
+    birthMonth,
+    birthYear,
     errorTxt,
     onChange,
     dispatch,

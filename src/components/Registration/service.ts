@@ -1,5 +1,5 @@
 import { AxiosResquestError, IUser } from 'greenpeace';
-import { ApiCall } from '../../../utils/apiCall';
+import { ApiCall } from '../../utils/apiCall';
 
 // const save = async (data: IUser): Promise<any | AxiosResquestError> => (
 //   ApiCall({
@@ -14,7 +14,7 @@ const save = async (data: IUser): Promise<any | AxiosResquestError> => (
     method: 'POST',
     url: `${process.env.REACT_APP_API_URL}/forms/save`,
     data: {
-      formId: `${process.env.REACT_APP_FORM_ID}`,
+      form_id: `${process.env.REACT_APP_FORM_ID}`,
       ...data,
     },
   })

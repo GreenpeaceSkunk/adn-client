@@ -1,13 +1,12 @@
 import React, { memo, Suspense, useContext, useEffect, useMemo, useState } from 'react';
 import {useParams, withRouter } from 'react-router-dom';
-import { GameContext } from '../../Game/context';
-import { Loader } from '../../Shared';
-import config from '../../../config';
+import { Loader } from '../Shared';
+import config from '../../config';
 import { Wrapper, Img, P, H1 } from '@bit/meema.ui-components.elements';
 import { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { IAnimal } from 'greenpeace';
-const Modal = React.lazy(() => import('..'));
+const Modal = React.lazy(() => import('../Modal'));
 
 interface IProps {}
 
@@ -19,7 +18,7 @@ const Component: React.FunctionComponent<IProps> = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { default: src } = await import(`../../../assets/images/animals/${animal?.picture}`);
+        const { default: src } = await import(`../../assets/images/animals/${animal?.picture}`);
         setImage(src);
       } catch (err) {
         console.log(`Error when loading image`);

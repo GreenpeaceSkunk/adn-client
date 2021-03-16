@@ -9,14 +9,13 @@ import { ButtonNavLink } from '../Elements';
 import { AppContext } from '../App/context';
 import { GameContext } from '../Game/context';
 import { IAnimal } from 'greenpeace';
-import { Loader } from '../Shared';
 
 interface IContext {
   results: IAnimal[];
 }
 
 // const Share = React.lazy(() => import('../../components/Modal/Share'));
-const AnimalDescription = React.lazy(() => import('../Modal/AnimalDescription'));
+const AnimalDescription = React.lazy(() => import('../AnimalDescription'));
 
 const HomeButton = styled(NavLink)`
   color: white;

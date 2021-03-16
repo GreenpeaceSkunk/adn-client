@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom';
+import Loader from '@bit/meema.ui-components.loaders.three-circles';
+
 import App from './components/App/router';
-// import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router
-      basename={process.env.PUBLIC_URL}
-    >
-      <App />
+    <Router basename={process.env.PUBLIC_URL}>
+      <Suspense fallback={Loader}>
+        <App />
+      </Suspense>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

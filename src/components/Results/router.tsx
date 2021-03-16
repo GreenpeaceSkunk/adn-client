@@ -5,7 +5,7 @@ import { Loader } from '../Shared';
 
 const Component = React.lazy(() => import('.'));
 const Share = React.lazy(() => import('../../components/Modal/Share'));
-const AnimalDescription = React.lazy(() => import('../Modal/AnimalDescription'));
+const AnimalDescription = React.lazy(() => import('../AnimalDescription'));
 
 const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
   const { path } = useRouteMatch();
