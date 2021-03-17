@@ -1,12 +1,13 @@
 import React, { Suspense, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useRouteMatch, withRouter } from 'react-router';
-import { Wrapper, Nav, P, Span, Label, Option } from '@bit/meema.ui-components.elements';
+import Elements, { Wrapper, Nav, P, Span, Label, Option } from '@bit/meema.ui-components.elements';
 import { Button } from '../Elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
 import { pixelToRem } from 'meema.utils';
 import { CustomCSSType, OnChangeEvent } from 'greenpeace';
 import { save } from './service';
+import { addZero } from '../../utils/shared';
 import moment from 'moment';
 import { Loader } from '../Shared';
 
@@ -17,8 +18,12 @@ const Form = styled.form`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  width: ${pixelToRem(380)};
   border-radius: ${pixelToRem(20)};
+  width: 100%;
+
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+    width: ${pixelToRem(380)};
+  }
 `;
 
 const FormGroup = styled(Wrapper)`
@@ -26,7 +31,7 @@ const FormGroup = styled(Wrapper)`
   flex-direction: row;
 `;
 
-const Input = styled.input<{ customCss?: CustomCSSType }>`
+const Input = styled(Elements.Input)<{ customCss?: CustomCSSType }>`
   width: 100%;
   height: 2.5rem;
   outline: none;
@@ -35,6 +40,7 @@ const Input = styled.input<{ customCss?: CustomCSSType }>`
   padding: ${pixelToRem(8)};
   margin: 0 0 ${pixelToRem(16)} 0;
   font-size: ${pixelToRem(16)};
+  background-color: white;
   border-bottom: ${pixelToRem(1)} solid ${(props) => props.theme.color.secondary.light};
   transition: all 250ms ease;
 
@@ -51,7 +57,8 @@ const Select = styled.select`
   width: 100%;
   height: 2.5rem;
   outline: none;
-  appearance: none;  
+  appearance: none;
+  background-color: transparent;  
   border: ${pixelToRem(1)} solid transparent;
   padding: ${pixelToRem(8)};
   margin: 0 0 ${pixelToRem(16)} 0;
@@ -74,16 +81,6 @@ const Registration: React.FunctionComponent<{}> = () => {
   const [ birthDay, setBirthDay ] = useState<string>('');
   const [ birthMonth, setBirthMonth ] = useState<string>('');
   const [ birthYear, setBirthYear ] = useState<string>('');
-
-  useEffect(() => {
-    if(now) {
-      setBirthDay(`${now.getDate()}`);
-      setBirthMonth(`${now.getMonth() + 1}`);
-      setBirthYear(`${now.getFullYear()}`);
-    }
-  }, [
-    now,
-  ])
   
   const onChange = useCallback((evt: OnChangeEvent) => {
     evt.preventDefault();
@@ -100,9 +97,6 @@ const Registration: React.FunctionComponent<{}> = () => {
   const onChangeBirthDate = useCallback((evt: OnChangeEvent) => {
     evt.preventDefault();
     const name = evt.currentTarget.name;
-
-    console.log(evt.currentTarget.name, evt.currentTarget.value);
-
     switch(name) {
       case 'birthDay': {
         setBirthDay(evt.currentTarget.value);
@@ -117,14 +111,26 @@ const Registration: React.FunctionComponent<{}> = () => {
       }
       break;
     }
-    // dispatch({
-    //   type: 'UPDATE_USER_DATA',
-    //   payload: { [evt.currentTarget.name]: evt.currentTarget.value }
-    // });
-
   }, [
     dispatch,
   ]);
+
+  useEffect(() => {
+    if(birthDay !== '' && birthMonth !== '' && birthYear !== '') {
+      console.log();
+      dispatch({
+        type: 'UPDATE_USER_DATA',
+        payload: { 
+          'birthDate': `${birthDay}/${birthMonth}/${birthYear}`
+        },
+      });
+    }
+  }, [
+    birthDay,
+    birthMonth,
+    birthYear,
+    dispatch,
+  ])
 
   const onSubmit = useCallback((evt: any) => {
     evt.preventDefault();
@@ -200,9 +206,10 @@ const Registration: React.FunctionComponent<{}> = () => {
                 placeholder='DD/MM/AAAA'
                 onChange={onChange}
                 customCss={css`
-                  @media (max-width: ${props => pixelToRem(props.theme.responsive.mobile.maxWidth)}) {
-                    display: none;
-                  }
+                
+                @media (max-width: ${props => pixelToRem(props.theme.responsive.mobile.maxWidth)}) {
+                  display: none;
+                }
                 `}
               />
               <Wrapper
@@ -235,7 +242,8 @@ const Registration: React.FunctionComponent<{}> = () => {
                     onChange={onChangeBirthDate}
                     value={birthDay}
                   >
-                    {Array.from({length: 31}, (_, idx) => <option key={`day-${idx}`}>{idx + 1}</option>)}
+                    <option></option>
+                    {Array.from({length: 31}, (_, idx) => <option key={`day-${idx}`}>{addZero(`${idx + 1}`)}</option>)}
                   </Select>
                   <Span customCss={css`display: block; padding: 0 ${pixelToRem(10)}; color: grey; `}>/</Span>
                   <Select
@@ -243,15 +251,17 @@ const Registration: React.FunctionComponent<{}> = () => {
                     onChange={onChangeBirthDate}
                     value={birthMonth}
                   >
-                    {Array.from({length: 12}, (_, idx) => <option key={`month-${idx}`}>{idx + 1}</option>)}
+                    <option></option>
+                    {Array.from({length: 12}, (_, idx) => <option key={`month-${idx}`}>{addZero(`${idx + 1}`)}</option>)}
                   </Select>
                   <Span customCss={css`display: block; padding: 0 ${pixelToRem(10)}; color: grey; `}>/</Span>
                   <Select
                     name='birthYear'
                     onChange={onChangeBirthDate}
                     value={birthYear}
-                  >
-                    {Array.from({length: 100}, (_, idx) => idx).reverse().map((i) => <option key={`year-${i}`}>{((now.getFullYear() + 1) - 100) + i}</option>)}
+                    >
+                    <option></option>
+                    {Array.from({length: 120}, (_, idx) => idx).reverse().map((i) => <option key={`year-${i}`}>{((now.getFullYear() + 1) - 120) + i}</option>)}
                   </Select>
                 </Wrapper>
               </Wrapper>
