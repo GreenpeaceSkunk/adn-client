@@ -40,6 +40,7 @@ const Main = styled(Wrapper)`
   background-image: linear-gradient(0, #005C42 0%, rgba(0, 92, 66, 0) 100%), url(${BackgroundHome});
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   overflow: hidden;
   font-family: ${({theme}) => theme.font.family.primary.regular};
 `;
@@ -65,7 +66,7 @@ const App: React.FunctionComponent<{}> = () => {
           <Switch>
             <Route path='/'>
               <Main>
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader type='light' />}>
                   <MainHeader />
                 </Suspense>
                 <Wrapper
@@ -77,29 +78,29 @@ const App: React.FunctionComponent<{}> = () => {
                   <GameProvider>
                     <Switch>
                       <Route exact path='/scanner'>
-                        <Suspense fallback={<Loader />}>
+                        <Suspense fallback={<Loader type='light' />}>
                           <ScannerRouter/>
                         </Suspense>
                       </Route>
                       <Route path='/tutorial'>
-                        <Suspense fallback={<Loader />}>
+                        <Suspense fallback={<Loader type='light' />}>
                           <TutorialRouter/>
                         </Suspense>
                       </Route>
                       <Route path='/game'>
-                        <Suspense fallback={<Loader />}>
+                        <Suspense fallback={<Loader type='light' />}>
                           <GameRouter />
                         </Suspense>
                       </Route>
                       
                       <Route path='/results'>
-                        <Suspense fallback={<Loader />}>
+                        <Suspense fallback={<Loader type='light' />}>
                           <ResultsRouter />
                         </Suspense>
                       </Route>
 
                       <Route path='/'>
-                        <Suspense fallback={<Loader />}>
+                        <Suspense fallback={<Loader type='light' />}>
                           <HomeView />
                         </Suspense>
                       </Route>
@@ -107,13 +108,13 @@ const App: React.FunctionComponent<{}> = () => {
 
                   </GameProvider>
                 </Wrapper>
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader type='light' />}>
                   <MainFooter />
                 </Suspense>
               </Main>
 
               <Route path='/registration'>
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader type='light' />}>
                   <Registration />
                 </Suspense>
               </Route>

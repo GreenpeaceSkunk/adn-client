@@ -52,7 +52,6 @@ const Component: React.FunctionComponent<IProps> = () => {
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            width: 60vw;
             transition: all 200ms ease;
 
             @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {

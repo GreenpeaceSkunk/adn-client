@@ -6,6 +6,7 @@ declare global {
       dataLayer: [{
         event: EventType,
       }];
+      innerWidth: number;
 
       navigator;
   }

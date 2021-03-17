@@ -16,7 +16,13 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
           padding: ${pixelToRem(40)} ${pixelToRem(40)} ${pixelToRem(40)} ${pixelToRem(40)};
         `}
       >
-        <H1 width='80%'>A continuación te mostraremos imágenes de animales.<br/>Para cada dupla, hace click en el animal con el que más te identifiques.</H1>
+        <H1
+          customCss={css`
+            width: 100% !important;
+            font-size: ${pixelToRem(26)} !important;
+            text-align: justify;
+          `}
+        >A continuación te mostraremos imágenes de animales.<br/>Para cada dupla, hace click en el animal con el que más te identifiques.</H1>
       </Header>
       <Wrapper
         customCss={css`
@@ -32,8 +38,6 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
           infinite={true}
           delay={1500}
         >
-          
-
           {config.animals.map((animal: IAnimal) => (
             <Wrapper
               key={animal.label}

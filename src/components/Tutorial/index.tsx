@@ -35,10 +35,37 @@ const Tutorial: React.FunctionComponent<{}> = () => {
       >
         <Switch>
           <Route exact path={`${path}/1`}>
-            <ButtonNavLink to={`/`} style={{border: 'none'}}>Anterior</ButtonNavLink>
-            <ButtonNavLink to='/game' format='outlined'>
-              Siguiente<IconImage src={ArrowRightIcon} />
-            </ButtonNavLink>
+            <Nav
+              customCss={css`
+                display: flex;
+                flex-direction: column;
+                > * {
+                  margin-bottom: ${pixelToRem(20)};
+
+                  &:last-child {
+                    margin-bottom: 0;
+                  }  
+                }
+
+
+                @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+                  flex-direction: row;
+                  
+                  > * {
+                    margin-right: ${pixelToRem(20)};
+
+                    &:last-child {
+                      margin-right: 0;
+                    }  
+                  }
+                }
+              `}
+            >
+              <ButtonNavLink to={`/`} style={{border: 'none'}}>Anterior</ButtonNavLink>
+              <ButtonNavLink to='/game' format='outlined'>
+                Siguiente<IconImage src={ArrowRightIcon} />
+              </ButtonNavLink>
+            </Nav>
           </Route>
         </Switch>
       </Nav>

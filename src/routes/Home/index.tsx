@@ -1,5 +1,5 @@
 import React, { memo, useContext, useMemo } from 'react';
-import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
+import { useRouteMatch, withRouter, useHistory } from 'react-router';
 import { Wrapper, Button, H1, Nav, P, View } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../../components/App/context';
@@ -7,6 +7,7 @@ import { pixelToRem } from 'meema.utils';
 import Bubble from '../../components/Home/Bubbles';
 import Animal from '../../components/Animal';
 import config from '../../config';
+import { desktopMinWidth } from '../../theme/Theme';
 import { ButtonNavLink } from '../../components/Elements';
 import { headerHeightNormal, footerHeightNormal } from '../../theme/Theme';
 
@@ -43,7 +44,6 @@ const Input = styled.input`
 const Home: React.FunctionComponent<{}> = () => {
   const { searchParams } = useContext(AppContext);
   const { path } = useRouteMatch();
-  const history = useHistory();
   
   return useMemo(() => (
     <View
@@ -63,15 +63,16 @@ const Home: React.FunctionComponent<{}> = () => {
         customCss={css`
           padding: ${pixelToRem(40)};
           z-index: 99;
-
-          @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
-          }
         `}
       >
         <H1
           customCss={css`
             color: white;
-            font-size: ${pixelToRem(58)};
+            font-size: ${pixelToRem(40)};
+
+            @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+              font-size: ${pixelToRem(58)};  
+            }
           `}
         >Descubrí a qué <br/>animal autóctono te pareces más</H1>
         <ButtonNavLink to='/registration' style={{marginTop: pixelToRem(30)}}>Comenzar</ButtonNavLink>
@@ -91,36 +92,73 @@ const Home: React.FunctionComponent<{}> = () => {
           }
         `}
       >
-        <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}>
-          <Animal {...config.animals[2]} showChip={true} />
-        </Bubble>
-        <Bubble size={155} animationTime={5} initialPosX={30} initialPosY={-100}>
-          <Animal {...config.animals[7]} showChip={true} />
-        </Bubble>
-        <Bubble size={295} animationTime={5} initialPosX={-10} initialPosY={0}>
-          <Animal {...config.animals[0]} showChip={true} />
-        </Bubble>
-        <Bubble size={300} animationTime={5} initialPosX={60} initialPosY={380}>
-          <Animal {...config.animals[1]} showChip={true} />
-        </Bubble>
-        <Bubble size={150} animationTime={5} initialPosX={40} initialPosY={100}>
-          <Animal {...config.animals[4]} showChip={true} />
-        </Bubble>
-        <Bubble size={200} animationTime={5} initialPosX={65} initialPosY={150}>
-          <Animal {...config.animals[5]} showChip={true} />
-        </Bubble>
-        <Bubble size={170} animationTime={5} initialPosX={40} initialPosY={280}>
-          <Animal {...config.animals[6]} showChip={true} />
-        </Bubble>
-        <Bubble size={250} animationTime={6} initialPosX={-30} initialPosY={340}>
-          <Animal {...config.animals[3]} showChip={true} />
-        </Bubble>
-        <Bubble size={150} animationTime={5} initialPosX={10} initialPosY={320}>
-          <Animal {...config.animals[8]} showChip={true} />
-        </Bubble>
-        <Bubble size={322} animationTime={5} initialPosX={10} initialPosY={490}>
-          <Animal {...config.animals[9]} showChip={true} />
-        </Bubble>
+        {(window.innerWidth >= desktopMinWidth) ? (
+          <>
+            <Bubble size={380} animationTime={5} initialPosX={60} initialPosY={-260}>
+              <Animal {...config.animals[2]} showChip={true} />
+            </Bubble>
+            <Bubble size={155} animationTime={5} initialPosX={30} initialPosY={-100}>
+              <Animal {...config.animals[7]} showChip={true} />
+            </Bubble>
+            <Bubble size={295} animationTime={5} initialPosX={-10} initialPosY={0}>
+              <Animal {...config.animals[0]} showChip={true} />
+            </Bubble>
+            <Bubble size={300} animationTime={5} initialPosX={60} initialPosY={380}>
+              <Animal {...config.animals[1]} showChip={true} />
+            </Bubble>
+            <Bubble size={150} animationTime={5} initialPosX={40} initialPosY={100}>
+              <Animal {...config.animals[4]} showChip={true} />
+            </Bubble>
+            <Bubble size={200} animationTime={5} initialPosX={65} initialPosY={150}>
+              <Animal {...config.animals[5]} showChip={true} />
+            </Bubble>
+            <Bubble size={170} animationTime={5} initialPosX={40} initialPosY={280}>
+              <Animal {...config.animals[6]} showChip={true} />
+            </Bubble>
+            <Bubble size={250} animationTime={6} initialPosX={-30} initialPosY={340}>
+              <Animal {...config.animals[3]} showChip={true} />
+            </Bubble>
+            <Bubble size={150} animationTime={5} initialPosX={10} initialPosY={320}>
+              <Animal {...config.animals[8]} showChip={true} />
+            </Bubble>
+            <Bubble size={322} animationTime={5} initialPosX={10} initialPosY={490}>
+              <Animal {...config.animals[9]} showChip={true} />
+            </Bubble>
+          </>
+        ) : (
+          <>
+            <Bubble size={250} animationTime={5} initialPosX={60} initialPosY={-160}>
+              <Animal {...config.animals[2]} showChip={true} />
+            </Bubble>
+            <Bubble size={110} animationTime={5} initialPosX={25} initialPosY={-100}>
+              <Animal {...config.animals[7]} showChip={true} />
+            </Bubble>
+            <Bubble size={200} animationTime={5} initialPosX={-10} initialPosY={-20}>
+              <Animal {...config.animals[0]} showChip={true} />
+            </Bubble>
+            <Bubble size={220} animationTime={5} initialPosX={60} initialPosY={220}>
+              <Animal {...config.animals[1]} showChip={true} />
+            </Bubble>
+            <Bubble size={90} animationTime={5} initialPosX={42} initialPosY={20}>
+              <Animal {...config.animals[4]} showChip={true} />
+            </Bubble>
+            <Bubble size={165} animationTime={5} initialPosX={65} initialPosY={110}>
+              <Animal {...config.animals[5]} showChip={true} />
+            </Bubble>
+            <Bubble size={132} animationTime={5} initialPosX={40} initialPosY={280}>
+              <Animal {...config.animals[6]} showChip={true} />
+            </Bubble>
+            <Bubble size={210} animationTime={6} initialPosX={-20} initialPosY={150}>
+              <Animal {...config.animals[3]} showChip={true} />
+            </Bubble>
+            <Bubble size={115} animationTime={5} initialPosX={10} initialPosY={320}>
+              <Animal {...config.animals[8]} showChip={true} />
+            </Bubble>
+            <Bubble size={140} animationTime={5} initialPosX={30} initialPosY={140}>
+              <Animal {...config.animals[9]} showChip={true} />
+            </Bubble>
+          </>
+        )}
       </Wrapper>
     </View>
   ), [

@@ -33,8 +33,18 @@ export const fontSecondaryRegular = 'Font-Secondary-Regular';
 export const fontSecondaryMedium = 'Font-Secondary-Medium';
 export const fontSecondaryBold = 'Font-Secondary-Bold';
 
+export const headerHeightSmall = 64;
 export const headerHeightNormal = 64;
+export const headerHeightLarge = 64;
+
+export const footerHeightSmall = 120;
 export const footerHeightNormal = 70;
+export const footerHeightLarge = 70;
+
+export const desktopMinWidth = 1024;
+export const tabletMinWidth = 768;
+export const tabletMaxWidth = 1023;
+export const mobileMaxWidth = 767;
 
 const DefaultTheme: ITheme = {
   borderRadius,
@@ -138,28 +148,28 @@ const DefaultTheme: ITheme = {
   },
   header: {
     height: {
-      // small: 0,
+      small: headerHeightSmall,
       normal: headerHeightNormal,
-      // large: 0,
+      large: headerHeightLarge,
     },
   },
   footer: {
     height: {
-      // small: 0,
+      small: footerHeightSmall,
       normal: footerHeightNormal,
-      // large: 0,
+      large: footerHeightLarge,
     },
   },
   responsive: {
     desktop: {
-      minWidth: 1024,
+      minWidth: desktopMinWidth,
     },
     tablet: {
-      minWidth: 768,
-      maxWidth: 1023,
+      minWidth: tabletMinWidth,
+      maxWidth: tabletMaxWidth,
     },
     mobile: {
-      maxWidth: 767,
+      maxWidth: mobileMaxWidth,
     },
   },
 };
