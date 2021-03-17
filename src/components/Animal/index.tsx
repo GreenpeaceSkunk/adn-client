@@ -3,9 +3,10 @@ import { Img, Wrapper } from '@bit/meema.ui-components.elements';
 import { pixelToRem } from 'meema.utils';
 import styled, { css } from 'styled-components';
 import { IAnimal } from 'greenpeace';
+import { Loader } from '../Shared';
 
-const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boolean; }>`
-  position: absolute;
+export const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boolean; }>`
+  /* position: absolute; */
   padding: ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(20)};
   font-size: ${pixelToRem(32)};
   font-family: ${props => props.theme.font.family.primary.bold};
@@ -23,38 +24,18 @@ const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boo
   border-bottom-right-radius: ${pixelToRem(80 / 2)};
   border-bottom-left-radius: ${pixelToRem(80 / 2)};
   animation-delay: 750ms;
-  transform: scale(0);
-  z-index: 99999;
+  /* transform: scale(0); */
+  /* z-index: 99999; */
 
   ${(props) => (props.showChipAnimation === true) && css`
     animation: showTextAnimation 250ms forwards;
-    /* animation-delay: 1000ms; */
   `}
 
   ${(props) => (props.showChipAnimation === false) && css`
     animation: hideTextAnimation 250ms forwards;
-    /* animation-delay: 1000ms; */
   `}
 
-  top: calc(100% + ${pixelToRem(20)});
-
-  /* ${(props => (props.chipOrientation === 'bottom') && css`
-    bottom: -${pixelToRem(20)};
-  `)} */
-
-  /* ${(props => (props.chipOrientation === 'left') && css`
-    left: -${pixelToRem(160 / 2)};
-    border-bottom-right-radius: 0;
-  `)} */
-  
-  /* ${(props => (props.chipOrientation === 'right') && css`
-    right: -${pixelToRem(160 / 2)};
-    border-bottom-left-radius: 0;
-  `)} */
-
-  /* ${(props) => css`
-    color: ${(props.showChipAnimation === true) ? 'white' : 'white'}; 
-  `} */
+  /* top: calc(100% + ${pixelToRem(20)}); */
   
   @keyframes showTextAnimation {
     0% {
@@ -104,6 +85,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   onClickHandler,
 }) => {
   const [ image, setImage ] = useState<any>();
+  const [ imageLoaded, setImageLoaded ] = useState<boolean>(false);
   const [ clicked, setClicked ] = useState<boolean>(false);
   const [ showChipAnimation, setShowChipAnimation ] = useState<boolean>(false);
  
@@ -141,6 +123,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   useEffect(() => {
     (async () => {
       try {
+        setImageLoaded(false);
         const { default: src } = await import(`../../assets/images/animals/${picture}`);
         setImage(src);
       } catch (err) {
@@ -153,61 +136,65 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   
   useEffect(() => {
     setClicked(false);
+    setImageLoaded(true);
   }, [
     image,
   ]);
 
   return useMemo(() => (
     <>
-    <Wrapper
-      className={`animal__${name}`}
-      customCss={css`
-        display: flex;
-        position: relative;
-        align-items: center;
-        justify-content: center;
-        background: white url(${image});
-        background-size: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        flex: 0 0 100%; 
-        height: 100%;
-        border-radius: ${borderRadius ? '50%' : '0'};
-        font-size: 40px;
-        transition: all 300ms ease;
-        overflow: hidden;
-        cursor: auto;
-
-        ${onClickHandler && css`
-          cursor: pointer;
-          &:hover {
-            background-size: 110%;
-          }
-        `}
-      `}
-      onClick={onClick}
-      >
-      <Wrapper 
+      <Wrapper
+        className={`animal__${name}`}
         customCss={css`
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
+          display: flex;
+          position: relative;
+          align-items: center;
+          justify-content: center;
+          background: white url(${image});
+          background-size: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          flex: 0 0 100%; 
           height: 100%;
-          z-index: 9999;
-          height: ${clicked ? '100%' : '0%'};
-          background: linear-gradient(transparent, #66CC00);
+          border-radius: ${borderRadius ? '50%' : '0'};
+          font-size: ${pixelToRem(40)};
           transition: all 300ms ease;
+          overflow: hidden;
+          cursor: auto;
+
+          ${onClickHandler && css`
+            cursor: pointer;
+            &:hover {
+              background-size: 110%;
+            }
+          `}
         `}
-      />
-      
-    </Wrapper>
-      {(showChip) && (
+        onClick={onClick}
+      >
+        {(!imageLoaded) && (
+          <Loader />  
+        )}
+        <Wrapper 
+          customCss={css`
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            height: ${clicked ? '100%' : '0%'};
+            background: linear-gradient(transparent, #66CC00);
+            transition: all 300ms ease;
+          `}
+        />
+        
+      </Wrapper>
+      {/* {(showChip) && (
         <Chip
-        chipOrientation={chipOrientation}
-        showChipAnimation={showChipAnimation}
+          chipOrientation={chipOrientation}
+          showChipAnimation={showChipAnimation}
         >{name}</Chip>
-      )}
+      )} */}
     </>
   ), [
     description,
@@ -216,6 +203,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
     name,
     picture,
     image,
+    imageLoaded,
     clicked,
     showChipAnimation,
     borderRadius,
