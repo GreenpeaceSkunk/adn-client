@@ -54,7 +54,7 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
           <H1
             customCss={css`
               color: white;
-              font-size: ${pixelToRem(40)};
+              font-size: ${pixelToRem(30)};
               font-family: ${props => props.theme.font.family.primary.bold};
               text-align: center;
               opacity: 0;
@@ -68,6 +68,10 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
                 100% {
                   opacity: 1;
                 }
+              }
+
+              @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+                font-size: ${pixelToRem(40)};
               }
             `}
           >{user?.fullName}, por tu ADN Greenpeace<br/> descubrimos que:</H1>

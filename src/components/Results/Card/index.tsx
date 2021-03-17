@@ -43,12 +43,16 @@ const Component: React.FunctionComponent<{
         flex-basis: ${pixelToRem(400)};
         justify-content: center;
         padding: 0 ${pixelToRem(20)};
-        margin: ${pixelToRem(10)};
+        margin-top: ${pixelToRem(10)};
         text-align: center;
         opacity: 0;
         width: 100%;
         animation: sideInCard 500ms forwards ease;
         animation-delay: ${300 + delay}ms;
+
+        &:first-child {
+          margin-top: 0;
+        }
 
         @keyframes sideInCard {
           0% {

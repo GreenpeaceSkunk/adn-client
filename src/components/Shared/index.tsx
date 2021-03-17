@@ -21,7 +21,9 @@ export const Logo = () => (
   </A>
 );
 
-export const Loader = () => (
+export const Loader: React.FunctionComponent<{ type?: 'light' }> = ({
+  type,
+}) => (
   <Wrapper
     customCss={css`
       margin: 1rem 0;
@@ -30,6 +32,10 @@ export const Loader = () => (
     <ThreeCircles 
       circleCss={css`
         background-color: ${props => props.theme.color.primary.normal};
+
+        ${(type === 'light') && css`
+          background-color: white;
+        `}
       `}
     />
   </Wrapper>

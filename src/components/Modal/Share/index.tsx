@@ -45,18 +45,9 @@ const Share: React.FunctionComponent<{}> = () => {
         >Compartí con tus amigos</H1>
         <Nav
           customCss={css`
+            display: flex;
+            justify-content: space-between;
             margin-top: ${pixelToRem(40)};
-            & > * {
-              margin: 0 ${pixelToRem(10)};
-
-              &:first-child {
-                margin-left: 0;
-              }
-
-              &:last-child {
-                margin-right: 0;
-              }
-            }
           `}
         >
           <TwitterShareButton
@@ -68,35 +59,35 @@ const Share: React.FunctionComponent<{}> = () => {
             <img src={TwitterLogo} alt='Twitter' width='auto' height='auto' />
           </TwitterShareButton>
 
-        <WhatsappShareButton
-          title={`${process.env.REACT_APP_SHARE_WHATSAPP_TITLE}`}
-          url={`${process.env.REACT_APP_SHARE_URL}`}
-          separator=" "
-          windowHeight={SHARE_MODAL_HEIGHT}
-          windowWidth={SHARE_MODAL_WIDTH}
-        >
-          <img src={WhatsappLogo} alt='Whatsapp' width='auto' height='auto' />
-        </WhatsappShareButton>
+          <WhatsappShareButton
+            title={`${process.env.REACT_APP_SHARE_WHATSAPP_TITLE}`}
+            url={`${process.env.REACT_APP_SHARE_URL}`}
+            separator=" "
+            windowHeight={SHARE_MODAL_HEIGHT}
+            windowWidth={SHARE_MODAL_WIDTH}
+          >
+            <img src={WhatsappLogo} alt='Whatsapp' width='auto' height='auto' />
+          </WhatsappShareButton>
         
-        <FacebookShareButton
-          quote={`${process.env.REACT_APP_SHARE_FACEBOOK_TITLE}`}
-          url={`${process.env.REACT_APP_SHARE_URL}`}
-          windowHeight={SHARE_MODAL_HEIGHT}
-          windowWidth={SHARE_MODAL_WIDTH}
-        >
-          <img src={FacebookLogo} alt='Facebook' width='auto' height='auto' />
-        </FacebookShareButton>
+          <FacebookShareButton
+            quote={`${process.env.REACT_APP_SHARE_FACEBOOK_TITLE}`}
+            url={`${process.env.REACT_APP_SHARE_URL}`}
+            windowHeight={SHARE_MODAL_HEIGHT}
+            windowWidth={SHARE_MODAL_WIDTH}
+          >
+            <img src={FacebookLogo} alt='Facebook' width='auto' height='auto' />
+          </FacebookShareButton>
 
-        <EmailShareButton
-          url={`${process.env.REACT_APP_SHARE_URL}`}
-          subject={`${process.env.REACT_APP_SHARE_EMAIL_SUBJECT}`}
-          body={`${process.env.REACT_APP_SHARE_EMAIL_BODY}`}
-          separator=" "
-          windowHeight={SHARE_MODAL_HEIGHT}
-          windowWidth={SHARE_MODAL_WIDTH}
-        >
-          <img src={EmailLogo} alt='Email' width='auto' height='auto' />
-        </EmailShareButton>
+          <EmailShareButton
+            url={`${process.env.REACT_APP_SHARE_URL}`}
+            subject={`${process.env.REACT_APP_SHARE_EMAIL_SUBJECT}`}
+            body={`${process.env.REACT_APP_SHARE_EMAIL_BODY}`}
+            separator=" "
+            windowHeight={SHARE_MODAL_HEIGHT}
+            windowWidth={SHARE_MODAL_WIDTH}
+          >
+            <img src={EmailLogo} alt='Email' width='auto' height='auto' />
+          </EmailShareButton>
         </Nav>
       </Modal>
     </Suspense>

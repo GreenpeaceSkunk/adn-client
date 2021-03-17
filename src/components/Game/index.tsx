@@ -1,19 +1,18 @@
 import React, { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Redirect, Route, Switch, useRouteMatch, withRouter, useHistory, Router } from 'react-router';
-import { Wrapper, Button, Nav, P, View, Header, Img } from '@bit/meema.ui-components.elements';
+import { Route, Switch, useRouteMatch, withRouter, useHistory } from 'react-router';
+import { Wrapper, View, Img } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { IAnimal } from 'greenpeace';
-import { NavLink } from 'react-router-dom';
 import { pixelToRem } from 'meema.utils';
 import { SliderIcon } from '../../assets/images';
 import { H1 } from '../../components/Elements'; 
-import Animal from '../../components/Animal';
+import Animal, { Chip } from '../../components/Animal';
 import { ArrowLeftIcon } from '../../assets/images';
 import config from '../../config'; 
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
 import { GameContext } from './context';
-
+import { desktopMinWidth } from '../../theme/Theme';
 interface MatchParams {
   stepId?: string;
 }
@@ -34,75 +33,86 @@ const ProgressLine = styled(Wrapper)<{ finished: boolean }>`
   `}
 `;
 
-const WrapperAnimal = styled(Wrapper)`
+const WrapperAnimal = styled(Wrapper)<{ size?: number }>`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  width: ${pixelToRem(310)};
-  height: ${pixelToRem(310)};
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: ${({size}) => (size && pixelToRem(size))};
+  height: ${({size}) => (size && pixelToRem(size))};
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-  cursor: pointer;
   opacity: 0;
-    
-  &.fromLeft {
-    animation-name: fromLeft;
-    animation-duration: 750ms;
-    @keyframes fromLeft {
-      0% {
-        left: -${pixelToRem(310)};
-      }
-      100% {
-        left: calc(48% - ${pixelToRem(310)});
-        opacity: 1;
-      }
-    }
-  }
-
-  &.toLeft {
-    animation-name: toLeft;
-    animation-duration: 500ms;
-    @keyframes toLeft {
-      0% {
-        opacity: 1;
-        left: calc(48% - ${pixelToRem(310)});
-      }
-      100% {
-        left: -${pixelToRem(310)};
-        opacity: 0;
-      }
-    }
-  }
+  top: ${pixelToRem(40)};
+  cursor: pointer;
   
-  &.fromRight {
-    animation-name: fromRight;
-    animation-duration: 750ms;
+  ${({size}) => size && css`
+    &.fromLeft {
+      animation-name: fromLeft;
+      animation-duration: 750ms;
 
-    @keyframes fromRight {
-      0% {
-        right: -${pixelToRem(310)};
-      }
-      100% {
-        right: calc(48% - ${pixelToRem(310)});
-        opacity: 1;
+      @keyframes fromLeft {
+        0% {
+          left: -${pixelToRem(size)};
+        }
+        100% {
+          left: calc(48% - ${pixelToRem(size)});
+          opacity: 1;
+        }
       }
     }
-  }
 
-  &.toRight {
-    animation-name: toRight;
-    animation-duration: 500ms;
-    @keyframes toRight {
-      0% {
-        opacity: 1;
-        right: calc(48% - ${pixelToRem(310)});
-      }
-      100% {
-        right: -${pixelToRem(310)};
-        opacity: 0;
+    &.toLeft {
+      animation-name: toLeft;
+      animation-duration: 500ms;
+
+      @keyframes toLeft {
+        0% {
+          opacity: 1;
+          left: calc(48% - ${pixelToRem(size)});
+        }
+        100% {
+          left: -${pixelToRem(size)};
+          opacity: 0;
+        }
       }
     }
-  }
+
+    &.fromRight {
+      animation-name: fromRight;
+      animation-duration: 750ms;
+
+
+      @keyframes fromRight {
+        0% {
+          right: -${pixelToRem(size)};
+        }
+        100% {
+          right: calc(48% - ${pixelToRem(size)});
+          opacity: 1;
+        }
+      }
+    }
+
+    &.toRight {
+      animation-name: toRight;
+      animation-duration: 500ms;
+      
+
+      @keyframes toRight {
+        0% {
+          opacity: 1;
+          right: calc(48% - ${pixelToRem(size)});
+        }
+        100% {
+          right: -${pixelToRem(size)};
+          opacity: 0;
+        }
+      }
+    }
+  `}
+
+  
 `;
 
 const Game: React.FunctionComponent<IProps> = ({
@@ -174,10 +184,8 @@ const Game: React.FunctionComponent<IProps> = ({
 
   useEffect(() => {
     if(maxSteps > 0 && currentStep > maxSteps) {
-      // End game
       dispatch({type: 'UPDATE_USER_GAME_DATA', payload: winners });
       const timer = setTimeout(() => {
-        // history.push(`/results`);
         history.push(`${match.url}/end`);
         const timer = setTimeout(() => {
           history.push(`/scanner`);
@@ -261,149 +269,143 @@ const Game: React.FunctionComponent<IProps> = ({
 
   return useMemo(() => (
     <View>
-      <Wrapper>
+      <Wrapper
+        customCss={css`
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: ${pixelToRem(20)};
+        `}
+      >
         <Wrapper
           customCss={css`
             display: flex;
-            flex-direction: column;
+            flex: 1 0 15%;
+            padding-left: ${pixelToRem(40)};
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+          `}
+        >
+          <Switch>
+            <Route exact path={match.path}>
+              {(currentStep > 1) && (<Wrapper
+                onClick={goPrev}
+                customCss={css`
+                  color: white;
+                  font-family: ${pixelToRem(50)} !important;
+                  cursor: pointer;
+                `}
+              ><Img
+                customCss={css`
+                  margin-right:${pixelToRem(14)};
+                `}
+                src={ArrowLeftIcon}
+              />Volver al paso anterior</Wrapper>)}
+            </Route>
+          </Switch>
+        </Wrapper>
+        <H1
+          customCss={css`
+            text-align: center !important;
+            margin-top: ${pixelToRem(34)};
+            padding: 0 10%;
+          `}
+        >Elegí con cuál te identificas más</H1>
+      </Wrapper>
+      <Wrapper customCss={css`
+        height: ${pixelToRem(40)};
+        width: 100%;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 5%;
+        padding-right: 5%;
+        transition: all 500ms ease;
+
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+          padding-left: 15%;
+          padding-right: 15%;
+        }
+      `}>
+        <Wrapper
+          customCss={css`
+            position: relative;
+            align-items: center;
+            display: flex;
             width: 100%;
-            margin-bottom: ${pixelToRem(20)};
+            height: 100%;
           `}
         >
           <Wrapper
             customCss={css`
+              width: 100%;
               display: flex;
-              flex: 1 0 15%;
-              padding-left: ${pixelToRem(40)};
-              align-items: center;
-              justify-content: flex-start;
-              overflow: hidden;
+              padding: 0 ${pixelToRem(40 / 2)};
             `}
           >
-            <Switch>
-              <Route exact path={match.path}>
-                {(currentStep > 1) && (<Wrapper
-                  onClick={goPrev}
-                  customCss={css`
-                    color: white;
-                    font-family: ${pixelToRem(50)} !important;
-                    cursor: pointer;
-                  `}
-                ><Img
-                  customCss={css`
-                    margin-right:${pixelToRem(14)};
-                  `}
-                  src={ArrowLeftIcon}
-                />Volver al paso anterior</Wrapper>)}
-              </Route>
-            </Switch>
+            {[...Array((maxSteps - 1 < 0) ? 0 : maxSteps - 1).keys()].map((step: number) => (
+              <ProgressLine key={step} finished={currentStep > step + 1} />
+            ))}
           </Wrapper>
-          <H1
-            customCss={css`
-              text-align: center !important;
-              margin-top: ${pixelToRem(34)};
-            `}
-          >Elegí con cuál te identificas más</H1>
+
           <Wrapper
             customCss={css`
+              position: absolute;
+              width: 100%;
               display: flex;
-              flex: 1 0 15%;
+              flex-direction: row;
+              justify-content: space-between;
+            `}
+          >
+            {[...Array(maxSteps).keys()].map((step: number) => (
+              <Wrapper
+                key={step}
+                customCss={css`
+                  display: flex;
+                  flex: 0 0 ${pixelToRem(40)};
+                  height: ${pixelToRem(40)};
+                  border: solid ${pixelToRem(1)} white;
+                  color: white;
+                  border-radius: 50%;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: ${props => props.theme.font.family.primary.bold};
+                  font-size: ${pixelToRem(20)};
+                  opacity: 1;
+                  transition: all 600ms ease;
+                  
+                  ${(currentStep >= (step + 1)) && css`
+                    background: white;
+                    opacity: 1;
+                    color: black;
+                    transition-delay: 350ms;
+                  `}
+                `}
+              >{step + 1}</Wrapper>
+            ))}
+          </Wrapper>
+          <Img
+            src={SliderIcon}
+            customCss={css`
+              position: absolute;
+              top: 0;
+              opacity: 1;
+              transition: all 500ms ease-out;
+
+              ${(currentStep === 1) ? css`
+                left: 0%;
+              ` : (currentStep === maxSteps) ? css`
+                left: calc(100% - ${pixelToRem(40)});
+              ` : (currentStep < maxSteps) ? css`
+                left: calc(50% - ${pixelToRem(20)});
+              ` : css`
+                opacity: 0;
+              `}
             `}
           />
         </Wrapper>
-        <Wrapper customCss={css`
-          height: ${pixelToRem(40)};
-          width: 100%;
-          padding-top: 0;
-          padding-bottom: 0;
-          padding-left: 5%;
-          padding-right: 5%;
-          transition: all 500ms ease;
-
-          @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
-            padding-left: 15%;
-            padding-right: 15%;
-          }
-        `}>
-          <Wrapper
-            customCss={css`
-              position: relative;
-              align-items: center;
-              display: flex;
-              width: 100%;
-              height: 100%;
-            `}
-          >
-            <Wrapper
-              customCss={css`
-                width: 100%;
-                display: flex;
-                padding: 0 ${pixelToRem(40 / 2)};
-              `}
-            >
-              {[...Array((maxSteps - 1 < 0) ? 0 : maxSteps - 1).keys()].map((step: number) => (
-                <ProgressLine key={step} finished={currentStep > step + 1} />
-              ))}
-            </Wrapper>
-
-            <Wrapper
-              customCss={css`
-                position: absolute;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-              `}
-            >
-              {[...Array(maxSteps).keys()].map((step: number) => (
-                <Wrapper
-                  key={step}
-                  customCss={css`
-                    display: flex;
-                    flex: 0 0 ${pixelToRem(40)};
-                    height: ${pixelToRem(40)};
-                    border: solid ${pixelToRem(1)} white;
-                    color: white;
-                    border-radius: 50%;
-                    align-items: center;
-                    justify-content: center;
-                    font-family: ${props => props.theme.font.family.primary.bold};
-                    font-size: ${pixelToRem(20)};
-                    opacity: 1;
-                    transition: all 600ms ease;
-                    
-                    ${(currentStep >= (step + 1)) && css`
-                      background: white;
-                      opacity: 1;
-                      color: black;
-                      transition-delay: 350ms;
-                    `}
-                  `}
-                >{step + 1}</Wrapper>
-              ))}
-            </Wrapper>
-            <Img
-              src={SliderIcon}
-              customCss={css`
-                position: absolute;
-                top: 0;
-                opacity: 1;
-                transition: all 500ms ease-out;
-
-                ${(currentStep === 1) ? css`
-                  left: 0%;
-                ` : (currentStep === maxSteps) ? css`
-                  left: calc(100% - ${pixelToRem(40)});
-                ` : (currentStep < maxSteps) ? css`
-                  left: calc(50% - ${pixelToRem(20)});
-                ` : css`
-                  opacity: 0;
-                `}
-              `}
-            />
-          </Wrapper>
-        </Wrapper>
       </Wrapper>
+
       <Switch>
         <Route exact path={`${match.path}/end`}>
           <Wrapper
@@ -422,14 +424,21 @@ const Game: React.FunctionComponent<IProps> = ({
           <Wrapper
             customCss={css`
               position: relative;
+              display: flex;
+              flex-direction: column;
               width: 100%;
-              padding: 70px 0;
+              margin: ${pixelToRem(50)} 0;
+
+              @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+                height: ${pixelToRem(450)};
+              }
             `}>
               {
                 (currentStep <= maxSteps) && (
                   <>
                     <WrapperAnimal
                       className={`${isSelected ? 'toLeft' : 'fromLeft'}`}
+                      size={(window.innerWidth >= desktopMinWidth) ? 310 : 180}
                     >
                       {(players.length && matches.length) && (
                         <Animal
@@ -439,10 +448,12 @@ const Game: React.FunctionComponent<IProps> = ({
                           onClickHandler={onClickHandler}
                         />
                       )}
+                      <Chip>{matches[currentStep - 1][0].name}</Chip>
                     </WrapperAnimal>
 
                     <WrapperAnimal
                       className={`${isSelected ? 'toRight' : 'fromRight'}`}
+                      size={(window.innerWidth >= desktopMinWidth) ? 310 : 180}
                     >
                       {(players.length && matches.length) && (
                         <Animal
@@ -452,6 +463,7 @@ const Game: React.FunctionComponent<IProps> = ({
                           onClickHandler={onClickHandler}
                         />
                       )}
+                      <Chip>{matches[currentStep - 1][1].name}</Chip>
                     </WrapperAnimal>
                   </>
                 )

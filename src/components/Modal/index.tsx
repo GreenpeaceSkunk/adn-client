@@ -35,7 +35,7 @@ const Component: React.FunctionComponent<IProps> = ({
   
   return useMemo(() => (
     <>
-      <Overlay />
+      
       <Wrapper
         customCss={css`
           position: fixed;
@@ -43,9 +43,13 @@ const Component: React.FunctionComponent<IProps> = ({
           justify-content: center;
           align-items: center;
           z-index: 9999;
-          width: 100vw;
-          height: 100vh;
-          top: 0;
+          /* width: 100vw;
+          height: 100vh; */
+          top: 50%;
+          pointer-events: none;
+          bottom: 50%;
+          left: 0;
+          right: 0;
         `}
       >
         <Wrapper
@@ -54,10 +58,18 @@ const Component: React.FunctionComponent<IProps> = ({
             background-color: white;
             border-radius: ${pixelToRem(20)};
             padding: ${pixelToRem(40)};
+            width: 90vw;
+            transition: all 250ms ease;
+
+            @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+              width: auto;
+            }
             ${customCss};
           `}
         >
-          <XCloseButton onClick={goBack}>
+          <XCloseButton
+            onClick={goBack}
+          >
             <Img src={XCloseIcon} />
           </XCloseButton>
           <Wrapper>
@@ -65,6 +77,9 @@ const Component: React.FunctionComponent<IProps> = ({
           </Wrapper>
         </Wrapper>
       </Wrapper>
+      <Overlay
+        onClick={goBack}
+      />
     </>
   ), [
     children,

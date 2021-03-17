@@ -14,6 +14,7 @@ export const Overlay = styled(Elements.Wrapper)`
   align-items: center;
   justify-content: center;
   z-index: 999;
+  cursor: pointer;
 `;
 
 interface IH1 { width?: string; fontSize?: string; textAlign?: string }
