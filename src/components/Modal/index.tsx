@@ -77,9 +77,7 @@ const Component: React.FunctionComponent<IProps> = ({
           </Wrapper>
         </Wrapper>
       </Wrapper>
-      <Overlay
-        onClick={goBack}
-      />
+      <Overlay/>
     </>
   ), [
     children,
