@@ -46,7 +46,7 @@ const Component: React.FunctionComponent<IProps> = ({
           /* width: 100vw;
           height: 100vh; */
           top: 50%;
-          pointer-events: none;
+          /* pointer-events: none; */
           bottom: 50%;
           left: 0;
           right: 0;
@@ -77,7 +77,9 @@ const Component: React.FunctionComponent<IProps> = ({
           </Wrapper>
         </Wrapper>
       </Wrapper>
-      <Overlay/>
+      <Overlay
+        onClick={goBack}
+      />
     </>
   ), [
     children,
