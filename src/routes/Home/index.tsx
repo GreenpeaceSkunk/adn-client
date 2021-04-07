@@ -74,7 +74,7 @@ const Home: React.FunctionComponent<{}> = () => {
               font-size: ${pixelToRem(58)};  
             }
           `}
-        >Descubrí a qué <br/>animal autóctono te pareces más</H1>
+        >Descubrí a qué <br/>animal autóctono te parecés más</H1>
         <ButtonNavLink to='/registration' style={{marginTop: pixelToRem(30)}}>Comenzar</ButtonNavLink>
       </Wrapper>
       <Wrapper
