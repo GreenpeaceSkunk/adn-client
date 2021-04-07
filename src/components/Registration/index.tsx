@@ -180,7 +180,7 @@ const Registration: React.FunctionComponent<{}> = () => {
               font-family: ${props => props.theme.font.family.normal};
               font-size: ${pixelToRem(24)};
             `}
-          >Completa para comenzar</Span>
+          >Completá para comenzar</Span>
           <Wrapper
             customCss={css`
               margin: ${pixelToRem(25)} 0;
