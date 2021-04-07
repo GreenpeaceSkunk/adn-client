@@ -144,7 +144,7 @@ const Registration: React.FunctionComponent<{}> = () => {
       } else if (moment.duration(moment().diff(birthDate)).years() < 18) {
         setErrorTxt('Debes ser mayor de edad');
       } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(user?.email || ''))) {
-        setErrorTxt('Email inválido');
+        setErrorTxt(`Introducí una dirección de correo electrónico válida. </br>Ejemplo <strong>${user?.fullName.toLowerCase().replace(/ /,'.') || 'nombre'}@greenpeace.org</strong>`);
       } else {  
         const result = await save({
           fullName: user?.fullName || '',
@@ -286,10 +286,12 @@ const Registration: React.FunctionComponent<{}> = () => {
           </Nav>
           <P
             customCss={css`
+              text-align: center;
               color: ${({theme}) => theme.color.error.normal};
               margin-top: ${pixelToRem(20)};
             `}
-          >{errorTxt}</P>
+            dangerouslySetInnerHTML={{__html: errorTxt}}
+          />
         </Form>
       </Modal>
     </Suspense>
