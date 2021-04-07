@@ -35,21 +35,18 @@ const Component: React.FunctionComponent<IProps> = ({
   
   return useMemo(() => (
     <>
-      
       <Wrapper
         customCss={css`
           position: fixed;
           display: fixed;
           justify-content: center;
           align-items: center;
-          z-index: 9999;
-          /* width: 100vw;
-          height: 100vh; */
-          top: 50%;
-          /* pointer-events: none; */
-          bottom: 50%;
+          height: 100%;
+          width: 100%;
+          top: 0;
           left: 0;
-          right: 0;
+          z-index: 9999;
+          /* pointer-events: none; */
         `}
       >
         <Wrapper
