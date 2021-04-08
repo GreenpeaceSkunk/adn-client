@@ -74,6 +74,10 @@ export const Button = styled(Elements.Button)<IButtonNavLink>`
   &:hover {
     background: ${(props) => props.theme.color.primary.dark};
   }
+
+  &:focus {
+    outline: 0;
+  }
   
   ${props => props.disabled && css`
     background-color: #E0E0E0;
