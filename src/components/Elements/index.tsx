@@ -48,16 +48,16 @@ export const ButtonNavLink = styled(Link)<IButtonNavLink>`
   `}
 
   ${props => (props.format && props.format === 'outlined') && css`
-      background: transparent;
-      font-size: ${pixelToRem(32)};
-      border: solid 2px white;
+    background: transparent;
+    font-size: ${pixelToRem(32)};
+    border: solid 2px white;
 
-      &:hover {
-        color: white;
-        background: ${(props) => props.theme.color.primary.dark};
+    &:hover {
+      color: white;
+      background: ${(props) => props.theme.color.primary.dark};
 
-      }
-    `}
+    }
+  `}
 `;
 
 export const Button = styled(Elements.Button)<IButtonNavLink>`
@@ -97,3 +97,10 @@ export const Button = styled(Elements.Button)<IButtonNavLink>`
       }
     `}
 `;
+
+export default {
+  Overlay,
+  H1,
+  Button,
+  ButtonNavLink,
+};

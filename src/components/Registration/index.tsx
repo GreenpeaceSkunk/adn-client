@@ -1,6 +1,6 @@
 import React, { Suspense, memo, useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react';
 import { useHistory, useRouteMatch, withRouter } from 'react-router';
-import Elements, { Wrapper, Nav, P, Span, Label, Option } from '@bit/meema.ui-components.elements';
+import Elements, { Wrapper, Nav, P, Span, Label } from '@bit/meema.ui-components.elements';
 import { Button } from '../Elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
@@ -13,15 +13,14 @@ import { Loader } from '../Shared';
 
 const Modal = React.lazy(() => import('../Modal'));
 
-const Form = styled.form`
+const Form = styled(Elements.Form)`
   position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  border-radius: ${pixelToRem(20)};
   width: 100%;
 
-  @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
     width: ${pixelToRem(380)};
   }
 `;
@@ -191,7 +190,7 @@ const Registration: React.FunctionComponent<{}> = () => {
 
   return useMemo(() => (
     <Suspense fallback={<Loader />}>
-      <Modal>
+      <Modal allowGoBack={false}>
         <Form onSubmit={onSubmit}>
           <Span
             customCss={css`

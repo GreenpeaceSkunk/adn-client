@@ -1,8 +1,8 @@
-import React, { memo, useCallback, useEffect, useMemo } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useHistory, useRouteMatch } from 'react-router';
 import { Wrapper, Img } from '@bit/meema.ui-components.elements';
-import { Overlay } from '../Elements';
+import Elements from '../Elements';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { XCloseIcon } from '../../assets/images';
@@ -19,27 +19,39 @@ const XCloseButton = styled(Wrapper)`
 interface IProps {
   children?: React.ReactNode | HTMLAllCollection;
   customCss?: CustomCSSType;
+  allowGoBack?: boolean;
 }
 
 const Component: React.FunctionComponent<IProps> = ({
   children,
   customCss,
+  allowGoBack = true,
 }) => {
   const history = useHistory();
   const { path } = useRouteMatch();
 
   const goBack = useCallback(() => {
-    console.log('goback')
-    history.goBack();
+    if(allowGoBack) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
   }, [
     history,
+    allowGoBack,
   ]);
+
+  useEffect(() => {
+    return () => {
+      console.log('Unmount');
+    }
+  }, []);
   
   return useMemo(() => (
     <>
       {ReactDOM.createPortal(
         <>
-          <Overlay
+          <Elements.Overlay
             onClick={goBack}
           />
           <Wrapper
@@ -59,19 +71,23 @@ const Component: React.FunctionComponent<IProps> = ({
             <Wrapper
               customCss={css`
                 position: relative;
-                background-color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 border-radius: ${pixelToRem(20)};
-                padding: ${pixelToRem(40)};
+                padding: ${pixelToRem(40)} ${pixelToRem(40)};
                 width: 90%;
-                pointer-events: auto;
                 transform-origin: 50% 50%;
                 animation-name: show-modal;
                 animation-duration: 250ms;
                 transition: all 250ms ease;
+                pointer-events: auto;
+                background-color: white;
 
-                @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
-                  width: ${pixelToRem(500)};
+                @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+                  width: auto;
                 }
+
                 ${customCss};
 
                 @keyframes show-modal {
@@ -99,6 +115,7 @@ const Component: React.FunctionComponent<IProps> = ({
     </>
   ), [
     children,
+    allowGoBack,
     history,
     path,
   ]);
