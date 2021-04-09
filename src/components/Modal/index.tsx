@@ -40,12 +40,6 @@ const Component: React.FunctionComponent<IProps> = ({
     history,
     allowGoBack,
   ]);
-
-  useEffect(() => {
-    return () => {
-      console.log('Unmount');
-    }
-  }, []);
   
   return useMemo(() => (
     <>

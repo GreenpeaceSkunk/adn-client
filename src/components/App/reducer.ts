@@ -11,9 +11,9 @@ export type ContextActionType =
 export const initialState: ContextStateType = {
   user: null,
   // user: {
-  //   birthDate: '20/03/1985',
-  //   email: 'dtovbein@gmail.com',
-  //   fullName: 'Dan Tovbein',
+  //   birthDate: '20/03/1990',
+  //   email: 'doe.deer@gmail.com',
+  //   fullName: 'Doe Deer',
   // } as IUser,
   submitting: false,
   submitted: false,

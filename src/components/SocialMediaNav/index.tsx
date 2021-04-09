@@ -66,7 +66,6 @@ const SocialMediaNavs: FunctionComponent<{}> = () => {
       >
         <img src={EmailLogo} alt='Email' width='auto' height='auto' />
       </EmailShareButton>
-      
     </Nav>
   )
 }

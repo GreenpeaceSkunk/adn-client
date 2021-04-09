@@ -133,23 +133,6 @@ const Registration: React.FunctionComponent<{}> = () => {
     birthYearRef,
   ]);
 
-
-  useEffect(() => {
-    if(birthDay !== '' && birthMonth !== '' && birthYear !== '') {
-      dispatch({
-        type: 'UPDATE_USER_DATA',
-        payload: { 
-          'birthDate': `${birthDay}/${birthMonth}/${birthYear}`
-        },
-      });
-    }
-  }, [
-    birthDay,
-    birthMonth,
-    birthYear,
-    dispatch,
-  ])
-
   const onSubmit = useCallback((evt: any) => {
     evt.preventDefault();
     (async () => {
@@ -183,9 +166,26 @@ const Registration: React.FunctionComponent<{}> = () => {
   ]);
 
   useEffect(() => {
-    dispatch({
-      type: 'RESET_USER_DATA',
-    });
+    if(birthDay !== '' && birthMonth !== '' && birthYear !== '') {
+      dispatch({
+        type: 'UPDATE_USER_DATA',
+        payload: { 
+          'birthDate': `${birthDay}/${birthMonth}/${birthYear}`
+        },
+      });
+    }
+  }, [
+    birthDay,
+    birthMonth,
+    birthYear,
+    dispatch,
+  ])
+
+  useEffect(() => {
+    // TODO: Only for testing
+    // dispatch({
+    //   type: 'RESET_USER_DATA',
+    // });
   }, []);
 
   return useMemo(() => (

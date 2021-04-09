@@ -258,7 +258,6 @@ const Game: React.FunctionComponent<IProps> = ({
   useEffect(() => {
     if(losers.length === matches.length - 1) {
       if(!matches[currentStep ][1]) {
-        console.log('Agregar random de perdedores');
         matches[currentStep].push(losers[Math.round(Math.random() * 1)]);
       }
     }

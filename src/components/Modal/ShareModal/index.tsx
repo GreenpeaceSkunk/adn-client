@@ -18,18 +18,28 @@ import { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { ResultsContext } from '../../Results';
 
-const Modal = React.lazy(() => import('../../../components/Modal'));
+const Modal = React.lazy(() => import('..'));
 const SHARE_MODAL_HEIGHT = 800;
 const SHARE_MODAL_WIDTH = 600;
 
-const Share: React.FunctionComponent<{}> = () => {
-
+const ShareModal: React.FunctionComponent<{}> = () => {
   const { results } = useContext(ResultsContext);
 
   return useMemo(() => (
     <Suspense fallback={<Loader />}>
       <Modal
         customCss={css`
+          display: flex;
+          flex-direction: column;
+
+          nav button {
+            margin-right: ${pixelToRem(10)};
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
           @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
             padding-left: ${pixelToRem(54)};
             padding-right: ${pixelToRem(54)};
@@ -96,4 +106,4 @@ const Share: React.FunctionComponent<{}> = () => {
   ]);
 }
 
-export default memo(withRouter(Share));
+export default memo(withRouter(ShareModal));

@@ -1,6 +1,6 @@
 import Elements from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
-import { pixelToRem } from 'meema.utils';
+import { pixelToRem, CustomCSSType } from 'meema.utils';
 import { Link } from 'react-router-dom';
 
 export const Overlay = styled(Elements.Wrapper)`
@@ -25,17 +25,21 @@ export const H1 = styled(Elements.H1)<IH1>`
   text-align: ${props => props.textAlign ? props.textAlign : 'left'};
 `;
 
-interface IButtonNavLink { disabled?: boolean; format?: string }
+interface IButtonNavLink { disabled?: boolean; format?: string; customCss?: CustomCSSType }
 export const ButtonNavLink = styled(Link)<IButtonNavLink>`
   display: inline-flex;
   align-items: center;
   padding: ${pixelToRem(10)} ${pixelToRem(46)};
-  width: auto;
+  width: fit-content;
   border-radius: ${pixelToRem(30)};
   font-size: ${pixelToRem(24)};
   color: white;
   background: ${(props) => props.theme.color.primary.normal};
   transition: all 250ms ease;
+
+  svg {
+    margin-left: ${pixelToRem(10)};
+  }
 
   &:hover {
     background: ${(props) => props.theme.color.primary.dark};
@@ -49,15 +53,29 @@ export const ButtonNavLink = styled(Link)<IButtonNavLink>`
 
   ${props => (props.format && props.format === 'outlined') && css`
     background: transparent;
-    font-size: ${pixelToRem(32)};
     border: solid 2px white;
 
     &:hover {
-      color: white;
-      background: ${(props) => props.theme.color.primary.dark};
+      color: ${(props) => props.theme.color.primary.dark};
+      background: white;
+      border-color: ${(props) => props.theme.color.primary.dark};
 
+      svg path {
+        fill: ${(props) => props.theme.color.primary.dark};
+      }
     }
   `}
+  
+  ${props => (props.format && props.format === 'text') && css`
+    background: transparent;
+
+    &:hover {
+      color: ${(props) => props.theme.color.primary.dark};
+      background: white;
+    }
+  `}
+
+  ${({customCss}) => customCss};
 `;
 
 export const Button = styled(Elements.Button)<IButtonNavLink>`
