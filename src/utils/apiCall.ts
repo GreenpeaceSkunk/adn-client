@@ -1,11 +1,6 @@
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AxiosResquestError } from 'greenpeace';
 
-const isRequestError = (object: any): object is AxiosResquestError => {
-  console.log(object);
-  return (!object) ? true : object.error;
-}
-
 const ApiCall = async <A>(config: AxiosRequestConfig) => {
   try {
     const response: AxiosResponse = await Axios.request({

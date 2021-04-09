@@ -11,14 +11,12 @@ import { pushToDataLayer } from '../../utils/gtm';
 import { trackEvent } from '../../utils/facebookPixel';
 import { initialize as initializeTagManager } from '../../utils/gtm';
 import { initialize as initializeFacebookPixel } from '../../utils/facebookPixel';
-import { 
-  BackgroundHome,
-} from '../../assets/images';
+import { BackgroundHome } from '../../assets/images';
 import { GameProvider } from '../Game/context';
 
 const MainHeader = React.lazy(() => import('../Header'));
 const MainFooter = React.lazy(() => import('../Footer'));
-const HomeView = React.lazy(() => import('../../routes/Home'));
+const HomeView = React.lazy(() => import('../Home'));
 const ResultsRouter = React.lazy(() => import('../Results/router'));
 const TutorialRouter = React.lazy(() => import('../Tutorial/router'));
 const GameRouter = React.lazy(() => import('../Game/router'));
@@ -36,11 +34,6 @@ const Main = styled(Wrapper)`
   justify-content: space-between;
   margin: auto;
   min-height: 100vh;
-  background: ${props => props.theme.color.primary.normal};
-  background-image: linear-gradient(0, #005C42 0%, rgba(0, 92, 66, 0) 100%), url(${BackgroundHome});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
   font-family: ${({theme}) => theme.font.family.primary.regular};
 `;
@@ -62,6 +55,21 @@ const App: React.FunctionComponent<{}> = () => {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <ErrorBoundary>
+        <Wrapper
+          customCss={css`
+            background: ${props => props.theme.color.primary.normal};
+            background-image: linear-gradient(0, #005C42 0%, rgba(0, 92, 66, 0) 100%), url(${BackgroundHome});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+          `}
+        />
         <AppProvider>
           <Switch>
             <Route path='/'>

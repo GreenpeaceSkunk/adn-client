@@ -1,16 +1,15 @@
-import React, { memo, Suspense, useContext, useEffect, useMemo, useState } from 'react';
+import React, { memo, Suspense, useEffect, useMemo, useState } from 'react';
 import {useParams, withRouter } from 'react-router-dom';
-import { Loader } from '../Shared';
-import config from '../../config';
+import { Loader } from '../../Shared';
+import config from '../../../config';
 import { Wrapper, Img, P, H1 } from '@bit/meema.ui-components.elements';
 import { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { IAnimal } from 'greenpeace';
-const Modal = React.lazy(() => import('../Modal'));
 
-interface IProps {}
+const Modal = React.lazy(() => import('..'));
 
-const Component: React.FunctionComponent<IProps> = () => {
+const Component: React.FunctionComponent<{}> = () => {
   const { id } = useParams<{ id: string }>();
   const [ animal, setAnimal ] = useState<IAnimal | null>(null);
   const [ image, setImage ] = useState<string>('');
@@ -18,7 +17,7 @@ const Component: React.FunctionComponent<IProps> = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { default: src } = await import(`../../assets/images/animals/${animal?.picture}`);
+        const { default: src } = await import(`../../../assets/images/animals/${animal?.picture}`);
         setImage(src);
       } catch (err) {
         console.log(`Error when loading image`);
@@ -39,8 +38,15 @@ const Component: React.FunctionComponent<IProps> = () => {
       <Modal
         customCss={css`
           padding: ${pixelToRem(60)} ${pixelToRem(40)};
-          
+          width: 90vw;
+
+          @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+            width: 90vw;
+            
+          }
+
           @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+            width: auto;
             padding-left: ${pixelToRem(69)};
             padding-right: ${pixelToRem(69)};
           }

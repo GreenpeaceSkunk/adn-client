@@ -7,7 +7,7 @@ COPY . /usr/src/app/
 RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent 
 RUN npm run types
-RUN npm run build 
+RUN npm run client:build:development 
 
 FROM nginx:1.16.0-alpine
 COPY --from=adn_greenpeace_app /app/build /usr/share/nginx/html

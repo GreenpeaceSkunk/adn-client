@@ -1,31 +1,22 @@
 import React, { memo, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { Img, Wrapper } from '@bit/meema.ui-components.elements';
+import { Wrapper } from '@bit/meema.ui-components.elements';
 import { pixelToRem } from 'meema.utils';
 import styled, { css } from 'styled-components';
 import { IAnimal } from 'greenpeace';
 import { Loader } from '../Shared';
 
 export const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boolean; }>`
-  /* position: absolute; */
   padding: ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(20)};
-  font-size: ${pixelToRem(32)};
-  font-family: ${props => props.theme.font.family.primary.bold};
+  font-size: ${pixelToRem(30)};
+  font-family: ${props => props.theme.font.family.primary.regular};
   width: 100%;
-  
-  /* max-width: ${pixelToRem(160)}; */
-  /* background: white; */
-  /* color: ${props => props.theme.color.primary.normal}; */
-
   color: white;
   text-align: center;
-
   border-top-left-radius: ${pixelToRem(80 / 2)};
   border-top-right-radius: ${pixelToRem(80 / 2)};
   border-bottom-right-radius: ${pixelToRem(80 / 2)};
   border-bottom-left-radius: ${pixelToRem(80 / 2)};
   animation-delay: 750ms;
-  /* transform: scale(0); */
-  /* z-index: 99999; */
 
   ${(props) => (props.showChipAnimation === true) && css`
     animation: showTextAnimation 250ms forwards;
@@ -34,8 +25,6 @@ export const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimatio
   ${(props) => (props.showChipAnimation === false) && css`
     animation: hideTextAnimation 250ms forwards;
   `}
-
-  /* top: calc(100% + ${pixelToRem(20)}); */
   
   @keyframes showTextAnimation {
     0% {
@@ -79,8 +68,6 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   label,
   name,
   picture,
-  showChip = false,
-  chipOrientation = 'bottom',
   borderRadius = true,
   onClickHandler,
 }) => {
@@ -92,9 +79,6 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   const onClick = useCallback(() => {
     if(onClickHandler) {
       setClicked(true);
-      // const timer = setTimeout((a, b) => {
-          // onClickHandler(label);
-          // }, 1000);
       let tick = 0;
       const interval = setInterval(() => {
         tick++;
@@ -106,12 +90,9 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         
         if(tick === 12) {
           onClickHandler(label);
-          // setShowChipAnimation(false);
           clearInterval(interval);
         }
       }, 50);
-
-      // return () => clearTimeout(timer);
     }
   }, [
     label,
@@ -187,14 +168,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
             transition: all 300ms ease;
           `}
         />
-        
       </Wrapper>
-      {/* {(showChip) && (
-        <Chip
-          chipOrientation={chipOrientation}
-          showChipAnimation={showChipAnimation}
-        >{name}</Chip>
-      )} */}
     </>
   ), [
     description,
