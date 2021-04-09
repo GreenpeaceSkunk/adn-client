@@ -10,7 +10,6 @@ class ErrorBoundary extends React.Component<IProps, IState> {
   }
 
   static getDerivedStateFromError(error: any) {
-    console.log(error);
     return { hasError: true };
   }
 

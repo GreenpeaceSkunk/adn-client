@@ -4,8 +4,8 @@ import { AppContext } from '../App/context';
 import { Loader } from '../Shared';
 
 const Component = React.lazy(() => import('.'));
-const Share = React.lazy(() => import('../../components/Modal/Share'));
-const AnimalDescription = React.lazy(() => import('../AnimalDescription'));
+const ShareModal = React.lazy(() => import('../Modal/ShareModal'));
+const AnimalDescriptionModal = React.lazy(() => import('../Modal/AnimalDescriptionModal'));
 
 const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
   const { path } = useRouteMatch();
@@ -22,12 +22,12 @@ const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
           </Route>
           <Route path={`${path}/animal/:id`}>
             <Suspense fallback={<Loader />}>
-              <AnimalDescription />
+              <AnimalDescriptionModal />
             </Suspense>
           </Route>
           <Route path={`${path}/share`}>
             <Suspense fallback={<Loader />}>
-              <Share />
+              <ShareModal />
             </Suspense>
           </Route>
         </>

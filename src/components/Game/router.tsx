@@ -6,7 +6,6 @@ import Component from './';
 const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
   const { path } = useRouteMatch();
   const { user } = useContext(AppContext);
-console.log(user)
   return useMemo(() => (
     <Switch>
       {(user) ? (

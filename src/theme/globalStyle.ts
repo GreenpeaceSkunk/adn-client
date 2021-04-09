@@ -80,4 +80,8 @@ export const GlobalStyle = createGlobalStyle<DefaultTheme>`
     list-style-type: none;
   }
 
+  button {
+    outline: none;
+  }
+
 `;

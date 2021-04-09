@@ -1,9 +1,8 @@
-import React, { createContext, memo, Suspense, useContext, useEffect, useMemo, useState } from 'react';
-import { NavLink, Route, Switch, useRouteMatch, withRouter } from 'react-router-dom';
-import { Wrapper, A, H1, Span, View, Header, Nav } from '@bit/meema.ui-components.elements';
+import React, { createContext, memo, useContext, useEffect, useMemo, useState } from 'react';
+import { NavLink, useRouteMatch, withRouter } from 'react-router-dom';
+import { Wrapper, A, H1, View, Header, Nav } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
-import { trackEvent } from '../../utils/facebookPixel';
 import ResultsCard from './Card';
 import { ButtonNavLink } from '../Elements';
 import { AppContext } from '../App/context';
@@ -13,9 +12,6 @@ import { IAnimal } from 'greenpeace';
 interface IContext {
   results: IAnimal[];
 }
-
-// const Share = React.lazy(() => import('../../components/Modal/Share'));
-const AnimalDescription = React.lazy(() => import('../AnimalDescription'));
 
 const HomeButton = styled(NavLink)`
   color: white;
@@ -119,7 +115,7 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
             }
           `}
         >
-          <ButtonNavLink to={`${path}/share`}>¡Compartí el resultado con amigos!</ButtonNavLink>
+          <ButtonNavLink to={`${path}/share`}>¡Compartí el test con amigos!</ButtonNavLink>
           <HomeButton to='/'>Ir al inicio</HomeButton>
         </Nav>
       </View>
