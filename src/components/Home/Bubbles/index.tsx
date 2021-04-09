@@ -29,10 +29,9 @@ const Bubble: React.FunctionComponent<IProps> = ({
         position: absolute;
         top: ${pixelToRem(initialPosY)};
         left: ${initialPosX}%;
-        width: ${pixelToRem(size)};
-        height: ${pixelToRem(size)};
-        animation: animate ${animationTime}s infinite;
         z-index: 1;
+        transform-origin: 50% 50%;
+        transition: all 100ms ease;
 
         @keyframes animate {
           0% {

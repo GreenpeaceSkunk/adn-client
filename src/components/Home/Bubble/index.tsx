@@ -2,9 +2,6 @@ import React from 'react';
 import { Wrapper } from '@bit/meema.ui-components.elements';
 import { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
-import { backgroundImage } from '../../../styles/mixins';
-// import { BackgroundHome } from '../../../lib/images';
-
 interface IProps {
   size?: number;
   initialPosX?: number;
