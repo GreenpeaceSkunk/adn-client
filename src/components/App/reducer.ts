@@ -9,12 +9,12 @@ export type ContextActionType =
 | SharedActions;
 
 export const initialState: ContextStateType = {
-  // user: null,
-  user: {
-    birthDate: '20/03/1990',
-    email: 'doe.deer@gmail.com',
-    fullName: 'Doe Deer',
-  } as IUser,
+  user: null,
+  // user: {
+  //   birthDate: '20/03/1990',
+  //   email: 'doe.deer@gmail.com',
+  //   fullName: 'Doe Deer',
+  // } as IUser,
   submitting: false,
   submitted: false,
   error: null,

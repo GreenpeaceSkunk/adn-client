@@ -96,23 +96,3 @@ const Router: React.FunctionComponent<{}> = () => {
 
 Router.displayName = 'AppRouter';
 export default memo(Router);
-
-{/* <Wrapper
-            customCss={css`
-              position: relative;
-              height: ${({theme}) => pixelToRem(window.innerHeight - theme.header.mobile.height - theme.footer.mobile.height)};
-              background-color: orange;
-              
-              @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
-                height: ${({theme}) => pixelToRem(window.innerHeight - theme.header.tablet.height - theme.footer.tablet.height)};
-                background-color: pink;
-              }
-              
-              @media (min-width: ${({theme}) => pixelToRem(theme.responsive.desktop.minWidth)}) {
-                height: ${({theme}) => pixelToRem(window.innerHeight - theme.header.desktop.height - theme.footer.desktop.height)};
-                background-color: brown;
-              }
-            `}
-          >
-          </Wrapper> */}
-          
