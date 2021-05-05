@@ -1,7 +1,7 @@
 import React, { Suspense, memo, useContext, useMemo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter } from 'react-router';
 import { AppContext } from '../App/context';
-import { Loader } from '../Shared';
+import Widgets from '../Widgets';
 
 const Component = React.lazy(() => import('.'));
 const ShareModal = React.lazy(() => import('../Modal/ShareModal'));
@@ -16,17 +16,17 @@ const Router: React.FunctionComponent<{}> =  memo(withRouter(() => {
       {(user) ? (
         <>
           <Route path={path}>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Widgets.Loader />}>
               <Component />
             </Suspense>
           </Route>
           <Route path={`${path}/animal/:id`}>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Widgets.Loader />}>
               <AnimalDescriptionModal />
             </Suspense>
           </Route>
           <Route path={`${path}/share`}>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Widgets.Loader />}>
               <ShareModal />
             </Suspense>
           </Route>

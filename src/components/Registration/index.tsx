@@ -1,7 +1,6 @@
 import React, { Suspense, memo, useCallback, useContext, useEffect, useMemo, useState, useRef } from 'react';
 import { useHistory, useRouteMatch, withRouter } from 'react-router';
 import Elements, { Wrapper, Nav, P, Span, Label } from '@bit/meema.ui-components.elements';
-import { Button } from '../Elements';
 import styled, { css } from 'styled-components';
 import { AppContext } from '../App/context';
 import { pixelToRem } from 'meema.utils';
@@ -9,7 +8,7 @@ import { CustomCSSType, OnChangeEvent } from 'greenpeace';
 import { save } from './service';
 import { addZero } from '../../utils/shared';
 import moment from 'moment';
-import { Loader } from '../Shared';
+import Widgets from '../Widgets';
 
 const Modal = React.lazy(() => import('../Modal'));
 
@@ -189,7 +188,7 @@ const Registration: React.FunctionComponent<{}> = () => {
   }, []);
 
   return useMemo(() => (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Widgets.Loader />}>
       <Modal allowGoBack={false}>
         <Form onSubmit={onSubmit}>
           <Span
@@ -321,11 +320,7 @@ const Registration: React.FunctionComponent<{}> = () => {
             </FormGroup>
           </Wrapper>
           <Nav>
-            <Button
-              type='submit'
-            >
-              Comenzar
-            </Button>
+            <Widgets.Button type='submit'>Comenzar</Widgets.Button>
           </Nav>
           <P
             customCss={css`

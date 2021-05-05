@@ -3,11 +3,11 @@ import { Wrapper } from '@bit/meema.ui-components.elements';
 import { pixelToRem } from 'meema.utils';
 import styled, { css } from 'styled-components';
 import { IAnimal } from 'greenpeace';
-import { Loader } from '../Shared';
+import Widgets from '../Widgets';
 
 export const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimation?: boolean; }>`
   padding: ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(15)} ${pixelToRem(20)};
-  font-size: ${pixelToRem(30)};
+  font-size: ${pixelToRem(20)};
   font-family: ${props => props.theme.font.family.primary.regular};
   width: 100%;
   color: white;
@@ -17,6 +17,14 @@ export const Chip = styled(Wrapper)<{ chipOrientation?: string; showChipAnimatio
   border-bottom-right-radius: ${pixelToRem(80 / 2)};
   border-bottom-left-radius: ${pixelToRem(80 / 2)};
   animation-delay: 750ms;
+
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.mobile.minWidth)}) {
+    font-size: ${pixelToRem(22)};
+  }
+
+  @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
+    font-size: ${pixelToRem(30)};
+  }
 
   ${(props) => (props.showChipAnimation === true) && css`
     animation: showTextAnimation 250ms forwards;
@@ -153,7 +161,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         onClick={onClick}
       >
         {(!imageLoaded) && (
-          <Loader />  
+          <Widgets.Loader />  
         )}
         <Wrapper 
           customCss={css`

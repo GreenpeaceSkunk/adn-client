@@ -6,13 +6,12 @@ import styled, { css } from 'styled-components';
 import { IAnimal } from 'greenpeace';
 import { pixelToRem } from 'meema.utils';
 import { SliderIcon } from '../../assets/images';
-import { H1 } from '../../components/Elements'; 
+import Widgets from '../../components/Widgets'; 
 import Animal, { Chip } from '../../components/Animal';
 import { ArrowLeftIcon } from '../../assets/images';
 import config from '../../config'; 
 import ThreeCircles from '@bit/meema.ui-components.loaders.three-circles';
 import { GameContext } from './context';
-import { desktopMinWidth } from '../../theme/Theme';
 interface MatchParams {
   stepId?: string;
 }
@@ -25,94 +24,104 @@ const ProgressLine = styled(Wrapper)<{ finished: boolean }>`
   margin-right: ${pixelToRem(30)};
   margin-left: ${pixelToRem(30)};
   background-color: white;
-  animation: bg-animation 1000ms infinite;
+  transform-origin: center center;
   transition: all 500ms ease;
+  animation: bg-animation 1000ms infinite;
 
   ${(props) => (props.finished) && css`
     background: ${({theme}) => theme.color.primary.normal};
   `}
 `;
 
-const WrapperAnimal = styled(Wrapper)<{ size?: number }>`
+const WrapperAnimal = styled(Wrapper)<{ size?: number; }>`
+  --size: 46vw;
+  
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+    --size: ${pixelToRem(310)};
+  }
+  
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+    --size: ${pixelToRem(310)};
+  }
+
   position: absolute;
   display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: ${({size}) => (size && pixelToRem(size))};
-  height: ${({size}) => (size && pixelToRem(size))};
+  width: var(--size);
+  height: var(--size);
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   opacity: 0;
   top: ${pixelToRem(40)};
   cursor: pointer;
-  
-  ${({size}) => size && css`
-    &.fromLeft {
-      animation-name: fromLeft;
-      animation-duration: 750ms;
+  transition: all 250ms ease;
 
-      @keyframes fromLeft {
-        0% {
-          left: -${pixelToRem(size)};
-        }
-        100% {
-          left: calc(48% - ${pixelToRem(size)});
-          opacity: 1;
-        }
+  &.fromLeft {
+    left: calc(var(--size) * -1);
+    animation-name: fromLeft;
+    animation-duration: 750ms;
+
+    @keyframes fromLeft {
+      0% {
+        left: calc(var(--size) * -1);
+        opacity: 0;
+      }
+      100% {
+        left: calc(48% - var(--size));
+        opacity: 1;
       }
     }
+  }
 
-    &.toLeft {
-      animation-name: toLeft;
-      animation-duration: 500ms;
+  &.toLeft {
+    animation-name: toLeft;
+    animation-duration: 500ms;
 
-      @keyframes toLeft {
-        0% {
-          opacity: 1;
-          left: calc(48% - ${pixelToRem(size)});
-        }
-        100% {
-          left: -${pixelToRem(size)};
-          opacity: 0;
-        }
+    @keyframes toLeft {
+      0% {
+        opacity: 1;
+        left: calc(48% - var(--size));
+      }
+      100% {
+        left: calc(var(--size) * -1);
+        opacity: 0;
       }
     }
+  }
 
-    &.fromRight {
-      animation-name: fromRight;
-      animation-duration: 750ms;
+  &.fromRight {
+    animation-name: fromRight;
+    animation-duration: 750ms;
+    right: calc(var(--size) * -1);
 
-
-      @keyframes fromRight {
-        0% {
-          right: -${pixelToRem(size)};
-        }
-        100% {
-          right: calc(48% - ${pixelToRem(size)});
-          opacity: 1;
-        }
+    @keyframes fromRight {
+      0% {
+        right: calc(var(--size) * -1);
+        opacity: 0;
+      }
+      100% {
+        right: calc(48% - var(--size));
+        opacity: 1;
       }
     }
+  }
 
-    &.toRight {
-      animation-name: toRight;
-      animation-duration: 500ms;
-      
-
-      @keyframes toRight {
-        0% {
-          opacity: 1;
-          right: calc(48% - ${pixelToRem(size)});
-        }
-        100% {
-          right: -${pixelToRem(size)};
-          opacity: 0;
-        }
+  &.toRight {
+    animation-name: toRight;
+    animation-duration: 500ms;
+    
+    @keyframes toRight {
+      0% {
+        opacity: 1;
+        right: calc(48% - var(--size));
+      }
+      100% {
+        right: calc(var(--size) * -1);
+        opacity: 0;
       }
     }
-  `}
-
-  
+  }
 `;
 
 const Game: React.FunctionComponent<IProps> = ({
@@ -267,7 +276,19 @@ const Game: React.FunctionComponent<IProps> = ({
   ]);
 
   return useMemo(() => (
-    <View>
+    <Widgets.View
+      customCss={css`
+        padding-top: ${pixelToRem(5)};
+
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.mobile.minWidth)}) {
+          padding-top: ${pixelToRem(15)};
+        }
+        
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+          padding-top: ${pixelToRem(30)};
+        }
+      `}
+    >
       <Wrapper
         customCss={css`
           display: flex;
@@ -280,37 +301,61 @@ const Game: React.FunctionComponent<IProps> = ({
           customCss={css`
             display: flex;
             flex: 1 0 15%;
-            padding-left: ${pixelToRem(40)};
+            padding-left: ${pixelToRem(20)};
             align-items: center;
             justify-content: flex-start;
             overflow: hidden;
+
+            @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+              padding-left: ${pixelToRem(40)};
+            }
           `}
         >
           <Switch>
             <Route exact path={match.path}>
-              {(currentStep > 1) && (<Wrapper
+              <Wrapper
                 onClick={goPrev}
                 customCss={css`
                   color: white;
                   font-family: ${pixelToRem(50)} !important;
                   cursor: pointer;
+                  opacity: 0;
+                  pointer-events: none;
+                  transform: translateX(-100vw);
+                  margin-bottom: ${pixelToRem(20)};
+                  transition: all 250ms ease-out;
+
+
+                  ${(currentStep > 1) && css`
+                    opacity: 1;
+                    pointer-events: auto;
+                    transform: translateX(0);
+                  `}
                 `}
               ><Img
                 customCss={css`
                   margin-right:${pixelToRem(14)};
                 `}
-                src={ArrowLeftIcon}
-              />Volver al paso anterior</Wrapper>)}
+                src={ArrowLeftIcon}/>Volver al paso anterior</Wrapper>
             </Route>
           </Switch>
         </Wrapper>
-        <H1
+        <Widgets.H1
           customCss={css`
             text-align: center !important;
-            margin-top: ${pixelToRem(34)};
+            font-size: ${pixelToRem(28)} !important;
             padding: 0 10%;
+            transition: all 250ms ease-out;
+
+            @media (min-width: ${props => pixelToRem(props.theme.responsive.mobile.minWidth)}) {
+              font-size: ${pixelToRem(34)} !important;
+            }
+            
+            @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
+              font-size: ${pixelToRem(50)} !important;
+            }
           `}
-        >Elegí con cuál te identificas más</H1>
+        >Elegí con cuál te identificas más</Widgets.H1>
       </Wrapper>
       <Wrapper customCss={css`
         height: ${pixelToRem(40)};
@@ -404,7 +449,6 @@ const Game: React.FunctionComponent<IProps> = ({
           />
         </Wrapper>
       </Wrapper>
-
       <Switch>
         <Route exact path={`${match.path}/end`}>
           <Wrapper
@@ -426,9 +470,9 @@ const Game: React.FunctionComponent<IProps> = ({
               display: flex;
               flex-direction: column;
               width: 100%;
-              margin: ${pixelToRem(50)} 0;
 
               @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+                margin: ${pixelToRem(50)} 0;
                 height: ${pixelToRem(450)};
               }
             `}>
@@ -437,7 +481,6 @@ const Game: React.FunctionComponent<IProps> = ({
                   <>
                     <WrapperAnimal
                       className={`${isSelected ? 'toLeft' : 'fromLeft'}`}
-                      size={(window.innerWidth >= desktopMinWidth) ? 310 : 180}
                     >
                       {(players.length && matches.length) && (
                         <Animal
@@ -452,7 +495,6 @@ const Game: React.FunctionComponent<IProps> = ({
 
                     <WrapperAnimal
                       className={`${isSelected ? 'toRight' : 'fromRight'}`}
-                      size={(window.innerWidth >= desktopMinWidth) ? 310 : 180}
                     >
                       {(players.length && matches.length) && (
                         <Animal
@@ -470,7 +512,7 @@ const Game: React.FunctionComponent<IProps> = ({
           </Wrapper>
         </Route>
       </Switch>
-    </View>
+    </Widgets.View>
   ), [
     currentStep,
     maxSteps,

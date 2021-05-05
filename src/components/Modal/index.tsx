@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useHistory, useRouteMatch } from 'react-router';
 import { Wrapper, Img } from '@bit/meema.ui-components.elements';
-import Elements from '../Elements';
+import { Overlay } from '../Widgets';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { XCloseIcon } from '../../assets/images';
@@ -45,7 +45,7 @@ const Component: React.FunctionComponent<IProps> = ({
     <>
       {ReactDOM.createPortal(
         <>
-          <Elements.Overlay
+          <Overlay
             onClick={goBack}
           />
           <Wrapper

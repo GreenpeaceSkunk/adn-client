@@ -33,18 +33,16 @@ export const fontSecondaryRegular = 'Font-Secondary-Regular';
 export const fontSecondaryMedium = 'Font-Secondary-Medium';
 export const fontSecondaryBold = 'Font-Secondary-Bold';
 
-export const headerHeightSmall = 64;
-export const headerHeightNormal = 64;
-export const headerHeightLarge = 64;
-
-export const footerHeightSmall = 120;
-export const footerHeightNormal = 70;
-export const footerHeightLarge = 70;
-
-export const desktopMinWidth = 1024;
-export const tabletMinWidth = 768;
-export const tabletMaxWidth = 1023;
-export const mobileMaxWidth = 767;
+// export const desktopMinWidth = 1024;
+// export const tabletMinWidth = 768;
+// export const tabletMaxWidth = 1023;
+// export const mobileMaxWidth = 767;
+// @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
+// @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+// @media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+// @media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+// @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+// @media (min-width:1281px) { /* hi-res laptops and desktops */ }
 
 const DefaultTheme: ITheme = {
   borderRadius,
@@ -147,29 +145,44 @@ const DefaultTheme: ITheme = {
     }
   },
   header: {
-    height: {
-      small: headerHeightSmall,
-      normal: headerHeightNormal,
-      large: headerHeightLarge,
+    mobile: {
+      backgroundColor: 'transparent',
+      height: 50,
+    },
+    tablet: {
+      backgroundColor: 'transparent',
+      height: 60,
+    },
+    desktop: {
+      backgroundColor: 'transparent',
+      height: 60,
     },
   },
   footer: {
-    height: {
-      small: footerHeightSmall,
-      normal: footerHeightNormal,
-      large: footerHeightLarge,
+    mobile: {
+      backgroundColor: 'transparent',
+      height: 110,
+    },
+    tablet: {
+      backgroundColor: 'transparent',
+      height: 100,
+    },
+    desktop: {
+      backgroundColor: 'transparent',
+      height: 70,
     },
   },
   responsive: {
-    desktop: {
-      minWidth: desktopMinWidth,
+    mobile: {
+      minWidth: 321,
+      maxWidth: 413,
     },
     tablet: {
-      minWidth: tabletMinWidth,
-      maxWidth: tabletMaxWidth,
+      minWidth: 767,
+      maxWidth: 1023,
     },
-    mobile: {
-      maxWidth: mobileMaxWidth,
+    desktop: {
+      minWidth: 1024,
     },
   },
 };

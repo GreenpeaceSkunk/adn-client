@@ -4,7 +4,7 @@ import { Wrapper, A, H1, View, Header, Nav } from '@bit/meema.ui-components.elem
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import ResultsCard from './Card';
-import { ButtonNavLink } from '../Elements';
+import { ButtonNavLink } from '../Widgets';
 import { AppContext } from '../App/context';
 import { GameContext } from '../Game/context';
 import { IAnimal } from 'greenpeace';

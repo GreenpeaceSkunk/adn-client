@@ -1,6 +1,6 @@
 import React, { memo, Suspense, useContext, useMemo } from 'react';
 import {withRouter } from 'react-router-dom';
-import { Loader } from '../../Shared';
+import Widgets from '../../Widgets';
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -13,7 +13,7 @@ import {
   FacebookLogo,
   TwitterLogo,
   EmailLogo,
-} from '../../../assets/icons';
+} from '../../../utils/icons';
 import { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
 import { ResultsContext } from '../../Results';
@@ -26,7 +26,7 @@ const ShareModal: React.FunctionComponent<{}> = () => {
   const { results } = useContext(ResultsContext);
 
   return useMemo(() => (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Widgets.Loader />}>
       <Modal
         customCss={css`
           display: flex;
