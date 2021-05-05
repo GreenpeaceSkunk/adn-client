@@ -1,21 +1,20 @@
 import React, { memo, useMemo } from 'react';
 import { Redirect, Route, Switch, useRouteMatch, withRouter } from 'react-router';
-import { Nav, View, Svg } from '@bit/meema.ui-components.elements';
-import { ButtonNavLink } from '../Elements';
+import { Wrapper, Nav, View, Svg } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
-import { Loader } from '../Shared';
+import Widgets from '../Widgets';
 
-const ButtonNav = styled(ButtonNavLink)`
+const ButtonNav = styled(Widgets.ButtonNavLink)`
   justify-content: center;
-  min-width: ${pixelToRem(250)};
-  font-size: ${pixelToRem(32)};
-  margin-bottom: ${pixelToRem(20)};
+  /* min-width: ${pixelToRem(250)}; */
+  /* margin-bottom: ${pixelToRem(20)}; */
   margin-right: 0;
 
   @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
     margin-bottom: 0;
-    margin-right: ${pixelToRem(20)};
+    font-size: ${pixelToRem(32)};
+    /* margin-right: ${pixelToRem(20)}; */
   }
 `;
 
@@ -25,16 +24,27 @@ const Tutorial: React.FunctionComponent<{}> = () => {
   const { path } = useRouteMatch();
 
   return useMemo(() => (
-    <View>
+    <Widgets.View
+      customCss={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+          
+        }
+      `}
+    >
       <Switch>
         <Redirect from={path} to={`${path}/1`} />
       </Switch>
       
-      <React.Suspense fallback={<Loader />}>
+      <React.Suspense fallback={<Widgets.Loader />}>
         <TutorialStepRouter />
       </React.Suspense>
         
-      <Nav
+      <Wrapper
         customCss={css`
           display: flex;
           justify-content: center;
@@ -49,7 +59,8 @@ const Tutorial: React.FunctionComponent<{}> = () => {
             <Nav
               customCss={css`
                 display: flex;
-                flex-direction: column;
+                /* flex-direction: column; */
+                flex-direction: row;
                 margin: ${pixelToRem(20)} 0;
 
                 @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
@@ -65,15 +76,13 @@ const Tutorial: React.FunctionComponent<{}> = () => {
                 to='/game'
                 format='outlined'
               >Siguiente
-                <Svg width="11" height="18" viewBox="0 0 11 18" fill="none">
-                  <path d="M0.93934 14.9393C0.353553 15.5251 0.353553 16.4749 0.93934 17.0607C1.52513 17.6464 2.47487 17.6464 3.06066 17.0607L0.93934 14.9393ZM9 9L10.0607 10.0607C10.342 9.77936 10.5 9.39782 10.5 9C10.5 8.60217 10.342 8.22064 10.0607 7.93934L9 9ZM3.06066 0.93934C2.47487 0.353554 1.52513 0.353554 0.939339 0.93934C0.353553 1.52513 0.353553 2.47487 0.939339 3.06066L3.06066 0.93934ZM3.06066 17.0607L10.0607 10.0607L7.93934 7.93934L0.93934 14.9393L3.06066 17.0607ZM10.0607 7.93934L3.06066 0.93934L0.939339 3.06066L7.93934 10.0607L10.0607 7.93934Z" fill="white"/>
-                </Svg>
+                
               </ButtonNav>
             </Nav>
           </Route>
         </Switch>
-      </Nav>
-    </View>
+      </Wrapper>
+    </Widgets.View>
   ), [
     path,
   ]);
