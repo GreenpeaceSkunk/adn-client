@@ -104,29 +104,44 @@ export interface ITheme {
     };
   };
   header: {
-    height: {
-      small?: number;
-      normal?: number;
-      large?: number;
+    mobile?: {
+      backgroundColor?: string;
+      height?: number;
+    };
+    tablet?: {
+      backgroundColor?: string;
+      height?: number;
+    };
+    desktop?: {
+      backgroundColor?: string;
+      height?: number;
     };
   };
   footer: {
-    height: {
-      small?: number;
-      normal?: number;
-      large?: number;
+    mobile?: {
+      backgroundColor?: string;
+      height?: number;
+    };
+    tablet?: {
+      backgroundColor?: string;
+      height?: number;
+    };
+    desktop?: {
+      backgroundColor?: string;
+      height?: number;
     };
   };
   responsive: {
-    desktop: {
+    mobile: {
       minWidth?: number;
+      maxWidth?: number;
     };
     tablet: {
       minWidth?: number;
       maxWidth?: number;
     };
-    mobile: {
-      maxWidth?: number;
+    desktop: {
+      minWidth?: number;
     };
   };
 }
