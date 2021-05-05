@@ -25,8 +25,6 @@ const Component: React.FunctionComponent<{}> = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(document.documentElement.scrollTop);
-    console.log(window.scrollY);
     scroll.scrollToTop({
       duration: 250,
       smooth: 'easeInOutQuart',
