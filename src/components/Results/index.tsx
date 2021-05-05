@@ -102,7 +102,6 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
             animation: slideInNav 500ms forwards ease;
             animation-delay: 2800ms;
             opacity: 0;
-            pointer-events: none;
 
             @keyframes slideInNav {
               0% {

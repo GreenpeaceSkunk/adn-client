@@ -145,7 +145,8 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
           background-repeat: no-repeat;
           flex: 0 0 100%; 
           height: 100%;
-          border-radius: ${borderRadius ? '50%' : '0'};
+          /* border-radius: ${borderRadius ? '50%' : '0'}; */
+          border-radius: 50%;
           font-size: ${pixelToRem(40)};
           transition: all 300ms ease;
           overflow: hidden;
