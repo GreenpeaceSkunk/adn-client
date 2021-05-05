@@ -12,7 +12,7 @@ import {
   FacebookLogo,
   TwitterLogo,
   EmailLogo,
-} from '../../assets/icons';
+} from '../../utils/icons';
 
 const SHARE_MODAL_HEIGHT = 800;
 const SHARE_MODAL_WIDTH = 600;

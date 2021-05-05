@@ -1,6 +1,6 @@
 import React, { memo, Suspense, useEffect, useMemo, useState } from 'react';
 import {useParams, withRouter } from 'react-router-dom';
-import { Loader } from '../../Shared';
+import Widgets from '../../Widgets';
 import config from '../../../config';
 import { Wrapper, Img, P, H1 } from '@bit/meema.ui-components.elements';
 import { css } from 'styled-components';
@@ -34,7 +34,7 @@ const Component: React.FunctionComponent<{}> = () => {
   ]);
 
   return useMemo(() => (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Widgets.Loader />}>
       <Modal
         customCss={css`
           padding: ${pixelToRem(60)} ${pixelToRem(40)};
