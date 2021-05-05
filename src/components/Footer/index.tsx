@@ -7,9 +7,21 @@ const Link = styled(A)`
   color: white;
   text-decoration: underline;
   margin-bottom: ${pixelToRem(5)};
-
+  
   @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
     margin-bottom: 0;
+    
+    &:after {
+      content: '|';
+      margin-right: ${pixelToRem(10)};
+      margin-left: ${pixelToRem(10)};
+    }
+    
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
   }
 `;
 
@@ -19,16 +31,25 @@ const MainFooter: React.FunctionComponent<{}> = () => (
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding-top: ${pixelToRem(20)};
+      padding-bottom: ${pixelToRem(20)};
       width: 100vw;
+      height: ${({theme}) => pixelToRem(theme.footer.mobile.height)};
+      background-color: ${({theme}) => theme.footer.mobile.backgroundColor};
       color: white;
-      height: ${({theme}) => pixelToRem(theme.footer.height.small)};
+      transition: all 250ms ease;
       z-index: 1;
 
-      @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
-        height: ${({theme}) => pixelToRem(theme.footer.height.large)};
-        padding-top: 0;
+      @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
         padding-left: ${pixelToRem(40)};
         padding-right: ${pixelToRem(40)}; 
+        height: ${({theme}) => pixelToRem(theme.footer.tablet.height)};
+        background-color: ${({theme}) => theme.footer.tablet.backgroundColor};
+      }
+
+      @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+        height: ${({theme}) => pixelToRem(theme.footer.desktop.height)};
+        background-color: ${({theme}) => theme.footer.desktop.backgroundColor};
       }
     `}
   >
@@ -50,7 +71,7 @@ const MainFooter: React.FunctionComponent<{}> = () => (
         align-items: center;
         justify-content: center;
         margin-bottom: ${pixelToRem(10)};
-      
+        
         @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
           flex-direction: row;
           margin-bottom: 0;
@@ -60,20 +81,15 @@ const MainFooter: React.FunctionComponent<{}> = () => (
         <Link
           href='https://www.greenpeace.org/argentina/terminios-y-condiciones/'
         >Términos y condiciones</Link>
-        <Wrapper 
-          customCss={css`
-            margin: 0 ${pixelToRem(9)};
-            display: none;
-
-            @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
-              display: block;
-            }
-          `}>|</Wrapper>
         <Link
           href='https://www.greenpeace.org/argentina/politica-privacidad/'
         >Politicas de privacidad</Link>
       </Wrapper>
-      <Span>© Greenpeace Copyright</Span>
+      <Span
+        customCss={css`
+          color: white;
+        `}
+      >© Greenpeace Copyright</Span>
     </Nav>
   </Footer>
 );
