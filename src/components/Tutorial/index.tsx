@@ -7,14 +7,11 @@ import Widgets from '../Widgets';
 
 const ButtonNav = styled(Widgets.ButtonNavLink)`
   justify-content: center;
-  /* min-width: ${pixelToRem(250)}; */
-  /* margin-bottom: ${pixelToRem(20)}; */
   margin-right: 0;
 
   @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
     margin-bottom: 0;
     font-size: ${pixelToRem(32)};
-    /* margin-right: ${pixelToRem(20)}; */
   }
 `;
 
@@ -37,7 +34,7 @@ const Tutorial: React.FunctionComponent<{}> = () => {
       `}
     >
       <Switch>
-        <Redirect from={path} to={`${path}/1`} />
+        <Redirect exact from={path} to={`${path}/1`} />
       </Switch>
       
       <React.Suspense fallback={<Widgets.Loader />}>
@@ -72,7 +69,6 @@ const Tutorial: React.FunctionComponent<{}> = () => {
 
                 @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
                   flex-direction: row;
-                  
                 }
               `}
             >
