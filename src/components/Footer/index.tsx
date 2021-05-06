@@ -79,10 +79,10 @@ const MainFooter: React.FunctionComponent<{}> = () => (
         }
       `}>
         <Link
-          href='https://www.greenpeace.org/argentina/terminios-y-condiciones/'
-        >Términos y condiciones</Link>
+          href={`${process.env.REACT_APP_TERMS_AND_CONDITIONS_URL}`}
+          >Términos y condiciones</Link>
         <Link
-          href='https://www.greenpeace.org/argentina/politica-privacidad/'
+          href={`${process.env.REACT_APP_PRIVACY_POLICY_URL}`}
         >Politicas de privacidad</Link>
       </Wrapper>
       <Span
