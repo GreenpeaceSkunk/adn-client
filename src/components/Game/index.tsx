@@ -477,7 +477,7 @@ const Game: React.FunctionComponent<IProps> = ({
               }
             `}>
               {
-                (currentStep <= maxSteps) && (
+                (currentStep <= maxSteps && matches.length) && (
                   <>
                     <WrapperAnimal
                       className={`${isSelected ? 'toLeft' : 'fromLeft'}`}
@@ -504,7 +504,9 @@ const Game: React.FunctionComponent<IProps> = ({
                           onClickHandler={onClickHandler}
                         />
                       )}
-                      <Chip>{matches[currentStep - 1][1].name}</Chip>
+                      {(matches[currentStep - 1]) && matches[currentStep - 1][1] ? (
+                        <Chip>{matches[currentStep - 1][1].name}</Chip>
+                      ) : null}
                     </WrapperAnimal>
                   </>
                 )
