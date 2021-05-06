@@ -3,7 +3,7 @@ import { NavLink, useRouteMatch, withRouter } from 'react-router-dom';
 import { Wrapper, A, H1, View, Header, Nav } from '@bit/meema.ui-components.elements';
 import styled, { css } from 'styled-components';
 import { pixelToRem } from 'meema.utils';
-import ResultsCard from './Card';
+import Card from './Card';
 import { ButtonNavLink } from '../Widgets';
 import { AppContext } from '../App/context';
 import { GameContext } from '../Game/context';
@@ -78,6 +78,7 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            height: 100%;
 
             @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
               flex-direction: row;
@@ -86,9 +87,9 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
         >
           {(sortedResults.length === 3) && (
             <>
-              <ResultsCard title='Sentís como' animal={sortedResults[0]} cardType='feeling' delay={600} />
-              <ResultsCard title='Pensás como' animal={sortedResults[1]} cardType='thought' delay={1200} />
-              <ResultsCard title='Tenés la energía de' animal={sortedResults[2]} cardType='energy' delay={1800} />
+              <Card title='Sentís como' animal={sortedResults[0]} cardType='feeling' delay={600} />
+              <Card title='Pensás como' animal={sortedResults[1]} cardType='thought' delay={1200} />
+              <Card title='Tenés la energía de' animal={sortedResults[2]} cardType='energy' delay={1800} />
             </>
           )}
         </Wrapper>
