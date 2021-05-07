@@ -66,8 +66,9 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
               font-size: ${pixelToRem(32)} !important;
             }
           `}
-        >A continuación te mostraremos imágenes de animales.<br/>Para cada dupla, hace click en el animal con el que más te identifiques.
+        >A continuación te mostraremos imágenes de animales.<br/>Hace click en siguiente y elegí con cuál (o qué) animal te identificás más.
         </Widgets.H1>
+        {children}
       </Header>
       <Wrapper
         customCss={css`
