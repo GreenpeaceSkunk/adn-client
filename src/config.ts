@@ -40,8 +40,8 @@ const config: {
     feeling: 'El agua te hace sensible, y es por eso que te sentís cómodo/a en tu propio hábitat.',
     energy: 'Tenés poca energía y por eso elegís muy bien en qué usarla.',
   }, {
-    name: 'Pinguino de Magallanes',
-    label: 'pinguino',
+    name: 'Pingüino de Magallanes',
+    label: 'pingüino',
     picture: 'pinguino.png',
     description: 'Con un peso de 6kg en adultos, miden casi 50 cm de alto y machos y hembras se ven iguales. Ambos padres crían al pichón. Se estiman 1.100.000 parejas reproductivas, aunque se vieron disminuciones sostenidas en la reproducción debido a la extracción off-shore de petróleo y su transfporte que ponen en peligro a la especie. También la actividad pesquera y el cambio climático colaboran con ello. Migran durante el invierno (estación no reproductiva) hacia la provincia de Buenos aires, Uruguay y el sur de Brasil.',
     group: 'C',
