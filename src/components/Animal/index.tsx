@@ -110,6 +110,7 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
   ])
   
   useEffect(() => {
+    let isMounted = true;
     (async () => {
       try {
         setImageLoaded(false);
@@ -117,6 +118,10 @@ export const Animal: React.FunctionComponent<IAnimal & IProps> = ({
         setImage(src);
       } catch (err) {
         console.log(`Error when loading image`);
+      }
+
+      return () => {
+        isMounted = false;
       }
     })()
   }, [
