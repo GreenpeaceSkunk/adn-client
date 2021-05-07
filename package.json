@@ -53,7 +53,7 @@
   "scripts": {
     "client:start": "NODE_ENV=development && node -r dotenv/config ./node_modules/.bin/react-scripts start dotenv_config_path='$PWD/.env'",
     "client:build:development": "NODE_ENV=development PUBLIC_URL=/adn react-scripts build",
-    "client:build:production": "NODE_ENV=production PUBLIC_URL=/ react-scripts build && npm run build:version",
+    "client:build:production": "NODE_ENV=pgit statusroduction PUBLIC_URL=/ react-scripts build",
     "types": "ln -s $(pwd)/src/types $(pwd)/node_modules/@types/greenpeace",
     "stylelint": "npx stylelint '**/*.css'",
     "build:version": "npm run build:version:id && npm run build:version:date && npm run build:author",
