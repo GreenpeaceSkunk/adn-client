@@ -1,4 +1,4 @@
-# ADN Greenpeace Client Production
+# ADN GREENPEACE Client Production
 
 FROM node:14 as adn_greenpeace_app
 WORKDIR /usr/app/build

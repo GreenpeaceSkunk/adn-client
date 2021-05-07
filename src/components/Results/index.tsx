@@ -70,7 +70,7 @@ const Component: React.FunctionComponent<{}> = memo(withRouter(() => {
                 font-size: ${pixelToRem(40)};
               }
             `}
-          >{user?.fullName}, por tu ADN Greenpeace<br/> descubrimos que:</H1>
+          >{user?.fullName}, por tu ADN GREENPEACE<br/> descubrimos que:</H1>
         </Header>
         <Wrapper
           customCss={css`

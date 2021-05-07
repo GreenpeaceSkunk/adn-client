@@ -53,7 +53,7 @@ const Component: React.FunctionComponent<{}> = () => {
               font-size: ${pixelToRem(40)} !important;
             }
           `}
-        >Estamos analizando tu <Span customCss={css`color: white; font-family: ${props => props.theme.font.family.primary.bold};`}>ADN Greenpeace</Span>, para<br/>determinar qué animales autóctonos te representan</Widgets.H1>
+        >Estamos analizando tu <Span customCss={css`color: white; font-family: ${props => props.theme.font.family.primary.bold};`}>ADN GREENPEACE</Span>, para<br/>determinar qué animales autóctonos te representan</Widgets.H1>
       </Header>
       <Wrapper
         customCss={css`
