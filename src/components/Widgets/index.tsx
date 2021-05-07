@@ -128,10 +128,13 @@ export const ButtonNavLink = styled(Link)<IButtonNavLink>`
   
   ${({format}) => (format && format === 'text') && css`
     background: transparent;
+    padding: 0 !important;
     
     &:hover {
       color: ${({theme}) => theme.color.primary.dark};
-      background: white;
+      /* background: white; */
+      color: white;
+      background: transparent;
     }
   `}
 
