@@ -7,7 +7,11 @@ import Widgets from '../../../Widgets';
 import Animal from '../../../Animal';
 import config from '../../../../config'; 
 
-const TutorialStepOne: React.FunctionComponent<{}> = () => {
+const TutorialStepOne: React.FunctionComponent<{
+  children?: React.ReactNode | HTMLAllCollection;
+}> = ({
+  children,
+}) => {
   const sliderRef = useRef<React.ReactNode | HTMLAllCollection | any>();
   const [ sliderWidth, setSliderWidth ] = useState<number>(0);
 
@@ -34,10 +38,15 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
         }
 
         width: 100%;
+        height: 100%;
         margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        /* background-color: pink; */
         
         @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
-          margin-top: ${pixelToRem(30)};
+          /* margin-top: ${pixelToRem(30)}; */
         }
       `}
     >
@@ -58,7 +67,7 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
             text-align: justify;
 
             @media (min-width: ${({theme}) => pixelToRem(theme.responsive.mobile.minWidth)}) {
-              font-size: ${pixelToRem(24)} !important;
+              font-size: ${pixelToRem(22)} !important;
             }
 
             @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
@@ -151,8 +160,10 @@ const TutorialStepOne: React.FunctionComponent<{}> = () => {
           ))}
         </Wrapper>
       </Wrapper>
+      {children}
     </Wrapper>
   ), [
+    children,
     sliderRef,
     sliderWidth,
   ]);

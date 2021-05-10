@@ -8,7 +8,7 @@ const Link = styled(A)`
   text-decoration: underline;
   margin-bottom: ${pixelToRem(5)};
   
-  @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+  @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
     margin-bottom: 0;
     
     &:after {
@@ -30,15 +30,19 @@ const MainFooter: React.FunctionComponent<{}> = () => (
     customCss={css`
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      /* justify-content: center; */
+      justify-content: space-between;
       padding-top: ${pixelToRem(20)};
       padding-bottom: ${pixelToRem(20)};
+      padding-left: ${pixelToRem(20)};
+      padding-right: ${pixelToRem(20)}; 
       width: 100vw;
       height: ${({theme}) => pixelToRem(theme.footer.mobile.height)};
       background-color: ${({theme}) => theme.footer.mobile.backgroundColor};
       color: white;
       transition: all 250ms ease;
       z-index: 1;
+      /* background-color: pink; */
 
       @media (min-width: ${({theme}) => pixelToRem(theme.responsive.tablet.minWidth)}) {
         padding-left: ${pixelToRem(40)};
@@ -56,11 +60,14 @@ const MainFooter: React.FunctionComponent<{}> = () => (
     <Nav customCss={css`
       display: flex;
       flex-direction: column;
+      /* flex-direction: row; */
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      height: 100%;
+      /* background-color: orange; */
     
-      @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+      @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
         flex-direction: row;
       }
     `}>
@@ -68,12 +75,16 @@ const MainFooter: React.FunctionComponent<{}> = () => (
         display: flex;
         flex-direction: column;
         width: 100%;
+        /* width: auto; */
+        /* height: 100%; */
         align-items: center;
-        justify-content: center;
-        margin-bottom: ${pixelToRem(10)};
+        /* justify-content: center; */
+        /* margin-bottom: ${pixelToRem(10)}; */
+        /* background-color: brown; */
         
-        @media (min-width: ${props => pixelToRem(props.theme.responsive.desktop.minWidth)}) {
+        @media (min-width: ${props => pixelToRem(props.theme.responsive.tablet.minWidth)}) {
           flex-direction: row;
+          justify-content: center;
           margin-bottom: 0;
           width: auto;
         }
