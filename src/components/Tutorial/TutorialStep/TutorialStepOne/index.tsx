@@ -75,7 +75,7 @@ const TutorialStepOne: React.FunctionComponent<{
               font-size: ${pixelToRem(32)} !important;
             }
           `}
-        >A continuación te mostraremos imágenes de animales.<br/>Hace click en siguiente y elegí con qué animal te identificás más.
+        >A continuación te mostraremos imágenes de animales.<br/>Hacé click en siguiente y elegí con qué animal te identificás más.
         </Widgets.H1>
       </Header>
       <Wrapper
