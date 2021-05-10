@@ -91,7 +91,7 @@ export const ButtonNavLink = styled(Link)<IButtonNavLink>`
   width: fit-content;
   padding: ${pixelToRem(10)} ${pixelToRem(20)};
   border-radius: ${pixelToRem(30)};
-  font-size: ${pixelToRem(18)};
+  font-size: ${pixelToRem(20)};
   color: white;
   background: ${(props) => props.theme.color.primary.normal};
   transition: all 250ms ease;
@@ -170,15 +170,15 @@ const Button = styled(Elements.Button)<IButtonNavLink>`
   `}
 
   ${({format}) => (format && format === 'outlined') && css`
-      background: transparent;
-      font-size: ${pixelToRem(32)};
-      border: solid 2px white;
+    background: transparent;
+    font-size: ${pixelToRem(32)};
+    border: solid 2px white;
 
-      &:hover {
-        color: white;
-        background: ${(props) => props.theme.color.primary.dark};
-      }
-    `}
+    &:hover {
+      color: white;
+      background: ${(props) => props.theme.color.primary.dark};
+    }
+  `}
 `;
 
 export default {

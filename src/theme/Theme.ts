@@ -150,7 +150,7 @@ const DefaultTheme: ITheme = {
       height: 50,
     },
     tablet: {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent', // '#362475',
       height: 60,
     },
     desktop: {
@@ -164,11 +164,11 @@ const DefaultTheme: ITheme = {
       height: 110,
     },
     tablet: {
-      backgroundColor: 'transparent',
-      height: 100,
+      backgroundColor: 'transparent', //'#36247580',
+      height: 70,
     },
     desktop: {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent', //'orange',
       height: 70,
     },
   },
